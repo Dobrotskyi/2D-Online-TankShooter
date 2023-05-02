@@ -5,6 +5,7 @@ public class TankPart : ScriptableObject
     [SerializeField] protected GameObject[] variants;
     protected MonoBehaviour _activeMonoBehaviour;
     protected GameObject _model;
+    public GameObject InstantiatedModel => _model;
 
     public virtual void SpawnPart(Transform parent, MonoBehaviour activeMonoBehaviour)
     {

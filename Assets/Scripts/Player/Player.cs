@@ -2,16 +2,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private MainPart _mainTankPart;
+    [SerializeField] Tank _tank;
 
-    public MainPart GetMainPart()
-    {
-        return _mainTankPart;
-    }
+    public Tank Tank => _tank;
 
     private void OnEnable()
     {
-        _mainTankPart.SpawnPart(this.transform, this);
+        _tank.SpawnTank(transform, this);
     }
-
 }

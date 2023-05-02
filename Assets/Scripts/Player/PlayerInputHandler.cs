@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    private MainPart _mainTankPart;
+    private Tank _tank;
+
     private void OnEnable()
     {
         PlayerInput input = GetComponent<PlayerInput>();
-        _mainTankPart = GetComponent<Player>().GetMainPart();
+        _tank = GetComponent<Player>().Tank;
         input.Move += Move;
         input.Rotate += Rotate;
         input.Shoot += Shoot;
-
     }
 
     private void OnDisable()
@@ -23,16 +23,16 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Move(float direction)
     {
-        _mainTankPart.Move(direction);
+       _tank.Move(direction);
     }
 
     private void Rotate(float side)
     {
-        _mainTankPart.Rotate(side);
+        _tank.Rotate(side);
     }
 
     private void Shoot()
     {
-        Debug.Log("Boom");
+        _tank.Shoot();
     }
 }

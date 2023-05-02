@@ -3006,7 +3006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9105bd12083a0a4fa59444545e07e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainTankPart: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
+  _tank: {fileID: 11400000, guid: 6c0933f7f89fa2c42853251b093cad8c, type: 2}
 --- !u!1 &2061781942
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MainPart", menuName = "TankPart/MainPart", order = 0)]
+[CreateAssetMenu(fileName = "MainPart", menuName = "Tank/Part/MainPart", order = 0)]
 public class MainPart : TankPart
 {
     [SerializeField] private float _acceleration;
@@ -8,6 +8,7 @@ public class MainPart : TankPart
     [SerializeField] private float _angularSpeed;
     private Rigidbody2D _rb;
 
+    public GameObject InstantiatedModel => _model;
     public void Move(float direction)
     {
         _rb.AddForce(_rb.transform.up * direction * _acceleration, ForceMode2D.Force);
