@@ -7,12 +7,13 @@ public class MainPart : TankPart
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _angularSpeed;
     private Rigidbody2D _rb;
-
-    public GameObject InstantiatedModel => _model;
+    
     public void Move(float direction)
     {
         _rb.AddForce(_rb.transform.up * direction * _acceleration, ForceMode2D.Force);
         _rb.velocity = Vector2.ClampMagnitude(_rb.velocity, _maxSpeed);
+        Vector3 lookDirection = _rb.transform.rotation.eulerAngles;
+        lookDirection.z += 90;
     }
 
     public void Rotate(float side)

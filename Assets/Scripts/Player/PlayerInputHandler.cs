@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerInputHandler : MonoBehaviour
 {
     private Tank _tank;
+    private Camera _cam;
 
     private void OnEnable()
     {
@@ -11,6 +12,7 @@ public class PlayerInputHandler : MonoBehaviour
         input.Move += Move;
         input.Rotate += Rotate;
         input.Shoot += Shoot;
+        _cam = Camera.main;
     }
 
     private void OnDisable()
@@ -19,6 +21,11 @@ public class PlayerInputHandler : MonoBehaviour
         input.Move -= Move;
         input.Rotate -= Rotate;
         input.Shoot -= Shoot;
+    }
+
+    private void Update()
+    {
+        _tank.Aim(_cam.ScreenToWorldPoint(Input.mousePosition));
     }
 
     private void Move(float direction)

@@ -22,6 +22,11 @@ public class Tank : ScriptableObject
         _turretTankPart.Shoot(_projectile);
     }
 
+    public void Aim(Vector2 target)
+    {
+        _turretTankPart.AimAtTarget(target);
+    }
+
     public void SpawnTank(Transform parent, MonoBehaviour activeMonoBehaviour)
     {
         _mainTankPart.SpawnPart(parent, activeMonoBehaviour);
