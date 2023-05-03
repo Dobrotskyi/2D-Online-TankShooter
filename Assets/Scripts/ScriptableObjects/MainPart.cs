@@ -7,6 +7,8 @@ public class MainPart : TankPart
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _angularSpeed;
     private Rigidbody2D _rb;
+    private Transform _turretPlacement;
+    public Transform TurretPlacement => _turretPlacement;
     
     public void Move(float direction)
     {
@@ -25,5 +27,6 @@ public class MainPart : TankPart
     {
         base.SpawnPart(parent, activeMonoBehaviour);
         _rb = _model.GetComponent<Rigidbody2D>();
+        _turretPlacement = _model.transform.Find("TurretPlacement");
     }
 }

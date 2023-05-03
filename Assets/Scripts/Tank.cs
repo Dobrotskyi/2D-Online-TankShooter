@@ -30,6 +30,11 @@ public class Tank : ScriptableObject
     public void SpawnTank(Transform parent, MonoBehaviour activeMonoBehaviour)
     {
         _mainTankPart.SpawnPart(parent, activeMonoBehaviour);
-        _turretTankPart.SpawnPart(_mainTankPart.InstantiatedModel.transform, activeMonoBehaviour);
+        _turretTankPart.SpawnPart(parent, activeMonoBehaviour);
+    }
+
+    public void LateUpdate()
+    {
+        _turretTankPart.InstantiatedModel.transform.position = _mainTankPart.TurretPlacement.position;
     }
 }

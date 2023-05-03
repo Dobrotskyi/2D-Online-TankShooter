@@ -28,6 +28,11 @@ public class PlayerInputHandler : MonoBehaviour
         _tank.Aim(_cam.ScreenToWorldPoint(Input.mousePosition));
     }
 
+    private void LateUpdate()
+    {
+        _tank.LateUpdate();
+    }
+
     private void Move(float direction)
     {
        _tank.Move(direction);
