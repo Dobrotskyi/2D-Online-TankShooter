@@ -10,7 +10,5 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _tank.SpawnTank(transform, this);
-        CinemachineVirtualCamera _cmCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
-        _cmCamera.Follow = _tank.GetCameraTarget();
     }
 }

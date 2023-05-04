@@ -31,11 +31,7 @@ public class Tank : ScriptableObject
     {
         _mainTankPart.SpawnPart(parent, activeMonoBehaviour);
         _turretTankPart.SpawnPart(parent, activeMonoBehaviour);
-    }
-
-    public Transform GetCameraTarget()
-    {
-        return _mainTankPart.InstantiatedModel.transform;
+        GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = _mainTankPart.InstantiatedModel.transform;
     }
 
     public void LateUpdate()
