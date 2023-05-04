@@ -1,14 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] Tank _tank;
-
-    public Tank Tank => _tank;
-
-    private void OnEnable()
+    // Start is called before the first frame update
+    void Start()
     {
-        _tank.SpawnTank(transform, this);
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

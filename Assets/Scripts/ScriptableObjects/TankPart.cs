@@ -11,7 +11,7 @@ public class TankPart : ScriptableObject
     {
         this._activeMonoBehaviour = activeMonoBehaviour;
         System.Random rnd = new System.Random();
-        _model = Instantiate(variants[rnd.Next(0, variants.Length - 1)]);
+        _model = Instantiate(variants[rnd.Next(0, variants.Length - 1)], parent.position, parent.rotation);
         _model.transform.SetParent(parent);
         _model.gameObject.name = this.GetType().ToString();
     }

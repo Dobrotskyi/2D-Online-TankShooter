@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainTankPart: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
   _turretTankPart: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
-  _projectile: {fileID: 7997101222126205401, guid: de7bf2d9a814e0a42a1a8c5026b01b99, type: 3}
+  _projectile: {fileID: 11400000, guid: ba946d1a6a87ed24e8a6aa6ea419e1dd, type: 2}

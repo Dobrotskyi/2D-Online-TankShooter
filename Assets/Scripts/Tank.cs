@@ -5,7 +5,24 @@ public class Tank : ScriptableObject
 {
     [SerializeField] private MainPart _mainTankPart;
     [SerializeField] private TurretPart _turretTankPart;
-    [SerializeField] private GameObject _projectile;
+    [SerializeField] private ProjectileSO _projectile;
+    private float _maxHealth;
+    private float _health = 0;
+    public float Health
+    {
+        get
+        {
+            return _health;
+        }
+        private set
+        {
+            _health += value;
+            if(_health > _maxHealth)
+                _health = _maxHealth;
+            else if (_health <= 0)
+                DestroyThisTank();
+        }
+    }
 
     public void Move(float direction)
     {
@@ -31,11 +48,22 @@ public class Tank : ScriptableObject
     {
         _mainTankPart.SpawnPart(parent, activeMonoBehaviour);
         _turretTankPart.SpawnPart(parent, activeMonoBehaviour);
-        GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = _mainTankPart.InstantiatedModel.transform;
+        _maxHealth = _mainTankPart.Durability * _turretTankPart.DurabilityMultiplier;
+        Health = _maxHealth;
+    }
+
+    public Transform GetCameraTarget()
+    {
+        return _mainTankPart.InstantiatedModel.transform;
     }
 
     public void LateUpdate()
     {
         _turretTankPart.InstantiatedModel.transform.position = _mainTankPart.TurretPlacement.position;
+    }
+
+    private void DestroyThisTank()
+    {
+        Debug.Log("Health below 0");
     }
 }

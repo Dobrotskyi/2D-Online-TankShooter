@@ -6,10 +6,13 @@ public class MainPart : TankPart
     [SerializeField] private float _acceleration;
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _angularSpeed;
+    [SerializeField] private float _durability = 300f;
+
     private Rigidbody2D _rb;
     private Transform _turretPlacement;
     public Transform TurretPlacement => _turretPlacement;
-    
+    public float Durability => _durability;
+
     public void Move(float direction)
     {
         _rb.AddForce(_rb.transform.up * direction * _acceleration, ForceMode2D.Force);

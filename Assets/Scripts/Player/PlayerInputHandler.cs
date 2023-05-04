@@ -8,7 +8,11 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnEnable()
     {
         PlayerInput input = GetComponent<PlayerInput>();
-        _tank = GetComponent<Player>().Tank;
+        _tank = GetComponent<TankSpawner>().Tank;
+        
+        //Тимчасове рішення, потрібно прибрати
+        GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = _tank.GetCameraTarget();
+
         input.Move += Move;
         input.Rotate += Rotate;
         input.Shoot += Shoot;
@@ -35,7 +39,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Move(float direction)
     {
-       _tank.Move(direction);
+        _tank.Move(direction);
     }
 
     private void Rotate(float side)
