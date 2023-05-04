@@ -33,6 +33,11 @@ public class Tank : ScriptableObject
         _turretTankPart.SpawnPart(parent, activeMonoBehaviour);
     }
 
+    public Transform GetCameraTarget()
+    {
+        return _mainTankPart.InstantiatedModel.transform;
+    }
+
     public void LateUpdate()
     {
         _turretTankPart.InstantiatedModel.transform.position = _mainTankPart.TurretPlacement.position;
