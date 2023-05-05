@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class Tank : MonoBehaviour
 {
-    [SerializeField] private MainPartData _mainTankPart;
-    [SerializeField] private TurretPartData _turretTankPart;
+    [SerializeField] private MainPart _mainTankPartData;
+    [SerializeField] private TurretPart _turretTankPartData;
     [SerializeField] private ProjectileSO _projectile;
     private GameObject _spawnedMainPart;
-    private MainTankPart _mainPart;
+    private MainPartBehav _mainPart;
     private GameObject _spawnedTurretPart;
+    private TurretPartBehav _turretPart;
     private float _maxHealth;
     private float _health = 0;
 
@@ -39,12 +40,12 @@ public class Tank : MonoBehaviour
 
     public void Shoot()
     {
-        //_turretTankPart.Shoot(_projectile);
+        _turretPart.Shoot(_projectile);
     }
 
     public void Aim(Vector2 target)
     {
-        //_turretTankPart.AimAtTarget(target);
+        _turretPart.AimAtTarget(target);
     }
 
     public Transform GetCameraTarget()
@@ -55,8 +56,6 @@ public class Tank : MonoBehaviour
     public void LateUpdate()
     {
         _spawnedTurretPart.transform.position = _spawnedMainPart.transform.Find("TurretPlacement").position;
-        //_turretTankPart.Shoot(_projectile);
-        _mainPart.Move(transform.forward.magnitude);
     }
 
     private void OnEnable()
@@ -66,14 +65,17 @@ public class Tank : MonoBehaviour
 
     private void SpawnTank()
     {
-        _spawnedMainPart = _mainTankPart.SpawnPart(transform);
-        _mainPart = _spawnedMainPart.GetComponent<MainTankPart>();
-        _mainPart.SetData(_mainTankPart);
-        _spawnedTurretPart = _turretTankPart.SpawnPart(transform);
-        _maxHealth = _mainTankPart.Durability * _turretTankPart.DurabilityMultiplier;
+        _spawnedMainPart = _mainTankPartData.SpawnPart(transform);
+        _mainPart = _spawnedMainPart.GetComponent<MainPartBehav>();
+        _mainPart.SetData(_mainTankPartData);
+
+        _spawnedTurretPart = _turretTankPartData.SpawnPart(transform);
+        _turretPart = _spawnedTurretPart.GetComponent<TurretPartBehav>();
+        _turretPart.SetData(_turretTankPartData);
+
+        _maxHealth = _mainTankPartData.Durability * _turretTankPartData.DurabilityMultiplier;
         Health = _maxHealth;
     }
-
 
     private void DestroyThisTank()
     {

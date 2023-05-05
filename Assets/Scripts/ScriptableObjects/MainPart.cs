@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "MainPart", menuName = "Tank/Part/MainPart", order = 0)]
-public class MainPartData : TankPartData
+public class MainPart : TankPartData
 {
     [SerializeField] private float _acceleration;
     [SerializeField] private float _maxSpeed;
@@ -17,7 +17,7 @@ public class MainPartData : TankPartData
     public override GameObject SpawnPart(Transform parent)
     {
         GameObject mainPart = base.SpawnPart(parent);
-        mainPart.AddComponent(typeof(MainTankPart));
+        mainPart.AddComponent(typeof(MainPartBehav));
         return mainPart;
     }
 }

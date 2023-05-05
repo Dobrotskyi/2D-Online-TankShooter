@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class MainTankPart : MonoBehaviour
+public class MainPartBehav : MonoBehaviour
 {
     private Rigidbody2D _rb;
-    private MainPartData _data;
+    private MainPart _data;
 
     public void Move(float direction)
     {
@@ -18,7 +18,7 @@ public class MainTankPart : MonoBehaviour
         _rb.AddTorque(-side * _data.AngularSpeed * Time.deltaTime, ForceMode2D.Impulse);
     }
 
-    public void SetData(MainPartData data)
+    public void SetData(MainPart data)
     {
         _data = data;
     }
