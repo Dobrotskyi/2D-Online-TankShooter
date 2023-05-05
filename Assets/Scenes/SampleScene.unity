@@ -528,7 +528,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.32086146, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4897,9 +4897,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 999572427}
-  - component: {fileID: 999572428}
   - component: {fileID: 999572426}
   - component: {fileID: 999572425}
+  - component: {fileID: 999572428}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4931,7 +4931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9adbc35c1f446d146869f6c059af4582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _threshold: {x: 0.05, y: 0.05}
+  _inputThreshold: {x: 0, y: 0}
 --- !u!4 &999572427
 Transform:
   m_ObjectHideFlags: 0
@@ -4956,10 +4956,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 999572424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd2512b053a05b24cad39c823990cf38, type: 3}
+  m_Script: {fileID: 11500000, guid: 4abaaf4b025cddf43a126a5be669494e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tank: {fileID: 11400000, guid: 6c0933f7f89fa2c42853251b093cad8c, type: 2}
+  _mainTankPart: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
+  _turretTankPart: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
+  _projectile: {fileID: 11400000, guid: ba946d1a6a87ed24e8a6aa6ea419e1dd, type: 2}
 --- !u!1 &1491200980
 GameObject:
   m_ObjectHideFlags: 0
@@ -5001,10 +5003,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1491200980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd2512b053a05b24cad39c823990cf38, type: 3}
+  m_Script: {fileID: 11500000, guid: 4abaaf4b025cddf43a126a5be669494e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tank: {fileID: 11400000, guid: 6c0933f7f89fa2c42853251b093cad8c, type: 2}
+  _mainTankPart: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
+  _turretTankPart: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
+  _projectile: {fileID: 11400000, guid: ba946d1a6a87ed24e8a6aa6ea419e1dd, type: 2}
 --- !u!1 &2061781942
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,6 @@ public class TankSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        _tank.SpawnTank(transform, this);
+        //_tank.SpawnTank();
     }
 }

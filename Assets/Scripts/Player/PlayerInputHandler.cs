@@ -8,7 +8,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnEnable()
     {
         PlayerInput input = GetComponent<PlayerInput>();
-        _tank = GetComponent<TankSpawner>().Tank;
+        _tank = GetComponent<Tank>();
         
         //Тимчасове рішення, потрібно прибрати
         GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = _tank.GetCameraTarget();
@@ -30,11 +30,6 @@ public class PlayerInputHandler : MonoBehaviour
     private void Update()
     {
         _tank.Aim(_cam.ScreenToWorldPoint(Input.mousePosition));
-    }
-
-    private void LateUpdate()
-    {
-        _tank.LateUpdate();
     }
 
     private void Move(float direction)

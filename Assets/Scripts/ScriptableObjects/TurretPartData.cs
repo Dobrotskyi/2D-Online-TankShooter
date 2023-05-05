@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TurretPart", menuName = "Tank/Part/TurretPart", order = 2)]
-public class TurretPart : TankPart
+public class TurretPartData : TankPartData
 {
     [SerializeField] private float _rotationSpeed = 40f;
     [SerializeField] private Vector2 _spread = new Vector2(0.2f, 0.2f);
@@ -10,11 +10,11 @@ public class TurretPart : TankPart
     [SerializeField] private float _minAimingDistance = 1f;
     [SerializeField] private float _durabilityMultiplier = 1f;
     public float DurabilityMultiplier => _durabilityMultiplier;
-
     private Transform _barrel;
     private float _lastShotTime;
     private Transform _mainPart;
     private float _fireRateMultiplier = 1f;
+    private GameObject _instantiatedModel;
 
     public void Shoot(ProjectileSO projectileSO)
     {
@@ -37,16 +37,18 @@ public class TurretPart : TankPart
 
         Vector2 lookDirection = (target - (Vector2)_barrel.transform.position);
         float angleZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-        Quaternion rotation = Quaternion.AngleAxis(angleZ, _model.transform.forward);
-        _model.transform.rotation = Quaternion.Slerp(_model.transform.rotation, rotation, _rotationSpeed * Time.deltaTime);
+        Quaternion rotation = Quaternion.AngleAxis(angleZ, _barrel.transform.forward);
+        _instantiatedModel.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, rotation, _rotationSpeed * Time.deltaTime);
     }
 
-    public override void SpawnPart(Transform parent, MonoBehaviour activeMonoBehaviour)
+    public override GameObject SpawnPart(Transform parent)
     {
-        base.SpawnPart(parent, activeMonoBehaviour);
-        _barrel = _model.transform.Find("Barrel");
+        GameObject turretPart = base.SpawnPart(parent);
+        _barrel = turretPart.transform.Find("Barrel");
         _lastShotTime = Time.time;
         _mainPart = parent.Find("MainPart");
+        _instantiatedModel = turretPart;
+        return turretPart;
     }
 
     private bool IsLoaded()
