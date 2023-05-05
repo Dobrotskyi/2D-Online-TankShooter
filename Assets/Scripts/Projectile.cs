@@ -16,11 +16,15 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Transform superTF = collision.transform;
-        while(superTF.parent != null)
+        while (superTF.parent != null)
+        {
+            if (superTF.gameObject.TryGetComponent<ITakeDamage>(out ITakeDamage _takeDamageObj))
+            {
+                _takeDamageObj.TakeDamage(_damage);
+                break;
+            }
             superTF = superTF.parent;
-
-        if (superTF.gameObject.TryGetComponent<ITakeDamage>(out ITakeDamage _takeDamageObj))
-            _takeDamageObj.TakeDamage(_damage);
+        }
 
         Destroy(gameObject);
     }

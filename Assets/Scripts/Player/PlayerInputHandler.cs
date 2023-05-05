@@ -9,8 +9,6 @@ public class PlayerInputHandler : MonoBehaviour
     {
         PlayerInput input = GetComponent<PlayerInput>();
         _tank = GetComponent<Tank>();
-        
-        //Тимчасове рішення, потрібно прибрати
         GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = _tank.GetCameraTarget();
 
         input.Move += Move;
