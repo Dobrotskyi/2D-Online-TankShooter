@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tank : MonoBehaviour
+public class Tank : MonoBehaviour, ITakeDamage
 {
     [SerializeField] private MainPart _mainTankPartData;
     [SerializeField] private TurretPart _turretTankPartData;
@@ -20,7 +20,7 @@ public class Tank : MonoBehaviour
         }
         private set
         {
-            _health += value;
+            _health = value;
             if (_health > _maxHealth)
                 _health = _maxHealth;
             else if (_health <= 0)
@@ -28,30 +28,17 @@ public class Tank : MonoBehaviour
         }
     }
 
-    public void Move(float direction)
-    {
-        _mainPart.Move(direction);
-    }
+    public void TakeDamage(int amt) => Health -= amt;
 
-    public void Rotate(float side)
-    {
-        _mainPart.Rotate(side);
-    }
+    public void Move(float direction) => _mainPart.Move(direction);
 
-    public void Shoot()
-    {
-        _turretPart.Shoot(_projectile);
-    }
+    public void Rotate(float side) =>  _mainPart.Rotate(side);
 
-    public void Aim(Vector2 target)
-    {
-        _turretPart.AimAtTarget(target);
-    }
+    public void Shoot() => _turretPart.Shoot(_projectile);
 
-    public Transform GetCameraTarget()
-    {
-        return _spawnedMainPart.transform;
-    }
+    public void Aim(Vector2 target) => _turretPart.AimAtTarget(target);
+
+    public Transform GetCameraTarget() => _spawnedMainPart.transform;
 
     public void LateUpdate()
     {
