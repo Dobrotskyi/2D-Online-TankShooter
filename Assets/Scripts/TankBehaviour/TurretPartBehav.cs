@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretPartBehav : MonoBehaviour
@@ -12,7 +10,10 @@ public class TurretPartBehav : MonoBehaviour
 
     public void SetData(TurretPart data)
     {
-        _data = data;
+        if (data == null)
+            _data = data;
+        else
+            throw new System.Exception("Data for this turret was already set");
     }
 
     public void Shoot(ProjectileSO projectileSO)
