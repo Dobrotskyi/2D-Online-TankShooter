@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 [CreateAssetMenu(fileName = "MainPart", menuName = "Tank/Part/MainPart", order = 0)]
 public class MainPart : TankPartData
@@ -18,6 +17,7 @@ public class MainPart : TankPartData
     {
         GameObject mainPart = base.SpawnPart(parent);
         mainPart.AddComponent(typeof(MainPartBehav));
+        mainPart.AddComponent(typeof(TankCollisionHandler));
         return mainPart;
     }
 }

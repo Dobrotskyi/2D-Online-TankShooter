@@ -32,13 +32,18 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Move(float direction) => _mainPart.Move(direction);
 
-    public void Rotate(float side) =>  _mainPart.Rotate(side);
+    public void Rotate(float side) => _mainPart.Rotate(side);
 
     public void Shoot() => _turretPart.Shoot(_projectile);
 
     public void Aim(Vector2 target) => _turretPart.AimAtTarget(target);
 
     public Transform GetCameraTarget() => _spawnedMainPart.transform;
+
+    public void RestoreAmmo(int amt)
+    {
+        Debug.Log($"ammo was added - + {amt}");
+    }
 
     public void LateUpdate()
     {
