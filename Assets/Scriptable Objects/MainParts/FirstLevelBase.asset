@@ -15,6 +15,6 @@ MonoBehaviour:
   variants:
   - {fileID: 8992559794526171013, guid: 257ab9095af6518459cb7492e4752d52, type: 3}
   _acceleration: 80
-  _maxSpeed: 100
+  _maxSpeed: 130
   _angularSpeed: 160
   _durability: 300

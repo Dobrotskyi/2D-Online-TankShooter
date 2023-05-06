@@ -4897,6 +4897,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 999572427}
+  - component: {fileID: 999572429}
   - component: {fileID: 999572426}
   - component: {fileID: 999572425}
   - component: {fileID: 999572428}
@@ -4962,6 +4963,18 @@ MonoBehaviour:
   _mainTankPartData: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
   _turretTankPartData: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
   _projectile: {fileID: 11400000, guid: ba946d1a6a87ed24e8a6aa6ea419e1dd, type: 2}
+--- !u!114 &999572429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999572424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9105bd12083a0a4fa59444545e07e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1491200980
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,7 @@ public class Tank : MonoBehaviour, ITakeDamage
                 _health = _maxHealth;
             else if (_health <= 0)
                 DestroyThisTank();
+            Debug.Log(_health);
         }
     }
 
