@@ -5,11 +5,34 @@ public class Tank : MonoBehaviour, ITakeDamage
     [SerializeField] private MainPartData _mainPartData;
     [SerializeField] private TurretPartData _turretPartData;
     [SerializeField] private ProjectileSO _projectile;
-    private GameObject _spawnedMainPart;
-    private MainPartBehav _mainPartBehav;
-    private GameObject _spawnedTurretPart;
-    private TurretPartBehav _turretPartBehav;
     private AmmoStorage _ammoStorage;
+
+    private struct MainPart
+    {
+        public GameObject SpawnedObj { get; private set; }
+        public MainPartBehav Script { get; private set; }
+
+        public MainPart(GameObject spawnedPart)
+        {
+            SpawnedObj = spawnedPart;
+            Script = spawnedPart.GetComponent<MainPartBehav>();
+        }
+    }
+
+    private struct TurretPart
+    {
+        public GameObject SpawnedObj { get; private set; }
+        public TurretPartBehav Script { get; private set; }
+
+        public TurretPart(GameObject spawnedPart)
+        {
+            SpawnedObj = spawnedPart;
+            Script = spawnedPart.GetComponent<TurretPartBehav>();
+        }
+    }
+
+    private MainPart _mainPart;
+    private TurretPart _turretPart;
 
     private float _maxHealth;
     private float _health = 0;
@@ -31,15 +54,15 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void TakeDamage(int amt) => Health -= amt;
 
-    public void Move(float direction) => _mainPartBehav.Move(direction);
+    public void Move(float direction) => _mainPart.Script.Move(direction);
 
-    public void Rotate(float side) => _mainPartBehav.Rotate(side);
+    public void Rotate(float side) => _mainPart.Script.Rotate(side);
 
-    public void Shoot() => _turretPartBehav.Shoot(_projectile);
+    public void Shoot() => _turretPart.Script.Shoot(_projectile);
 
-    public void Aim(Vector2 target) => _turretPartBehav.AimAtTarget(target);
+    public void Aim(Vector2 target) => _turretPart.Script.AimAtTarget(target);
 
-    public Transform GetCameraTarget() => _spawnedMainPart.transform;
+    public Transform GetCameraTarget() => _mainPart.SpawnedObj.transform;
 
     public void RestoreAmmo(int amt)
     {
@@ -49,7 +72,7 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void LateUpdate()
     {
-        _spawnedTurretPart.transform.position = _spawnedMainPart.transform.Find("TurretPlacement").position;
+        _turretPart.SpawnedObj.transform.position = _mainPart.SpawnedObj.transform.Find("TurretPlacement").position;
     }
 
     private void OnEnable()
@@ -59,17 +82,14 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private void SpawnTank()
     {
-        _spawnedMainPart = _mainPartData.SpawnPart(transform);
-        _mainPartBehav = _spawnedMainPart.GetComponent<MainPartBehav>();
-        _mainPartBehav.SetData(_mainPartData);
+        _mainPart = new MainPart(_mainPartData.SpawnPart(transform));
+        _turretPart = new TurretPart(_turretPartData.SpawnPart(transform));
 
-        _spawnedTurretPart = _turretPartData.SpawnPart(transform);
-        _turretPartBehav = _spawnedTurretPart.GetComponent<TurretPartBehav>();
-        _turretPartBehav.SetData(_turretPartData);
-        _turretPartBehav.AttachToBase(_mainPartBehav.transform);
-
+        _mainPart.Script.SetData(_mainPartData);
+        _turretPart.Script.SetData(_turretPartData);
+        _turretPart.Script.AttachToBase(_mainPart.SpawnedObj.transform);
         _ammoStorage = new AmmoStorage(_mainPartData.AmmoStorage);
-        _turretPartBehav.SetAmmoStorage(_ammoStorage);
+        _turretPart.Script.SetAmmoStorage(_ammoStorage);
 
         _maxHealth = _mainPartData.Durability * _turretPartData.DurabilityMultiplier;
         Health = _maxHealth;
