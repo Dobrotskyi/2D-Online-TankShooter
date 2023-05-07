@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 733bbb2851849964882c348e3b874b1f, type: 3}
+  m_Script: {fileID: 11500000, guid: 33819317370899849bb5538fcb3e5e64, type: 3}
   m_Name: FirstLevelTurret
   m_EditorClassIdentifier: 
   variants:
@@ -20,3 +20,4 @@ MonoBehaviour:
   _shotForce: 15
   _minAimingDistance: 0.5
   _durabilityMultiplier: 1
+  _fireRateMultiplier: 1

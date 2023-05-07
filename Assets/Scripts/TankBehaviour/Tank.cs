@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class Tank : MonoBehaviour, ITakeDamage
 {
-    [SerializeField] private MainPart _mainTankPartData;
-    [SerializeField] private TurretPart _turretTankPartData;
+    [SerializeField] private MainPartData _mainPartData;
+    [SerializeField] private TurretPartData _turretPartData;
     [SerializeField] private ProjectileSO _projectile;
     private GameObject _spawnedMainPart;
-    private MainPartBehav _mainPart;
+    private MainPartBehav _mainPartBehav;
     private GameObject _spawnedTurretPart;
-    private TurretPartBehav _turretPart;
+    private TurretPartBehav _turretPartBehav;
+    private AmmoStorage _ammoStorage;
+
     private float _maxHealth;
     private float _health = 0;
 
     public float Health
     {
-        get
-        {
-            return _health;
-        }
+        get => _health;
+
         private set
         {
             _health = value;
@@ -31,19 +31,20 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void TakeDamage(int amt) => Health -= amt;
 
-    public void Move(float direction) => _mainPart.Move(direction);
+    public void Move(float direction) => _mainPartBehav.Move(direction);
 
-    public void Rotate(float side) => _mainPart.Rotate(side);
+    public void Rotate(float side) => _mainPartBehav.Rotate(side);
 
-    public void Shoot() => _turretPart.Shoot(_projectile);
+    public void Shoot() => _turretPartBehav.Shoot(_projectile);
 
-    public void Aim(Vector2 target) => _turretPart.AimAtTarget(target);
+    public void Aim(Vector2 target) => _turretPartBehav.AimAtTarget(target);
 
     public Transform GetCameraTarget() => _spawnedMainPart.transform;
 
     public void RestoreAmmo(int amt)
     {
         Debug.Log($"ammo was added - + {amt}");
+        _ammoStorage.RessuplyAmmo(amt);
     }
 
     public void LateUpdate()
@@ -58,15 +59,19 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private void SpawnTank()
     {
-        _spawnedMainPart = _mainTankPartData.SpawnPart(transform);
-        _mainPart = _spawnedMainPart.GetComponent<MainPartBehav>();
-        _mainPart.SetData(_mainTankPartData);
+        _spawnedMainPart = _mainPartData.SpawnPart(transform);
+        _mainPartBehav = _spawnedMainPart.GetComponent<MainPartBehav>();
+        _mainPartBehav.SetData(_mainPartData);
 
-        _spawnedTurretPart = _turretTankPartData.SpawnPart(transform);
-        _turretPart = _spawnedTurretPart.GetComponent<TurretPartBehav>();
-        _turretPart.SetData(_turretTankPartData);
+        _spawnedTurretPart = _turretPartData.SpawnPart(transform);
+        _turretPartBehav = _spawnedTurretPart.GetComponent<TurretPartBehav>();
+        _turretPartBehav.SetData(_turretPartData);
+        _turretPartBehav.AttachToBase(_mainPartBehav.transform);
 
-        _maxHealth = _mainTankPartData.Durability * _turretTankPartData.DurabilityMultiplier;
+        _ammoStorage = new AmmoStorage(_mainPartData.AmmoStorage);
+        _turretPartBehav.SetAmmoStorage(_ammoStorage);
+
+        _maxHealth = _mainPartData.Durability * _turretPartData.DurabilityMultiplier;
         Health = _maxHealth;
     }
 

@@ -6,7 +6,7 @@ public class MainPartBehav : MonoBehaviour
     private const int ACCELERATION_MULT = 10;
 
     private Rigidbody2D _rb;
-    private MainPart _data;
+    private MainPartData _data;
 
     public void Move(float direction)
     {
@@ -19,7 +19,7 @@ public class MainPartBehav : MonoBehaviour
         _rb.AddTorque(-side * _data.AngularSpeed * Time.deltaTime, ForceMode2D.Impulse);
     }
 
-    public void SetData(MainPart data)
+    public void SetData(MainPartData data)
     {
         if (_data == null)
             _data = data;

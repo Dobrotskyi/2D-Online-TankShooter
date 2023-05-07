@@ -4960,8 +4960,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abaaf4b025cddf43a126a5be669494e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainTankPartData: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
-  _turretTankPartData: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
+  _mainPartData: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
+  _turretPartData: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
   _projectile: {fileID: 11400000, guid: ba946d1a6a87ed24e8a6aa6ea419e1dd, type: 2}
 --- !u!114 &999572429
 MonoBehaviour:
@@ -5019,8 +5019,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abaaf4b025cddf43a126a5be669494e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainTankPartData: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
-  _turretTankPartData: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
+  _mainPartData: {fileID: 11400000, guid: 2cd99f695c36eba449831176cf2bde96, type: 2}
+  _turretPartData: {fileID: 11400000, guid: ee3af20307696b14181b1369768910d7, type: 2}
   _projectile: {fileID: 11400000, guid: ba946d1a6a87ed24e8a6aa6ea419e1dd, type: 2}
 --- !u!1 &2061781942
 GameObject:
