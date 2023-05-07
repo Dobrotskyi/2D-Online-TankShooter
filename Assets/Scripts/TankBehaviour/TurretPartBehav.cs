@@ -10,7 +10,7 @@ public class TurretPartBehav : MonoBehaviour
 
     public void SetData(TurretPart data)
     {
-        if (data == null)
+        if (_data == null)
             _data = data;
         else
             throw new System.Exception("Data for this turret was already set");
