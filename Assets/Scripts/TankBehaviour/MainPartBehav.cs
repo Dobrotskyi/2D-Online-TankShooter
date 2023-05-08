@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class MainPartBehav : MonoBehaviour
 {
+    private const int MAX_SPEED_MULT = 10;
+    private const int ACCELERATION_MULT = 10;
+
     private Rigidbody2D _rb;
-    private MainPart _data;
+    private MainPartData _data;
 
     public void Move(float direction)
     {
-        _rb.AddForce(_rb.transform.up * direction * _data.Acceleration, ForceMode2D.Force);
-        _rb.velocity = Vector2.ClampMagnitude(_rb.velocity, _data.MaxSpeed);
-        Vector3 lookDirection = _rb.transform.rotation.eulerAngles;
-        lookDirection.z += 90;
+        _rb.AddForce(_rb.transform.up * direction * _data.Acceleration * ACCELERATION_MULT, ForceMode2D.Force);
+        _rb.velocity = Vector2.ClampMagnitude(_rb.velocity, _data.MaxSpeed * MAX_SPEED_MULT);
     }
 
     public void Rotate(float side)
@@ -18,9 +19,12 @@ public class MainPartBehav : MonoBehaviour
         _rb.AddTorque(-side * _data.AngularSpeed * Time.deltaTime, ForceMode2D.Impulse);
     }
 
-    public void SetData(MainPart data)
+    public void SetData(MainPartData data)
     {
-        _data = data;
+        if (_data == null)
+            _data = data;
+        else
+            throw new System.Exception("Scriptable Object data was already set for this object");
     }
 
     private void OnEnable()

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TurretPart", menuName = "Tank/Part/TurretPart", order = 2)]
-public class TurretPart : TankPartData
+public class TurretPartData : TankPartData
 {
     [SerializeField] private float _rotationSpeed = 40f;
     [SerializeField] private Vector2 _spread = new Vector2(0.2f, 0.2f);

@@ -9,7 +9,6 @@ public class TankPartData : ScriptableObject
         System.Random rnd = new System.Random();
         GameObject part = Instantiate(variants[rnd.Next(0, variants.Length - 1)], parent.position, parent.rotation);
         part.transform.SetParent(parent);
-        part.gameObject.name = this.GetType().ToString();
         return part;
     }
 }

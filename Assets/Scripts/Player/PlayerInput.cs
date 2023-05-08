@@ -1,25 +1,26 @@
 using UnityEngine;
-using System;
-using Unity;
 
 public class PlayerInput : MonoBehaviour
 {
-    public event Action Shoot;
-    public event Action<float> Move;
-    public event Action<float> Rotate;
     [SerializeField] private Vector2 _inputThreshold = Vector2.zero;
+    [SerializeField]
+    public bool Shoot { get; private set; }
+    public bool Move { get; private set; }
+    public float MoveDirection { get; private set; }
+    public bool Rotate { get; private set; }
+    public float RotationSide { get; private set; }
 
     private void Update()
     {
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
 
-        if (Mathf.Abs(horizontalInput) > _inputThreshold.x)
-            Rotate?.Invoke(horizontalInput);
-        if (Mathf.Abs(verticalInput) > _inputThreshold.y)
-            Move?.Invoke(verticalInput);
+        Rotate = (Mathf.Abs(horizontalInput) > _inputThreshold.x) ? true : false;
+        RotationSide = Rotate ? horizontalInput : 0;
 
-        if (Input.GetMouseButton(0))
-            Shoot?.Invoke();
+        Move = (Mathf.Abs(verticalInput) > _inputThreshold.y) ? true : false;
+        MoveDirection = Move ? verticalInput : 0;
+
+        Shoot = (Input.GetMouseButton(0)) ? true : false;
     }
 }

@@ -11,18 +11,7 @@ public class PlayerInputHandler : MonoBehaviour
         _tank = GetComponent<Tank>();
         GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = _tank.GetCameraTarget();
 
-        input.Move += Move;
-        input.Rotate += Rotate;
-        input.Shoot += Shoot;
         _cam = Camera.main;
-    }
-
-    private void OnDisable()
-    {
-        PlayerInput input = GetComponent<PlayerInput>();
-        input.Move -= Move;
-        input.Rotate -= Rotate;
-        input.Shoot -= Shoot;
     }
 
     private void Update()
@@ -30,18 +19,9 @@ public class PlayerInputHandler : MonoBehaviour
         _tank.Aim(_cam.ScreenToWorldPoint(Input.mousePosition));
     }
 
-    private void Move(float direction)
-    {
-        _tank.Move(direction);
-    }
+    public void Move(float direction) => _tank.Move(direction);
 
-    private void Rotate(float side)
-    {
-        _tank.Rotate(side);
-    }
+    public void Rotate(float side) => _tank.Rotate(side);
 
-    private void Shoot()
-    {
-        _tank.Shoot();
-    }
+    public void Shoot() => _tank.Shoot();
 }
