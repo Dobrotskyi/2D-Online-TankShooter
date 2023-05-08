@@ -6,7 +6,7 @@ public class Tank : MonoBehaviour, ITakeDamage
     [SerializeField] private TurretPartData _turretPartData;
     [SerializeField] private ProjectileSO _projectile;
     private AmmoStorage _ammoStorage;
-    private HealthSystem _health;
+    private Health _health;
 
     private struct MainPart
     {
@@ -78,7 +78,7 @@ public class Tank : MonoBehaviour, ITakeDamage
 
         _ammoStorage = new AmmoStorage(_mainPartData.AmmoStorage);
         int maxHealth = Mathf.FloorToInt(_mainPartData.Durability * _turretPartData.DurabilityMultiplier);
-        _health = new HealthSystem(maxHealth);
+        _health = new Health(maxHealth);
         _health.ZeroHealth += DestroyThisTank;
     }
 

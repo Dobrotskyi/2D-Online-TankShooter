@@ -1,33 +1,28 @@
-public class AmmoStorage
+public class AmmoStorage : TankProperty
 {
-    private readonly int _maxAmmoAmt;
-    private int _ammoLeft;
-    public int AmmoLeft
+    public override int Current
     {
-        get => _ammoLeft;
-        private set
+        get => _current;
+
+        protected set
         {
-            _ammoLeft = value;
-            if (_ammoLeft > _maxAmmoAmt)
-                _ammoLeft = _maxAmmoAmt;
-            if (_ammoLeft < 0)
-                _ammoLeft = 0;
+            _current = value;
+            if (_current > _max)
+                _current = _max;
+            if (_current < 0)
+                _current = 0;
         }
     }
 
-    public AmmoStorage(int maxAmmoAmt)
-    {
-        _maxAmmoAmt = maxAmmoAmt;
-        _ammoLeft = _maxAmmoAmt;
-    }
+    public AmmoStorage(int maxAmmoAmt) : base(maxAmmoAmt) { }
 
-    public void RessuplyAmmo(int amt) => AmmoLeft += amt;
+    public void RessuplyAmmo(int amt) => Current += amt;
 
     public bool LoadTurret()
     {
-        if (AmmoLeft > 0)
+        if (Current > 0)
         {
-            AmmoLeft--;
+            Current--;
             return true;
         }
         else
@@ -36,13 +31,13 @@ public class AmmoStorage
 
     public void LoadTurret(TurretPartBehav turret)
     {
-        if (turret.Loaded || AmmoLeft == 0)
+        if (turret.Loaded || Current == 0)
             return;
 
-        if (AmmoLeft > 0)
+        if (Current > 0)
         {
             turret.Loaded = true;
-            AmmoLeft--;
+            Current--;
         }
         else
             turret.Loaded = false;
