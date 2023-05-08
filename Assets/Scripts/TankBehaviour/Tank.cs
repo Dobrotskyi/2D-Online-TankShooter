@@ -5,6 +5,7 @@ public class Tank : MonoBehaviour, ITakeDamage
     [SerializeField] private MainPartData _mainPartData;
     [SerializeField] private TurretPartData _turretPartData;
     [SerializeField] private ProjectileSO _projectile;
+    [SerializeField] private PropertyBar[] _bars;
     private AmmoStorage _ammoStorage;
     private Health _health;
 
@@ -57,14 +58,10 @@ public class Tank : MonoBehaviour, ITakeDamage
         _ammoStorage.RessuplyAmmo(amt);
     }
 
-    public void LateUpdate()
-    {
-        _turretPart.SpawnedObj.transform.position = _mainPart.SpawnedObj.transform.Find("TurretPlacement").position;
-    }
-
     private void OnEnable()
     {
         SpawnTank();
+        SetPropertyBars();
     }
 
     private void SpawnTank()
@@ -82,6 +79,18 @@ public class Tank : MonoBehaviour, ITakeDamage
         _health.ZeroHealth += DestroyThisTank;
     }
 
+    private void SetPropertyBars()
+    {
+        if (_bars.Length != 0)
+        {
+            //Temporary
+            foreach (var bar in _bars)
+                bar.transform.parent = _mainPart.SpawnedObj.transform;
+
+            _bars[0].SetProperty(_health);
+        }
+    }
+
     private void OnDisable()
     {
         _health.ZeroHealth -= DestroyThisTank;
@@ -89,6 +98,6 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private void DestroyThisTank()
     {
-        Debug.Log("Health below 0, EXPLOSION");
+        Debug.Log("Destroying this tank");
     }
 }

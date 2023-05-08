@@ -68,4 +68,9 @@ public class TurretPartBehav : MonoBehaviour
     {
         _barrel = transform.Find("Barrel");
     }
+
+    private void LateUpdate()
+    {
+        transform.position = _mainPart.transform.Find("TurretPlacement").position;
+    }
 }

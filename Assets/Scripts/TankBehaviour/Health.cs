@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 public class Health : TankProperty, ITakeDamage
 {
     public event Action ZeroHealth;
@@ -15,17 +14,14 @@ public class Health : TankProperty, ITakeDamage
                 _current = _max;
             if (_current <= 0)
             {
+                _current = 0;
                 ZeroHealth?.Invoke();
-                Debug.Log("Dead");
             }
+            RaiseValueChanged();
         }
     }
 
     public Health(int current) : base(current) { }
 
-    public void TakeDamage(int damage)
-    {
-        Current -= damage;
-        Debug.Log(Current);
-    }
+    public void TakeDamage(int damage) => Current -= damage;
 }
