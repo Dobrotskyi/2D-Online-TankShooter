@@ -39,7 +39,8 @@ public class Registration : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Smth was wrong while trying to register user# {www.text}");
+            Debug.Log($"Smth was wrong while trying to register user#");
+            Debug.Log(www.text);
         }
         www.Dispose();
         yield break;
