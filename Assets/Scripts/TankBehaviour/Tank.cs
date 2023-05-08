@@ -6,6 +6,7 @@ public class Tank : MonoBehaviour, ITakeDamage
     [SerializeField] private TurretPartData _turretPartData;
     [SerializeField] private ProjectileSO _projectile;
     private AmmoStorage _ammoStorage;
+    private HealthSystem _health;
 
     private struct MainPart
     {
@@ -34,31 +35,17 @@ public class Tank : MonoBehaviour, ITakeDamage
     private MainPart _mainPart;
     private TurretPart _turretPart;
 
-    private float _maxHealth;
-    private float _health = 0;
-
-    public float Health
-    {
-        get => _health;
-
-        private set
-        {
-            _health = value;
-            if (_health > _maxHealth)
-                _health = _maxHealth;
-            else if (_health <= 0)
-                DestroyThisTank();
-            Debug.Log(_health);
-        }
-    }
-
-    public void TakeDamage(int amt) => Health -= amt;
+    public void TakeDamage(int amt) => _health.TakeDamage(amt);
 
     public void Move(float direction) => _mainPart.Script.Move(direction);
 
     public void Rotate(float side) => _mainPart.Script.Rotate(side);
 
-    public void Shoot() => _turretPart.Script.Shoot(_projectile);
+    public void Shoot()
+    {
+        _turretPart.Script.Shoot(_projectile);
+        _ammoStorage.LoadTurret(_turretPart.Script);
+    }
 
     public void Aim(Vector2 target) => _turretPart.Script.AimAtTarget(target);
 
@@ -88,15 +75,20 @@ public class Tank : MonoBehaviour, ITakeDamage
         _mainPart.Script.SetData(_mainPartData);
         _turretPart.Script.SetData(_turretPartData);
         _turretPart.Script.AttachToBase(_mainPart.SpawnedObj.transform);
-        _ammoStorage = new AmmoStorage(_mainPartData.AmmoStorage);
-        _turretPart.Script.SetAmmoStorage(_ammoStorage);
 
-        _maxHealth = _mainPartData.Durability * _turretPartData.DurabilityMultiplier;
-        Health = _maxHealth;
+        _ammoStorage = new AmmoStorage(_mainPartData.AmmoStorage);
+        int maxHealth = Mathf.FloorToInt(_mainPartData.Durability * _turretPartData.DurabilityMultiplier);
+        _health = new HealthSystem(maxHealth);
+        _health.ZeroHealth += DestroyThisTank;
+    }
+
+    private void OnDisable()
+    {
+        _health.ZeroHealth -= DestroyThisTank;
     }
 
     private void DestroyThisTank()
     {
-        Debug.Log("Health below 0");
+        Debug.Log("Health below 0, EXPLOSION");
     }
 }

@@ -5,11 +5,10 @@ public class TurretPartBehav : MonoBehaviour
     private TurretPartData _data;
     private Transform _barrel;
     private Transform _mainPart;
-    private AmmoStorage _ammoStorage;
     private float _fireRateMultiplier = 1f;
     private float _lastShotTime = 0f;
 
-    public void SetAmmoStorage(AmmoStorage ammoStorage) => _ammoStorage = ammoStorage;
+    public bool Loaded = false;
 
     public void SetData(TurretPartData data)
     {
@@ -50,12 +49,12 @@ public class TurretPartBehav : MonoBehaviour
             projectile.GetComponent<Projectile>().IgnoreCollisionWith(_mainPart.gameObject);
             _fireRateMultiplier = projectileSO.FireRateMultiplier;
             _lastShotTime = Time.time;
+
+            Loaded = false;
         }
     }
 
-    public bool CanShoot => ReadyToShoot() && Load();
-
-    private bool Load() => _ammoStorage.LoadTurret();
+    public bool CanShoot => ReadyToShoot() && Loaded;
 
     private bool ReadyToShoot()
     {

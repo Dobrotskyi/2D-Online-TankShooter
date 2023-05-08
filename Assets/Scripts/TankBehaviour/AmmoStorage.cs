@@ -33,4 +33,18 @@ public class AmmoStorage
         else
             return false;
     }
+
+    public void LoadTurret(TurretPartBehav turret)
+    {
+        if (turret.Loaded || AmmoLeft == 0)
+            return;
+
+        if (AmmoLeft > 0)
+        {
+            turret.Loaded = true;
+            AmmoLeft--;
+        }
+        else
+            turret.Loaded = false;
+    }
 }
