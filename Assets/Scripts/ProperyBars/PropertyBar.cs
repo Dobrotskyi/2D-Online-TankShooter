@@ -3,12 +3,32 @@ using UnityEngine;
 public class PropertyBar : MonoBehaviour
 {
     [SerializeField] private Transform _bar;
+    private float _yOffset = 0.8f;
+    private Transform _followedObj;
     private TankProperty _tankProp;
 
-    public void SetProperty(TankProperty tankProp)
+
+    public PropertyBar SetProperty(TankProperty tankProp)
     {
+        if (_tankProp != null)
+            return this;
+
         _tankProp = tankProp;
         _tankProp.ValueChanged += UpdateBar;
+        return this;
+    }
+
+    public PropertyBar SetFollowObject(Transform obj)
+    {
+        if (_followedObj == null)
+            _followedObj = obj;
+        return this;
+    }
+
+    public PropertyBar SetYOffset(float yOffset)
+    {
+        _yOffset = yOffset;
+        return this;
     }
 
     private void UpdateBar()
@@ -21,6 +41,9 @@ public class PropertyBar : MonoBehaviour
     private void LateUpdate()
     {
         transform.rotation = Quaternion.identity;
+        Vector2 newPos = _followedObj.position;
+        newPos.y += _yOffset;
+        transform.position = newPos;
     }
 
     private void OnDisable()

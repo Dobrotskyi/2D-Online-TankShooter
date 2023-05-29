@@ -423,6 +423,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 999572427}
     m_Modifications:
+    - target: {fileID: 2681163462839341888, guid: e40ef11a47afc0d419714e35c34e851f, type: 3}
+      propertyPath: _yOffset
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2681163462839341889, guid: e40ef11a47afc0d419714e35c34e851f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -4991,7 +4995,7 @@ GameObject:
   - component: {fileID: 999572425}
   - component: {fileID: 999572428}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerTank
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

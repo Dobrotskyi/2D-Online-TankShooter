@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Tank : MonoBehaviour, ITakeDamage
@@ -61,6 +62,7 @@ public class Tank : MonoBehaviour, ITakeDamage
     private void OnEnable()
     {
         SpawnTank();
+        Debug.Log(_bars.Length);
         SetPropertyBars();
     }
 
@@ -83,10 +85,13 @@ public class Tank : MonoBehaviour, ITakeDamage
     {
         if (_bars.Length != 0)
         {
-            //Temporary
+            float halfSize = _mainPart.SpawnedObj.GetComponent<Collider2D>().bounds.size.y / 2;
+            float yOffset = halfSize + 0.3f;
             foreach (var bar in _bars)
-                bar.transform.parent = _mainPart.SpawnedObj.transform;
-
+            {
+                bar.SetFollowObject(_mainPart.SpawnedObj.transform).SetYOffset(yOffset);
+                yOffset += 0.3f;
+            }
             _bars[0].SetProperty(_health);
         }
     }
