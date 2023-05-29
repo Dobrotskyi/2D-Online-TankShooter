@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Registration : MonoBehaviour
 {
+    private const string REG_URL = DBManager.REG_URL;
+
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private Button _submitButton;
@@ -17,9 +19,11 @@ public class Registration : MonoBehaviour
 
     public void VerifyInputs()
     {
-        Debug.Log(_nicknameField.text.Length);
-        Debug.Log(_password.text.Length);
-        _submitButton.interactable = (_nicknameField.text.Length >= 8 && _password.text.Length >= 8);
+        Debug.Log(_password.text);
+        Debug.Log(_password.text != _password.placeholder.GetComponent<TextMeshProUGUI>().text);
+        _submitButton.interactable = (_nicknameField.text.Length >= DBManager.MIN_NAME_LENGTH
+                                      && _password.text.Length >= DBManager.MIN_PASSW_LENGTH
+                                      && _nicknameField.text.Length < DBManager.MAX_NAME_LENGTH);
     }
 
     [System.Obsolete]
@@ -29,8 +33,7 @@ public class Registration : MonoBehaviour
         form.AddField("nickname", _nicknameField.text);
         form.AddField("password", _password.text);
 
-        string url = "http://localhost/topdowntankshooter/register.php";
-        WWW www = new WWW(url, form);
+        WWW www = new WWW(REG_URL, form);
         yield return www;
         if (www.text == "0")
         {
