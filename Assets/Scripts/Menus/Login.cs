@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,35 +13,44 @@ public class Login : MonoBehaviour
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _passwordField;
     [SerializeField] private Button _submitButton;
+    [SerializeField] private Button _goMainMenuButton;
 
     public void MakeLoginCall()
     {
         StartCoroutine(TryLoggin());
     }
 
-    [System.Obsolete]
+    public void GoMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public IEnumerator TryLoggin()
     {
         WWWForm form = new WWWForm();
         form.AddField("nickname", _nicknameField.text);
         form.AddField("password", _passwordField.text);
 
-        WWW www = new WWW(LOGIN_URL, form);
-        yield return www;
+        UnityWebRequest uwr = UnityWebRequest.Post(LOGIN_URL, form);
+        yield return uwr.SendWebRequest();
 
-        if (www.text[0] == '0')
+        if (uwr.error != null)
+            Debug.Log("Error");
+
+        string result = uwr.downloadHandler.text;
+        if (result[0] == '0')
         {
             DBManager.Nickname = _nicknameField.text;
-            DBManager.Money = int.Parse(www.text.Split("\t")[1]);
+            DBManager.Money = int.Parse(result.Split("\t")[1]);
             SceneManager.LoadScene("MainMenu");
         }
         else
         {
             Debug.Log("Loggin failed");
-            Debug.Log(www.text);
+            Debug.Log(result);
         }
 
-        www.Dispose();
+        uwr.Dispose();
         yield break;
 
     }

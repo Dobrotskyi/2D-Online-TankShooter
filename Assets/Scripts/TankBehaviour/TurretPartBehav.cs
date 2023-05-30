@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class TurretPartBehav : MonoBehaviour
 {
+    private const float MIN_AIMING_DIST = 1f;
+
     private TurretPartData _data;
     private Transform _barrel;
     private Transform _mainPart;
@@ -29,7 +31,7 @@ public class TurretPartBehav : MonoBehaviour
     public void AimAtTarget(Vector2 target)
     {
         Vector2 substraction = target - (Vector2)_barrel.transform.position;
-        if (substraction.magnitude < _data.MinAimingDistance)
+        if (substraction.magnitude < MIN_AIMING_DIST)
             return;
 
         Vector2 lookDirection = (target - (Vector2)_barrel.transform.position);

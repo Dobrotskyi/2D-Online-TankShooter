@@ -7,17 +7,13 @@ public class TurretPartData : TankPartData
     [SerializeField] private Vector2 _spread = new Vector2(0.2f, 0.2f);
     [SerializeField] private float _fireRate = 0.25f;
     [SerializeField] private float _shotForce = 15f;
-    [SerializeField] private float _minAimingDistance = 1f;
     [SerializeField] private float _durabilityMultiplier = 1f;
-    [SerializeField] private float _fireRateMultiplier = 1f;
 
     public float RotationSpeed => _rotationSpeed;
     public Vector2 Spread => _spread;
     public float FireRate => _fireRate;
     public float ShotForce => _shotForce;
-    public float MinAimingDistance => _minAimingDistance;
     public float DurabilityMultiplier => _durabilityMultiplier;
-    public float FireRateMultiplier => _fireRateMultiplier;
 
     public override GameObject SpawnPart(Transform parent)
     {

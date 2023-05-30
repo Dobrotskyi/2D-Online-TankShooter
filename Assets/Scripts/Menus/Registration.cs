@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class Registration : MonoBehaviour
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private Button _submitButton;
+    [SerializeField] private Button _goMainMenuButton;
 
     public void MakeRegisterCall()
     {
@@ -26,26 +28,33 @@ public class Registration : MonoBehaviour
                                       && _nicknameField.text.Length < DBManager.MAX_NAME_LENGTH);
     }
 
-    [System.Obsolete]
+    public void GoMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     private IEnumerator Register()
     {
         WWWForm form = new WWWForm();
         form.AddField("nickname", _nicknameField.text);
         form.AddField("password", _password.text);
 
-        WWW www = new WWW(REG_URL, form);
-        yield return www;
-        if (www.text == "0")
+        UnityWebRequest uwr = UnityWebRequest.Post(REG_URL, form);
+        yield return uwr.SendWebRequest();
+        if (uwr.error != null)
+            Debug.Log(uwr.error);
+        string result = uwr.downloadHandler.text;
+        if (result == "0")
         {
-            Debug.Log("user was connected succesfully");
+            Debug.Log("user was added succesfully");
             SceneManager.LoadScene("MainMenu");
         }
         else
         {
             Debug.Log($"Smth was wrong while trying to register user#");
-            Debug.Log(www.text);
+            Debug.Log(result);
         }
-        www.Dispose();
+        uwr.Dispose();
         yield break;
     }
 }
