@@ -4,20 +4,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.ComponentModel;
 using UnityEngine.UIElements;
+using System.Globalization;
 
 public class TurretDataBuilder
 {
     private static string PHP_URL = "http://localhost/topdowntankshooter/get_selected_turret.php";
-    public enum Status
-    {
-        Success,
-        Failed,
-        OnGoing
-    }
-
-    private Status _status = Status.OnGoing;
-
-    public Status GetStatus => _status;
 
     private float _rotationSpeed = -1;
     private Vector2 _spread;
@@ -71,15 +62,7 @@ public class TurretDataBuilder
         return this;
     }
 
-    public static TurretData GetSelectedByUser(MonoBehaviour sender)
-    {
-        TurretDataBuilder builder = new();
-        sender.StartCoroutine(MakeCall(builder));
-
-        return builder.Build();
-    }
-
-    private static IEnumerator MakeCall(TurretDataBuilder builder)
+    public static IEnumerator GetSelectedByUserTurret(TurretDataBuilder builder)
     {
         WWWForm form = new();
         form.AddField("nickname", DBManager.LoginedUserName);
@@ -91,7 +74,6 @@ public class TurretDataBuilder
         {
             Debug.Log(uwr.result.ToString());
             Debug.Log(uwr.downloadHandler.text);
-            builder._status = Status.Failed;
             yield break;
         }
 
@@ -100,28 +82,26 @@ public class TurretDataBuilder
         {
             Debug.Log("Smth went wrong");
             Debug.Log(result);
-            builder._status = Status.Failed;
         }
 
         else
         {
-            Debug.Log("Got result");
-            result.Remove(0, 1);
+            Debug.Log("Succes");
             string[] info = result.Split(",");
-            Vector2 spread = new Vector2(float.Parse(info[2]), float.Parse(info[3]));
-            builder.SetName(info[0]).SetRotationSpeed(float.Parse(info[1]))
-                   .SetSpread(spread).SetFireRate(float.Parse(info[4]))
-                   .SetShotForce(float.Parse(info[5]))
-                   .SetDM(float.Parse(info[6])).SetSprite(ImageLoader.LoadImage(info[7]));
-            Debug.Log(builder.Build().Sprite);
-            builder._status = Status.Success;
+            info[0] = info[0].Substring(1);
+
+            Vector2 spread = new Vector2(float.Parse(info[2], CultureInfo.InvariantCulture), float.Parse(info[3], CultureInfo.InvariantCulture));
+            builder.SetName(info[0]).SetRotationSpeed(float.Parse(info[1], CultureInfo.InvariantCulture))
+                   .SetSpread(spread).SetFireRate(float.Parse(info[4], CultureInfo.InvariantCulture))
+                   .SetShotForce(float.Parse(info[5], CultureInfo.InvariantCulture))
+                   .SetDM(float.Parse(info[6], CultureInfo.InvariantCulture)).SetSprite(ImageLoader.MakeSprite(info[7], new Vector2(0.5f, 0.2f)));
         }
 
         uwr.Dispose();
         yield break;
     }
 
-    private TurretData Build()
+    public TurretData Build()
     {
         if (Verify())
             return new TurretData(_name, _rotationSpeed, _spread, _fireRate, _shotForce, _durabilityMultiplier, _sprite);
@@ -130,13 +110,6 @@ public class TurretDataBuilder
 
     private bool Verify()
     {
-        //Debug.Log(_rotationSpeed);
-        //Debug.Log(_spread);
-        //Debug.Log(_fireRate);
-        //Debug.Log(_shotForce);
-        //Debug.Log(_durabilityMultiplier);
-        //Debug.Log(_name);
-        //Debug.Log(_sprite);
         if (_rotationSpeed == -1)
             return false;
         if (_spread == null)

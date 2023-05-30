@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInput))]
@@ -11,6 +12,17 @@ public class Player : MonoBehaviour
     {
         _input = GetComponent<PlayerInput>();
         _handler = GetComponent<PlayerInputHandler>();
+
+    }
+
+    private IEnumerator TryGetTank()
+    {
+        Transform tank = GetComponent<Tank>().GetCameraTarget();
+        if (tank == null)
+            yield return null;
+        else
+            GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = tank;
+        yield break;
     }
 
     private void FixedUpdate()

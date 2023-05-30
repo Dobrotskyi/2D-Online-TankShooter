@@ -17,7 +17,6 @@ public class TurretPartBehav : MonoBehaviour
         if (_data == null)
         {
             _data = data;
-
         }
         else
             throw new System.Exception("Data for this turret was already set");
@@ -71,11 +70,12 @@ public class TurretPartBehav : MonoBehaviour
 
     private void OnEnable()
     {
-        _barrel = transform.Find("Barrel");
+        _barrel = transform.Find("barrel");
     }
 
     private void LateUpdate()
     {
-        transform.position = _mainPart.transform.Find("TurretPlacement").position;
+        if (_mainPart != null)
+            transform.position = _mainPart.transform.Find("TurretPlacement").position;
     }
 }

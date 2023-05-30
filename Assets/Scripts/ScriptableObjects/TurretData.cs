@@ -36,17 +36,25 @@ public class TurretData
 
     public GameObject SpawnInstance(Transform parent)
     {
-        GameObject obj = new GameObject();
-        SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+        GameObject turret = new();
+        turret.transform.SetParent(parent);
+        turret.transform.localPosition = Vector3.zero;
+        turret.transform.localRotation = parent.transform.localRotation;
+        SpriteRenderer sr = turret.AddComponent<SpriteRenderer>();
+        sr.sortingOrder = 1;
         sr.sprite = _sprite;
+        sr.transform.localScale = new Vector2(1.3f, 1.3f);
 
-        TurretPartBehav behav = obj.AddComponent<TurretPartBehav>();
-        behav.SetData(this);
+        float halfHeight = sr.bounds.size.y / 2;
+        GameObject barrel = new GameObject();
+        barrel.name = "barrel";
+        barrel.transform.SetParent(turret.transform);
+        barrel.transform.position = turret.transform.position;
+        barrel.transform.localPosition = new Vector3(0, halfHeight, 0);
 
-        obj.AddComponent<BoxCollider2D>();
+        TurretPartBehav behav = turret.AddComponent<TurretPartBehav>();
+        turret.transform.SetParent(parent);
 
-        obj.transform.SetParent(parent);
-
-        return Object.Instantiate(obj, parent.position, parent.rotation); ;
+        return turret;
     }
 }
