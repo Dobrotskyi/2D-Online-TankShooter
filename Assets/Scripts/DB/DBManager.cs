@@ -9,17 +9,13 @@ public static class DBManager
     public const string LOGIN_URL = "http://localhost/topdowntankshooter/login.php";
     public const string REG_URL = "http://localhost/topdowntankshooter/register.php";
 
-    private static string s_userName;
+    private static string s_userName = "Valerii";
     private static int s_money;
 
-    public static string Nickname
+    public static string LoginedUserName
     {
         get => s_userName;
-        set
-        {
-            if (s_userName == null)
-                s_userName = value;
-        }
+        set => s_userName = value;
     }
 
     public static int Money
@@ -35,6 +31,5 @@ public static class DBManager
         s_userName = null;
         s_money = -1;
     }
-
 
 }

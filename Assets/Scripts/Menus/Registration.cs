@@ -41,8 +41,13 @@ public class Registration : MonoBehaviour
 
         UnityWebRequest uwr = UnityWebRequest.Post(REG_URL, form);
         yield return uwr.SendWebRequest();
-        if (uwr.error != null)
-            Debug.Log(uwr.error);
+
+        if (uwr.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(uwr.result.ToString());
+            yield break;
+        }
+
         string result = uwr.downloadHandler.text;
         if (result == "0")
         {

@@ -4,18 +4,20 @@ public class TurretPartBehav : MonoBehaviour
 {
     private const float MIN_AIMING_DIST = 1f;
 
-    private TurretPartData _data;
+    public bool Loaded = false;
+
+    private TurretData _data;
     private Transform _barrel;
     private Transform _mainPart;
     private float _fireRateMultiplier = 1f;
     private float _lastShotTime = 0f;
 
-    public bool Loaded = false;
-
-    public void SetData(TurretPartData data)
+    public void SetData(TurretData data)
     {
         if (_data == null)
+        {
             _data = data;
+        }
         else
             throw new System.Exception("Data for this turret was already set");
     }
@@ -68,11 +70,12 @@ public class TurretPartBehav : MonoBehaviour
 
     private void OnEnable()
     {
-        _barrel = transform.Find("Barrel");
+        _barrel = transform.Find("barrel");
     }
 
     private void LateUpdate()
     {
-        transform.position = _mainPart.transform.Find("TurretPlacement").position;
+        if (_mainPart != null)
+            transform.position = _mainPart.transform.Find("TurretPlacement").position;
     }
 }
