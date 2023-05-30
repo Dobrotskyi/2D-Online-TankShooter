@@ -86,7 +86,7 @@ public class TurretDataBuilder
 
         else
         {
-            Debug.Log("Succes");
+            Debug.Log("Data was succesfully readed from DB");
             string[] info = result.Split(",");
             info[0] = info[0].Substring(1);
 

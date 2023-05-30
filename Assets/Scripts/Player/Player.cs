@@ -13,16 +13,19 @@ public class Player : MonoBehaviour
         _input = GetComponent<PlayerInput>();
         _handler = GetComponent<PlayerInputHandler>();
 
+        StartCoroutine(TrySetCameraFollow());
     }
 
-    private IEnumerator TryGetTank()
+    private IEnumerator TrySetCameraFollow()
     {
-        Transform tank = GetComponent<Tank>().GetCameraTarget();
-        if (tank == null)
+        Tank tank = GetComponent<Tank>();
+        while (tank == null || tank.GetCameraTarget() == null)
+        {
+            Debug.Log("Failed");
             yield return null;
-        else
-            GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = tank;
-        yield break;
+        }
+        Debug.Log("Succes");
+        GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = tank.GetCameraTarget();
     }
 
     private void FixedUpdate()
