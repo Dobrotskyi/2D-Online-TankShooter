@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
     {
         if (DBManager.IsLogged())
         {
-            _playerDisplay.text = $"Welcome, {DBManager.Nickname} ";
+            _playerDisplay.text = $"Welcome, {DBManager.LoginedUserName} ";
             _playButton.interactable = true;
         }
     }

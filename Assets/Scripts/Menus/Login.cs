@@ -34,13 +34,16 @@ public class Login : MonoBehaviour
         UnityWebRequest uwr = UnityWebRequest.Post(LOGIN_URL, form);
         yield return uwr.SendWebRequest();
 
-        if (uwr.error != null)
-            Debug.Log("Error");
+        if (uwr.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(uwr.result.ToString());
+            yield break;
+        }
 
         string result = uwr.downloadHandler.text;
         if (result[0] == '0')
         {
-            DBManager.Nickname = _nicknameField.text;
+            DBManager.LoginedUserName = _nicknameField.text;
             DBManager.Money = int.Parse(result.Split("\t")[1]);
             SceneManager.LoadScene("MainMenu");
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class Tank : MonoBehaviour, ITakeDamage
 {
     [SerializeField] private MainPartData _mainPartData;
-    [SerializeField] private TurretPartData _turretPartData;
     [SerializeField] private ProjectileSO _projectile;
     [SerializeField] private PropertyBar[] _bars;
     private AmmoStorage _ammoStorage;
@@ -22,20 +21,9 @@ public class Tank : MonoBehaviour, ITakeDamage
         }
     }
 
-    private struct TurretPart
-    {
-        public GameObject SpawnedObj { get; private set; }
-        public TurretPartBehav Script { get; private set; }
-
-        public TurretPart(GameObject spawnedPart)
-        {
-            SpawnedObj = spawnedPart;
-            Script = spawnedPart.GetComponent<TurretPartBehav>();
-        }
-    }
+    private TurretPartBehav _turret;
 
     private MainPart _mainPart;
-    private TurretPart _turretPart;
 
     public void TakeDamage(int amt) => _health.TakeDamage(amt);
 
@@ -45,11 +33,11 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Shoot()
     {
-        _turretPart.Script.Shoot(_projectile);
-        _ammoStorage.LoadTurret(_turretPart.Script);
+        _turret.Shoot(_projectile);
+        _ammoStorage.LoadTurret(_turret);
     }
 
-    public void Aim(Vector2 target) => _turretPart.Script.AimAtTarget(target);
+    public void Aim(Vector2 target) => _turret.AimAtTarget(target);
 
     public Transform GetCameraTarget() => _mainPart.SpawnedObj.transform;
 
@@ -62,21 +50,20 @@ public class Tank : MonoBehaviour, ITakeDamage
     private void OnEnable()
     {
         SpawnTank();
-        Debug.Log(_bars.Length);
         SetPropertyBars();
     }
 
     private void SpawnTank()
     {
+        TurretData turretPartData = TurretDataBuilder.GetSelectedByUser(this);
+
         _mainPart = new MainPart(_mainPartData.SpawnPart(transform));
-        _turretPart = new TurretPart(_turretPartData.SpawnPart(transform));
+        _turret = turretPartData.SpawnInstance(transform).GetComponent<TurretPartBehav>();
 
         _mainPart.Script.SetData(_mainPartData);
-        _turretPart.Script.SetData(_turretPartData);
-        _turretPart.Script.AttachToBase(_mainPart.SpawnedObj.transform);
-
+        _turret.AttachToBase(_mainPart.SpawnedObj.transform);
         _ammoStorage = new AmmoStorage(_mainPartData.AmmoStorage);
-        int maxHealth = Mathf.FloorToInt(_mainPartData.Durability * _turretPartData.DurabilityMultiplier);
+        int maxHealth = Mathf.FloorToInt(_mainPartData.Durability * turretPartData.DurabilityMultiplier);
         _health = new Health(maxHealth);
         _health.ZeroHealth += DestroyThisTank;
     }
