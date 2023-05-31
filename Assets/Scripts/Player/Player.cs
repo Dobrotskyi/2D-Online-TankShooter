@@ -21,10 +21,8 @@ public class Player : MonoBehaviour
         Tank tank = GetComponent<Tank>();
         while (tank == null || tank.GetCameraTarget() == null)
         {
-            Debug.Log("Failed");
             yield return null;
         }
-        Debug.Log("Succes");
         GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>().Follow = tank.GetCameraTarget();
     }
 

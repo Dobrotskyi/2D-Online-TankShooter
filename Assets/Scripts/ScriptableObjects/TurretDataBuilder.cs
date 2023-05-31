@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.ComponentModel;
-using UnityEngine.UIElements;
 using System.Globalization;
 
 public class TurretDataBuilder
@@ -86,7 +83,7 @@ public class TurretDataBuilder
 
         else
         {
-            Debug.Log("Data was succesfully readed from DB");
+            Debug.Log("Turret part data was sucessfuly readed");
             string[] info = result.Split(",");
             info[0] = info[0].Substring(1);
 
