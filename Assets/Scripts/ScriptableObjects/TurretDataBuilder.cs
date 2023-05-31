@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Globalization;
 using System.Text;
+using static UnityEditor.ObjectChangeEventStream;
 
-public class TurretDataBuilder
+public class TurretDataBuilder : ObjectFromDBBuilder
 {
-    private static string PHP_URL = "http://localhost/topdowntankshooter/get_selected_turret.php";
+    protected override string PHP_URL => "http://localhost/topdowntankshooter/get_selected_turret.php";
 
     private float _rotationSpeed = -1;
     private Vector2 _spread;
@@ -60,31 +61,24 @@ public class TurretDataBuilder
         return this;
     }
 
-    public static IEnumerator GetSelectedByUserTurret(TurretDataBuilder builder)
+    protected override void ParseDataToBuilder(string[] info)
     {
-        PHPCaller caller = new(PHP_URL);
-        yield return caller.MakeCallWithNickname(DBManager.LoginedUserName);
-        while (caller.Result == null)
-            yield return null;
-
-        Debug.Log("Turret part data was sucessfuly readed");
-        string[] info = caller.Result;
         Vector2 spread = new Vector2(float.Parse(info[2], CultureInfo.InvariantCulture), float.Parse(info[3], CultureInfo.InvariantCulture));
-        builder.SetName(info[0]).SetRotationSpeed(float.Parse(info[1], CultureInfo.InvariantCulture))
+        this.SetName(info[0]).SetRotationSpeed(float.Parse(info[1], CultureInfo.InvariantCulture))
                .SetSpread(spread).SetFireRate(float.Parse(info[4], CultureInfo.InvariantCulture))
                .SetShotForce(float.Parse(info[5], CultureInfo.InvariantCulture))
                .SetDM(float.Parse(info[6], CultureInfo.InvariantCulture)).SetSprite(ImageLoader.MakeSprite(info[7], new Vector2(0.5f, 0.2f)));
 
     }
 
-    public TurretData Build()
+    protected override PartData MakePart()
     {
-        if (Verify())
-            return new TurretData(_name, _rotationSpeed, _spread, _fireRate, _shotForce, _durabilityMultiplier, _sprite);
-        else throw new System.Exception("Data was not full");
+        return new TurretData(_name, _rotationSpeed,
+                              _spread, _fireRate, _shotForce,
+                              _durabilityMultiplier, _sprite);
     }
 
-    private bool Verify()
+    protected override bool Verify()
     {
         if (_rotationSpeed == -1)
             return false;

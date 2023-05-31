@@ -83,18 +83,18 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private IEnumerator SpawnTank()
     {
-        TurretDataBuilder builder = new();
+        TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
-        yield return StartCoroutine(MainPartDataBuilder.GetSelectedByUserPart(mainBuilder));
-        yield return StartCoroutine(TurretDataBuilder.GetSelectedByUserTurret(builder));
+        yield return StartCoroutine(MainPartDataBuilder.GetSelectedByUser(mainBuilder));
+        yield return StartCoroutine(TurretDataBuilder.GetSelectedByUser(turretBuilder));
 
-        TurretData turretData = builder.Build();
+        TurretData turretData = (TurretData)turretBuilder.Build();
         GameObject obj = turretData.SpawnInstance(transform);
         _turret = obj.GetComponent<TurretPartBehav>();
         _turret.SetData(turretData);
 
-        MainPartData mainPartData = mainBuilder.Build();
+        MainPartData mainPartData = (MainPartData)mainBuilder.Build();
         _mainPart = new MainPart(mainPartData.SpawnInstance(transform));
 
         _turret.AttachToBase(_mainPart.SpawnedObj.transform);

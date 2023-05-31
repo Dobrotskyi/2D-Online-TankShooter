@@ -2,10 +2,11 @@ using System.Collections;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.Networking;
+using static UnityEditor.ObjectChangeEventStream;
 
-public class MainPartDataBuilder
+public class MainPartDataBuilder : ObjectFromDBBuilder
 {
-    private static string PHP_URL = "http://localhost/topdowntankshooter/get_selected_main.php";
+    protected override string PHP_URL => "http://localhost/topdowntankshooter/get_selected_main.php";
 
     private string _name;
     private Sprite _sprite;
@@ -64,18 +65,11 @@ public class MainPartDataBuilder
         return this;
     }
 
-    public static IEnumerator GetSelectedByUserPart(MainPartDataBuilder builder)
+    protected override void ParseDataToBuilder(string[] info)
     {
-        PHPCaller caller = new(PHP_URL);
-        yield return caller.MakeCallWithNickname(DBManager.LoginedUserName);
-        while (caller.Result == null)
-            yield return null;
-
-        Debug.Log("Main part data was sucessfuly readed");
-        string[] info = caller.Result;
         Vector2 turretPlacement = new Vector2(float.Parse(info[6], CultureInfo.InvariantCulture), float.Parse(info[7], CultureInfo.InvariantCulture));
         int i = 0;
-        builder.SetName(info[i++]).SetAcceleration(float.Parse(info[i++], CultureInfo.InvariantCulture)).
+        this.SetName(info[i++]).SetAcceleration(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetMaxSpeed(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetAngularSpeed(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetDurability(float.Parse(info[i++], CultureInfo.InvariantCulture)).
@@ -84,15 +78,14 @@ public class MainPartDataBuilder
 
     }
 
-    public MainPartData Build()
+    protected override PartData MakePart()
     {
-        if (Verify())
-            return new MainPartData(_name, _acceleration, _maxSpeed, _angularSpeed,
+        return new MainPartData(_name, _acceleration, _maxSpeed, _angularSpeed,
                 _durability, _ammoStorage, _turretPlacement, _sprite);
-        else throw new System.Exception("Data was not full");
+
     }
 
-    private bool Verify()
+    protected override bool Verify()
     {
         if (_name == null)
             return false;
