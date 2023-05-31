@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Globalization;
+using System.Text;
 
 public class TurretDataBuilder
 {
@@ -61,41 +62,19 @@ public class TurretDataBuilder
 
     public static IEnumerator GetSelectedByUserTurret(TurretDataBuilder builder)
     {
-        WWWForm form = new();
-        form.AddField("nickname", DBManager.LoginedUserName);
+        PHPCaller caller = new(PHP_URL);
+        yield return caller.MakeCallWithNickname(DBManager.LoginedUserName);
+        while (caller.Result == null)
+            yield return null;
 
-        UnityWebRequest uwr = UnityWebRequest.Post(PHP_URL, form);
-        yield return uwr.SendWebRequest();
+        Debug.Log("Turret part data was sucessfuly readed");
+        string[] info = caller.Result;
+        Vector2 spread = new Vector2(float.Parse(info[2], CultureInfo.InvariantCulture), float.Parse(info[3], CultureInfo.InvariantCulture));
+        builder.SetName(info[0]).SetRotationSpeed(float.Parse(info[1], CultureInfo.InvariantCulture))
+               .SetSpread(spread).SetFireRate(float.Parse(info[4], CultureInfo.InvariantCulture))
+               .SetShotForce(float.Parse(info[5], CultureInfo.InvariantCulture))
+               .SetDM(float.Parse(info[6], CultureInfo.InvariantCulture)).SetSprite(ImageLoader.MakeSprite(info[7], new Vector2(0.5f, 0.2f)));
 
-        if (uwr.result != UnityWebRequest.Result.Success)
-        {
-            Debug.Log(uwr.result.ToString());
-            Debug.Log(uwr.downloadHandler.text);
-            yield break;
-        }
-
-        string result = uwr.downloadHandler.text;
-        if (result[0] != '0')
-        {
-            Debug.Log("Smth went wrong");
-            Debug.Log(result);
-        }
-
-        else
-        {
-            Debug.Log("Turret part data was sucessfuly readed");
-            string[] info = result.Split(",");
-            info[0] = info[0].Substring(1);
-
-            Vector2 spread = new Vector2(float.Parse(info[2], CultureInfo.InvariantCulture), float.Parse(info[3], CultureInfo.InvariantCulture));
-            builder.SetName(info[0]).SetRotationSpeed(float.Parse(info[1], CultureInfo.InvariantCulture))
-                   .SetSpread(spread).SetFireRate(float.Parse(info[4], CultureInfo.InvariantCulture))
-                   .SetShotForce(float.Parse(info[5], CultureInfo.InvariantCulture))
-                   .SetDM(float.Parse(info[6], CultureInfo.InvariantCulture)).SetSprite(ImageLoader.MakeSprite(info[7], new Vector2(0.5f, 0.2f)));
-        }
-
-        uwr.Dispose();
-        yield break;
     }
 
     public TurretData Build()

@@ -76,6 +76,6 @@ public class TurretPartBehav : MonoBehaviour
     private void LateUpdate()
     {
         if (_mainPart != null)
-            transform.position = _mainPart.transform.Find(MainData.TurretPlacementStr).position;
+            transform.position = _mainPart.transform.Find(MainPartData.TurretPlacementStr).position;
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public abstract class PartBuilder
+public abstract class PartDataBuilder
 {
     protected static string PHP_URL;
     private string _name;
     private Sprite _sprite;
 
-    public PartBuilder() { }
+    public PartDataBuilder() { }
 
     public PartData Build()
     {
@@ -18,7 +18,7 @@ public abstract class PartBuilder
         else throw new System.Exception("Data was not full");
     }
 
-    public static IEnumerator GetSelectedByUser(PartBuilder builder)
+    public static IEnumerator GetSelectedByUser(PartDataBuilder builder)
     {
         WWWForm form = new();
         form.AddField("nickname", DBManager.LoginedUserName);
@@ -41,11 +41,18 @@ public abstract class PartBuilder
         }
         else
         {
-
+            yield return builder.ParseDataToBuilder(result);
         }
     }
 
+    //private static IEnumerator MakeCallWithNickname(out string result, string url, string name)
+    //{
+
+
+    //}
+
+
     protected abstract bool Verify();
     protected abstract PartData MakePart();
-    protected abstract void ParseDataToBuilder(PartBuilder builder);
+    protected abstract IEnumerator ParseDataToBuilder(string result);
 }

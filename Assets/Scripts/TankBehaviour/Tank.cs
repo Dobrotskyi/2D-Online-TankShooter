@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Tank : MonoBehaviour, ITakeDamage
 {
-    [SerializeField] private MainPartData _mainPartData;
     [SerializeField] private ProjectileSO _projectile;
     [SerializeField] private PropertyBar[] _bars;
     private AmmoStorage _ammoStorage;
@@ -79,41 +78,41 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private void OnEnable()
     {
-        StartCoroutine(Setup());
-    }
-
-    private IEnumerator Setup()
-    {
-        yield return StartCoroutine(SpawnTank());
-        yield return StartCoroutine(SetPropertyBars());
-        yield break;
+        StartCoroutine(SpawnTank());
     }
 
     private IEnumerator SpawnTank()
     {
         TurretDataBuilder builder = new();
-        MainDataBuilder mainBuilder = new();
+        MainPartDataBuilder mainBuilder = new();
+
+        yield return StartCoroutine(MainPartDataBuilder.GetSelectedByUserPart(mainBuilder));
         yield return StartCoroutine(TurretDataBuilder.GetSelectedByUserTurret(builder));
-        yield return StartCoroutine(MainDataBuilder.GetSelectedByUserPart(mainBuilder));
 
-        TurretData data = builder.Build();
-        GameObject obj = data.SpawnInstance(transform);
+        TurretData turretData = builder.Build();
+        GameObject obj = turretData.SpawnInstance(transform);
         _turret = obj.GetComponent<TurretPartBehav>();
-        _turret.SetData(data);
+        _turret.SetData(turretData);
 
-        _mainPart = new MainPart(mainBuilder.Build().SpawnInstance(transform));
+        MainPartData mainPartData = mainBuilder.Build();
+        _mainPart = new MainPart(mainPartData.SpawnInstance(transform));
 
         _turret.AttachToBase(_mainPart.SpawnedObj.transform);
-        _ammoStorage = new AmmoStorage(_mainPartData.AmmoStorage);
-        int maxHealth = Mathf.FloorToInt(_mainPartData.Durability * data.DurabilityMultiplier);
+        _ammoStorage = new AmmoStorage(mainPartData.AmmoStorage);
+        int maxHealth = Mathf.FloorToInt(mainPartData.Durability * turretData.DurabilityMultiplier);
         _health = new Health(maxHealth);
         _health.ZeroHealth += DestroyThisTank;
 
+        while (_mainPart.SpawnedObj == null && _turret.gameObject == null)
+        {
+            Debug.Log("InProgress");
+            yield return null;
+        }
+        SetPropertyBars();
         _setupInProgress = false;
-        yield break;
     }
 
-    private IEnumerator SetPropertyBars()
+    private void SetPropertyBars()
     {
         if (_bars.Length != 0)
         {
@@ -126,7 +125,6 @@ public class Tank : MonoBehaviour, ITakeDamage
             }
             _bars[0].SetProperty(_health);
         }
-        yield break;
     }
 
     private void OnDisable()

@@ -40,6 +40,8 @@ public class PropertyBar : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (_tankProp == null)
+            return;
         transform.rotation = Quaternion.identity;
         Vector2 newPos = _followedObj.position;
         newPos.y += _yOffset;
