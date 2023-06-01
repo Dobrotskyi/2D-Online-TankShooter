@@ -17,6 +17,8 @@ public class ProjectileData : PartData
         _ammoCost = cost;
     }
 
+    public void ApplyDamageMultiplier(float dmgMultiplier) => _damage = (int)(_damage * dmgMultiplier);
+
     public override GameObject SpawnInstance(Transform parent)
     {
         GameObject projectile = base.SpawnInstance(parent);

@@ -29,6 +29,8 @@ public class Tank : MonoBehaviour, ITakeDamage
     {
         if (_setupInProgress)
             return;
+
+        Debug.Log(amt);
         _health.TakeDamage(amt);
     }
 

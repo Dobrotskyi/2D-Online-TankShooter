@@ -45,6 +45,5 @@ public class PHPCaller
         _result = result.Split(',');
         _result[0] = _result[0].Substring(1);
         Debug.Log("Call was finnished");
-        yield break;
     }
 }

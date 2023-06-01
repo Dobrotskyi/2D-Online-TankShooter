@@ -43,6 +43,7 @@ public class TurretData : PartData
         barrel.transform.localPosition = new Vector3(0, halfHeight, 0);
 
         TurretPartBehav behav = turret.AddComponent<TurretPartBehav>();
+        _projData.ApplyDamageMultiplier(_damageMult);
         return turret;
     }
 }
