@@ -20,8 +20,10 @@ public abstract class ObjectFromDBBuilder
     {
         PHPCaller caller = new(builder.PHP_URL);
         yield return caller.MakeCallWithNickname(DBManager.LoginedUserName);
-        while (caller.Result == null)
+        while (caller.ResultStatus == UnityWebRequest.Result.InProgress)
             yield return null;
+        if (caller.ResultStatus != UnityWebRequest.Result.Success)
+            yield return new System.Exception("Loading data was failed");
 
         builder.ParseDataToBuilder(caller.Result);
         yield return null;
