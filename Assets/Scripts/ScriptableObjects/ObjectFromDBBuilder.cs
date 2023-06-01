@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Networking;
 
 public abstract class ObjectFromDBBuilder
@@ -25,11 +23,11 @@ public abstract class ObjectFromDBBuilder
         if (caller.ResultStatus != UnityWebRequest.Result.Success)
             yield return new System.Exception("Loading data was failed");
 
-        builder.ParseDataToBuilder(caller.Result);
+        builder.ParseData(caller.Result);
         yield return null;
     }
 
     protected abstract bool Verify();
     protected abstract PartData MakePart();
-    protected abstract void ParseDataToBuilder(string[] result);
+    protected abstract void ParseData(string[] result);
 }

@@ -42,16 +42,15 @@ public class TurretPartBehav : MonoBehaviour
         gameObject.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, rotation, _data.RotationSpeed * Time.deltaTime);
     }
 
-    public void Shoot(ProjectileSO projectileSO)
+    public void Shoot()
     {
         if (CanShoot)
         {
             Vector2 direction = (Vector2)_barrel.up +
                 new Vector2(Random.Range(-_data.Spread.x, _data.Spread.x), Random.Range(-_data.Spread.y, _data.Spread.y));
-            GameObject projectile = projectileSO.SpawnAt(_barrel);
+            GameObject projectile = _data.ProjData.SpawnInstance(_barrel);
             projectile.GetComponent<Rigidbody2D>().AddForce(direction * _data.ShotForce, ForceMode2D.Impulse);
             projectile.GetComponent<Projectile>().IgnoreCollisionWith(_mainPart.gameObject);
-            _fireRateMultiplier = projectileSO.FireRateMultiplier;
             _lastShotTime = Time.time;
 
             Loaded = false;

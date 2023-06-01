@@ -7,19 +7,26 @@ public class TurretData : PartData
     private float _fireRate = 0.25f;
     private float _shotForce = 15f;
     private float _durabilityMultiplier = 1f;
+    private float _damageMult = 1f;
+    private ProjectileData _projData;
 
     public float RotationSpeed => _rotationSpeed;
     public Vector2 Spread => _spread;
     public float FireRate => _fireRate;
     public float ShotForce => _shotForce;
     public float DurabilityMultiplier => _durabilityMultiplier;
+    public ProjectileData ProjData => _projData;
 
-    public TurretData(string name, float rotationSpeed, Vector2 spread, float fireRate, float shotForce, float dm, Sprite sprite) : base(name, sprite)
+    public TurretData(string name, float rotationSpeed, Vector2 spread, float fireRate, float shotForce,
+        float dm, float damageMult, Sprite sprite, ProjectileData projData) : base(name, sprite)
     {
         _rotationSpeed = rotationSpeed;
         _fireRate = fireRate;
         _shotForce = shotForce;
         _durabilityMultiplier = dm;
+        _damageMult = damageMult;
+        _spread = spread;
+        _projData = projData;
     }
 
     public override GameObject SpawnInstance(Transform parent)

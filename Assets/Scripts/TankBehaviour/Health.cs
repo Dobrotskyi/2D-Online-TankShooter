@@ -1,4 +1,5 @@
 using System;
+
 public class Health : TankProperty, ITakeDamage
 {
     public event Action ZeroHealth;

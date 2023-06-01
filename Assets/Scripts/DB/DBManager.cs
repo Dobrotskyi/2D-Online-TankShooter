@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public static class DBManager
 {
     public const int MAX_NAME_LENGTH = 10;

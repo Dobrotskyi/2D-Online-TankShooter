@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class Tank : MonoBehaviour, ITakeDamage
 {
-    [SerializeField] private ProjectileSO _projectile;
     [SerializeField] private PropertyBar[] _bars;
+    private ProjectileData _projectileData;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -51,7 +50,7 @@ public class Tank : MonoBehaviour, ITakeDamage
     {
         if (_setupInProgress)
             return;
-        _turret.Shoot(_projectile);
+        _turret.Shoot();
         _ammoStorage.LoadTurret(_turret);
     }
 
@@ -86,18 +85,19 @@ public class Tank : MonoBehaviour, ITakeDamage
         TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
-        yield return StartCoroutine(MainPartDataBuilder.GetSelectedByUser(mainBuilder));
-        yield return StartCoroutine(TurretDataBuilder.GetSelectedByUser(turretBuilder));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(mainBuilder));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(turretBuilder));
+
+        MainPartData mainPartData = (MainPartData)mainBuilder.Build();
+        _mainPart = new MainPart(mainPartData.SpawnInstance(transform));
 
         TurretData turretData = (TurretData)turretBuilder.Build();
         GameObject obj = turretData.SpawnInstance(transform);
         _turret = obj.GetComponent<TurretPartBehav>();
         _turret.SetData(turretData);
-
-        MainPartData mainPartData = (MainPartData)mainBuilder.Build();
-        _mainPart = new MainPart(mainPartData.SpawnInstance(transform));
-
         _turret.AttachToBase(_mainPart.SpawnedObj.transform);
+        _projectileData = turretData.ProjData;
+
         _ammoStorage = new AmmoStorage(mainPartData.AmmoStorage);
         int maxHealth = Mathf.FloorToInt(mainPartData.Durability * turretData.DurabilityMultiplier);
         _health = new Health(maxHealth);

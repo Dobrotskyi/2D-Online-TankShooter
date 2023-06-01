@@ -1,9 +1,5 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Networking;
 using System.Globalization;
-using System.Text;
-using static UnityEditor.ObjectChangeEventStream;
 
 public class TurretDataBuilder : ObjectFromDBBuilder
 {
@@ -14,8 +10,10 @@ public class TurretDataBuilder : ObjectFromDBBuilder
     private float _fireRate = -1;
     private float _shotForce = -1;
     private float _durabilityMultiplier = -1;
+    private float _damageMult = -1;
     private string _name;
     private Sprite _sprite;
+    private ProjectileData _projectileData;
 
     public TurretDataBuilder() { }
 
@@ -55,27 +53,40 @@ public class TurretDataBuilder : ObjectFromDBBuilder
         return this;
     }
 
+    public TurretDataBuilder SetDamageMult(float damageMultiplier)
+    {
+        _damageMult = damageMultiplier;
+        return this;
+    }
+
     public TurretDataBuilder SetDM(float dm)
     {
         _durabilityMultiplier = dm;
         return this;
     }
 
-    protected override void ParseDataToBuilder(string[] info)
+    protected override void ParseData(string[] info)
     {
         Vector2 spread = new Vector2(float.Parse(info[2], CultureInfo.InvariantCulture), float.Parse(info[3], CultureInfo.InvariantCulture));
         this.SetName(info[0]).SetRotationSpeed(float.Parse(info[1], CultureInfo.InvariantCulture))
                .SetSpread(spread).SetFireRate(float.Parse(info[4], CultureInfo.InvariantCulture))
                .SetShotForce(float.Parse(info[5], CultureInfo.InvariantCulture))
-               .SetDM(float.Parse(info[6], CultureInfo.InvariantCulture)).SetSprite(ImageLoader.MakeSprite(info[7], new Vector2(0.5f, 0.2f)));
+               .SetDM(float.Parse(info[6], CultureInfo.InvariantCulture))
+               .SetDamageMult(float.Parse(info[7], CultureInfo.InvariantCulture))
+               .SetSprite(ImageLoader.MakeSprite(info[8], new Vector2(0.5f, 0.2f)));
 
+        _projectileData = new ProjectileData(info[9],
+            int.Parse(info[10], CultureInfo.InvariantCulture),
+            float.Parse(info[11], CultureInfo.InvariantCulture),
+            int.Parse(info[12], CultureInfo.InvariantCulture),
+            ImageLoader.MakeSprite(info[13], new Vector2(0.5f, 0.5f)));
     }
 
     protected override PartData MakePart()
     {
         return new TurretData(_name, _rotationSpeed,
                               _spread, _fireRate, _shotForce,
-                              _durabilityMultiplier, _sprite);
+                              _durabilityMultiplier, _damageMult, _sprite, _projectileData);
     }
 
     protected override bool Verify()
@@ -93,6 +104,8 @@ public class TurretDataBuilder : ObjectFromDBBuilder
         if (_name == null)
             return false;
         if (_sprite == null)
+            return false;
+        if (_damageMult == -1)
             return false;
 
         return true;
