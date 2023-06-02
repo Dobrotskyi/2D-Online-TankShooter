@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Networking;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class ShopMenu : MonoBehaviour
@@ -15,15 +14,20 @@ public class ShopMenu : MonoBehaviour
 
     public void ChangeContent()
     {
-        if (_toggles[0].gameObject.name == "InStoreToggle")
-        {
+        if (_toggles[1].isOn)
+            ShowPartsInStore();
 
-        }
     }
 
     private void Start()
     {
+        ShowPartsInStore();
+    }
+
+    private void ShowPartsInStore()
+    {
         StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.TURRETS_IN_STORE_URL));
+        StartCoroutine(MakeCallToDB(new MainPartDataBuilder(), DBManager.MAIN_IN_STORE_URL));
     }
 
     private IEnumerator MakeCallToDB(ObjectFromDBBuilder builder, string url)

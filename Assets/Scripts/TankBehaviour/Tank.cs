@@ -87,8 +87,8 @@ public class Tank : MonoBehaviour, ITakeDamage
         TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
-        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(mainBuilder));
-        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(turretBuilder));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(mainBuilder, DBManager.SELECTED_MAIN_URL));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(turretBuilder, DBManager.SELECTED_TURRET_URL));
 
         MainPartData mainPartData = (MainPartData)mainBuilder.Build();
         _mainPart = new MainPart(mainPartData.SpawnInstance(transform));

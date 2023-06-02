@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class MainPartDataBuilder : ObjectFromDBBuilder
 {
-    protected override string PHP_URL => "http://localhost/topdowntankshooter/get_selected_main.php";
-
     private string _name;
     private Sprite _sprite;
     private float _acceleration = -1;

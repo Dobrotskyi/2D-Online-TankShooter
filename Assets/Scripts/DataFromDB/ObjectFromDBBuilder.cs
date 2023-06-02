@@ -3,8 +3,6 @@ using UnityEngine.Networking;
 
 public abstract class ObjectFromDBBuilder
 {
-    protected abstract string PHP_URL { get; }
-
     public ObjectFromDBBuilder() { }
 
     public PartData Build()
@@ -14,9 +12,9 @@ public abstract class ObjectFromDBBuilder
         else throw new System.Exception("Data was not full");
     }
 
-    public static IEnumerator GetSelectedByUser(ObjectFromDBBuilder builder)
+    public static IEnumerator GetSelectedByUser(ObjectFromDBBuilder builder, string url)
     {
-        PHPCaller caller = new(builder.PHP_URL);
+        PHPCaller caller = new(url);
         yield return caller.MakeCallWithNickname(DBManager.LoginedUserName);
         while (caller.ResultStatus == UnityWebRequest.Result.InProgress)
             yield return null;

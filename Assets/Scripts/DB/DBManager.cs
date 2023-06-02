@@ -6,10 +6,12 @@ public static class DBManager
 
     public const string LOGIN_URL = "http://localhost/topdowntankshooter/login.php";
     public const string REG_URL = "http://localhost/topdowntankshooter/register.php";
+
     public const string SELECTED_TURRET_URL = "http://localhost/topdowntankshooter/get_selected_turret.php";
     public const string SELECTED_MAIN_URL = "http://localhost/topdowntankshooter/get_selected_main.php";
-    public const string TURRETS_IN_STORE_URL = "http://localhost/topdowntankshooter/get_all_turrets.php";
-    public const string MAIN_IN_STORE = "";
+
+    public const string TURRETS_IN_STORE_URL = "http://localhost/topdowntankshooter/get_turrets_in_store.php";
+    public const string MAIN_IN_STORE_URL = "http://localhost/topdowntankshooter/get_mains_in_store.php";
 
     private static string s_userName = "admin1";
     private static int s_money;

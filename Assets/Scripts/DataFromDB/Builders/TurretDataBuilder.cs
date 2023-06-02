@@ -3,8 +3,6 @@ using System.Globalization;
 
 public class TurretDataBuilder : ObjectFromDBBuilder
 {
-    protected override string PHP_URL => "http://localhost/topdowntankshooter/get_selected_turret.php";
-
     private float _rotationSpeed = -1;
     private Vector2 _spread;
     private float _fireRate = -1;
