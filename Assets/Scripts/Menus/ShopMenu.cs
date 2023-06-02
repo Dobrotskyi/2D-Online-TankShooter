@@ -32,13 +32,10 @@ public class ShopMenu : MonoBehaviour
         List<string> fields = new();
         for (int i = 0; i < info.Length; i++)
         {
-            Debug.Log(fields.Count);
             if (fields.Count != 0 && info[i] == DETERM.ToString())
             {
-                Debug.Log(info[i]);
                 builder.ParseData(fields.ToArray());
                 fields.Clear();
-                Debug.Log(fields.Count);
                 DisplayItemOnScreen(builder);
                 continue;
             }

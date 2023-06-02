@@ -8,7 +8,7 @@ public static class ImageLoader
 
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), center);
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width - 1, texture.height - 1), center);
 
         return sprite;
     }

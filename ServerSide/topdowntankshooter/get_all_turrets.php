@@ -31,24 +31,14 @@ $rows_amt = mysqli_num_rows($result);
 if ($rows_amt == 0)
     die("0" . "All items were bought");
 else {
-    // $result = mysqli_fetch_assoc($result);
-    // $result["turret_sprite"] = base64_encode($result["turret_sprite"]);
-    // $result["projectile_sprite"] = base64_encode($result["projectile_sprite"]);
-    
-    // die( "0" . implode(",", $result));
-    echo("0");
+    echo ("0");
     for ($i = 0; $i < mysqli_num_rows($result); $i++) {
         $rowInfo = mysqli_fetch_assoc($result);
         $rowInfo["turret_sprite"] = base64_encode($rowInfo["turret_sprite"]);
         $rowInfo["projectile_sprite"] = base64_encode($rowInfo["projectile_sprite"]);
-        if ($rows_amt > 1)
-        {
-            echo(implode(",", $rowInfo) . ",\t");
-            if($i != $rows_amt - 1)
-                echo(",");
-        }
-        else
-            die("0" . implode(",", $rowInfo));
+        echo (implode(",", $rowInfo) . ",\t");
+        if ($i != $rows_amt - 1)
+            echo (",");
     }
     exit();
 }
