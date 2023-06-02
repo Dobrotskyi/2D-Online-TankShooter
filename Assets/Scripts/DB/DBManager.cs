@@ -7,7 +7,7 @@ public static class DBManager
     public const string LOGIN_URL = "http://localhost/topdowntankshooter/login.php";
     public const string REG_URL = "http://localhost/topdowntankshooter/register.php";
 
-    private static string s_userName = "Valerii";
+    private static string s_userName = "admin1";
     private static int s_money;
 
     public static string LoginedUserName

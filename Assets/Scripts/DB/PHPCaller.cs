@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -42,6 +43,7 @@ public class PHPCaller
             yield break;
         }
         uwr.Dispose();
+        Debug.Log(result);
         _result = result.Split(',');
         _result[0] = _result[0].Substring(1);
         Debug.Log("Call was finnished");

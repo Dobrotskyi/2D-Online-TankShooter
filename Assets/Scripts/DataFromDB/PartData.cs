@@ -5,7 +5,7 @@ public abstract class PartData
     protected string _name = null;
     protected Sprite _sprite;
 
-    public string Name => _name;
+    public string Name => _name.Replace("_", " ");
     public Sprite Sprite => _sprite;
 
     public PartData(string name, Sprite sprite)

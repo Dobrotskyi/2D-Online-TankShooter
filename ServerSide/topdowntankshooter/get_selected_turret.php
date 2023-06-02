@@ -44,8 +44,8 @@ if($rows_amt > 1)
 }
 else {
     $result = mysqli_fetch_assoc($result);
-    $rowInfo["turret_sprite"] = base64_encode($rowInfo["turret_sprite"]);
-    $rowInfo["projectile_sprite"] = base64_encode($rowInfo["projectile_sprite"]);
+    $result["turret_sprite"] = base64_encode($result["turret_sprite"]);
+    $result["projectile_sprite"] = base64_encode($result["projectile_sprite"]);
     
     die( "0" . implode(",", $result));
 }
