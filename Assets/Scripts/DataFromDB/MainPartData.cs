@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 public class MainPartData : PartData
@@ -52,6 +53,17 @@ public class MainPartData : PartData
         mainPart.AddComponent<MainPartBehav>().SetData(this);
         mainPart.AddComponent<TankCollisionHandler>();
         return mainPart;
+    }
+
+    public override string GetDescription()
+    {
+        StringBuilder sb = new();
+        sb.AppendLine($"Acceleration: {_acceleration}");
+        sb.AppendLine($"Max speed: {_maxSpeed}");
+        sb.AppendLine($"Angular speed: {_angularSpeed}");
+        sb.AppendLine($"Durability: {_durability}");
+        sb.AppendLine($"Ammo capacity: {_ammoStorage}");
+        return sb.ToString();
     }
 
 }

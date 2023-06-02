@@ -62,7 +62,7 @@ public class MainPartDataBuilder : ObjectFromDBBuilder
         return this;
     }
 
-    protected override void ParseData(string[] info)
+    public override void ParseData(string[] info)
     {
         Vector2 turretPlacement = new Vector2(float.Parse(info[6], CultureInfo.InvariantCulture), float.Parse(info[7], CultureInfo.InvariantCulture));
         int i = 0;

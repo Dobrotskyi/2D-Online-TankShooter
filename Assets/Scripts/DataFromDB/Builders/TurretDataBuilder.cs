@@ -65,7 +65,7 @@ public class TurretDataBuilder : ObjectFromDBBuilder
         return this;
     }
 
-    protected override void ParseData(string[] info)
+    public override void ParseData(string[] info)
     {
         Vector2 spread = new Vector2(float.Parse(info[2], CultureInfo.InvariantCulture), float.Parse(info[3], CultureInfo.InvariantCulture));
         this.SetName(info[0]).SetRotationSpeed(float.Parse(info[1], CultureInfo.InvariantCulture))

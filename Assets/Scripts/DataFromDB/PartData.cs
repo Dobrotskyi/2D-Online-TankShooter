@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PartData
+public abstract class PartData
 {
     protected string _name = null;
     protected Sprite _sprite;
@@ -28,4 +28,6 @@ public class PartData
 
         return part;
     }
+
+    public abstract string GetDescription();
 }

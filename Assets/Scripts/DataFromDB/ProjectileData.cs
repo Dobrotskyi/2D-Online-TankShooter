@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 public class ProjectileData : PartData
@@ -33,6 +34,16 @@ public class ProjectileData : PartData
         projectile.name = _name;
         projectile.tag = "Projectile";
         return projectile;
+    }
+
+    public override string GetDescription()
+    {
+        StringBuilder sb = new();
+        sb.AppendLine($"Damage: {_damage}");
+        sb.AppendLine($"Time of life: {_timeOfLife}");
+        sb.AppendLine($"Ammo cost: {_ammoCost}");
+
+        return sb.ToString();
     }
 
 }

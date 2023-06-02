@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 public class TurretData : PartData
@@ -45,5 +46,19 @@ public class TurretData : PartData
         TurretPartBehav behav = turret.AddComponent<TurretPartBehav>();
         _projData.ApplyDamageMultiplier(_damageMult);
         return turret;
+    }
+
+    public override string GetDescription()
+    {
+        StringBuilder sb = new();
+        sb.AppendLine($"Rotation speed: {_rotationSpeed}");
+        sb.AppendLine($"Spread: {_spread}");
+        sb.AppendLine($"Fire rate: {_fireRate}");
+        sb.AppendLine($"Shot force: {_shotForce}");
+        sb.AppendLine($"Durability multiplier: {_durabilityMultiplier}");
+        sb.AppendLine($"Damage multiplier: {_damageMult}");
+        sb.AppendLine($"Projectile data:");
+        sb.AppendLine(_projData.GetDescription());
+        return sb.ToString();
     }
 }
