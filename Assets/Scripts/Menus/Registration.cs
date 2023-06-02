@@ -12,7 +12,6 @@ public class Registration : MonoBehaviour
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private Button _submitButton;
-    [SerializeField] private Button _goMainMenuButton;
 
     public void MakeRegisterCall()
     {
@@ -26,11 +25,6 @@ public class Registration : MonoBehaviour
         _submitButton.interactable = (_nicknameField.text.Length >= DBManager.MIN_NAME_LENGTH
                                       && _password.text.Length >= DBManager.MIN_PASSW_LENGTH
                                       && _nicknameField.text.Length < DBManager.MAX_NAME_LENGTH);
-    }
-
-    public void GoMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
     }
 
     private IEnumerator Register()

@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 
 public abstract class ObjectFromDBBuilder
 {
-    //public abstract int ConstructParamsAmt { get; }
     protected abstract string PHP_URL { get; }
 
     public ObjectFromDBBuilder() { }

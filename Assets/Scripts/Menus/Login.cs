@@ -12,16 +12,10 @@ public class Login : MonoBehaviour
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _passwordField;
     [SerializeField] private Button _submitButton;
-    [SerializeField] private Button _goMainMenuButton;
 
     public void MakeLoginCall()
     {
         StartCoroutine(TryLoggin());
-    }
-
-    public void GoMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
     }
 
     public IEnumerator TryLoggin()

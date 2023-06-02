@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Networking;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class ShopMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _itemTemplate;
     [SerializeField] private GameObject _content;
+    [SerializeField] private Toggle[] _toggles;
 
     private const char DETERM = '\t';
-    private const string PHP_URL = "http://localhost/topdowntankshooter/get_all_turrets.php";
+
+    public void ChangeContent()
+    {
+        if (_toggles[0].gameObject.name == "InStoreToggle")
+        {
+
+        }
+    }
 
     private void Start()
     {
-        StartCoroutine(MakeCallToDB(new TurretDataBuilder()));
+        StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.TURRETS_IN_STORE_URL));
     }
 
-    private IEnumerator MakeCallToDB(ObjectFromDBBuilder builder)
+    private IEnumerator MakeCallToDB(ObjectFromDBBuilder builder, string url)
     {
-        PHPCaller caller = new(PHP_URL);
+        PHPCaller caller = new(url);
         StartCoroutine(caller.MakeCallWithNickname(DBManager.LoginedUserName));
         while (caller.ResultStatus == UnityWebRequest.Result.InProgress)
             yield return null;
