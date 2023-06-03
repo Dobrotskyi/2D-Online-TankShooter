@@ -6,11 +6,18 @@ if (mysqli_connect_errno()) {
     exit();
 }
 $nickname = $_POST["nickname"];
+$purchased = $_POST["purchased"];
+$switch = "";
+
+if ($purchased == "True")
+    $switch = "IN";
+else
+    $switch = "NOT IN";
 
 $queryText = "SELECT tank_main_part.name, tank_main_part.acceleration, tank_main_part.max_speed, tank_main_part.angular_speed, tank_main_part.durability, tank_main_part.ammo_storage, tank_main_part.turret_placement_x, tank_main_part.turret_placement_y, ANY_VALUE(tank_main_part_sprites.sprite) as 'sprite'
               FROM tank_main_part
               INNER join tank_main_part_sprites on tank_main_part.id = tank_main_part_sprites.main_part_id
-              where tank_main_part.id not in (Select tank_main_part.id 
+              where tank_main_part.id " . $switch . " (Select tank_main_part.id 
                                                 from users_main_parts
                                             inner join tank_main_part on users_main_parts.main_part_id = tank_main_part.id
                                             INNER join users on users_main_parts.user_id = users.id

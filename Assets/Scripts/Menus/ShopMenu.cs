@@ -15,17 +15,18 @@ public class ShopMenu : MonoBehaviour
     public void ChangeContent()
     {
         ClearContent();
+        ShowParts();
+
         if (_toggles[1].isOn)
         {
-            ShowPartsInStore();
             _toggles[1].interactable = false;
+            _toggles[0].interactable = true;
         }
         else if (_toggles[0].isOn)
         {
+            _toggles[0].interactable = false;
             _toggles[1].interactable = true;
         }
-
-
     }
 
     private void ClearContent()
@@ -36,10 +37,10 @@ public class ShopMenu : MonoBehaviour
 
     private void Start()
     {
-        ShowPartsInStore();
+        ShowParts();
     }
 
-    private void ShowPartsInStore()
+    private void ShowParts()
     {
         StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.TURRETS_IN_STORE_URL));
         StartCoroutine(MakeCallToDB(new MainPartDataBuilder(), DBManager.MAIN_IN_STORE_URL));
@@ -48,9 +49,13 @@ public class ShopMenu : MonoBehaviour
     private IEnumerator MakeCallToDB(ObjectFromDBBuilder builder, string url)
     {
         PHPCaller caller = new(url);
-        StartCoroutine(caller.MakeCallWithNickname(DBManager.LoginedUserName));
+        Dictionary<string, string> parameters = new Dictionary<string, string>() { { "nickname", DBManager.LoginedUserName },
+                                                                                        {"purchased", _toggles[0].isOn.ToString() } };
+        StartCoroutine(caller.MakeCallWithParameters(parameters));
         while (caller.ResultStatus == UnityWebRequest.Result.InProgress)
             yield return null;
+        if (caller.ResultStatus != UnityWebRequest.Result.Success)
+            yield return new System.Exception("\"Error occurred while making call to the server: \" + uwr.error");
         DisplayAllParts(caller.Result, builder);
 
     }

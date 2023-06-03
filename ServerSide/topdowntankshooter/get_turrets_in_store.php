@@ -6,6 +6,13 @@ if (mysqli_connect_errno()) {
     exit();
 }
 $nickname = $_POST["nickname"];
+$purchased= $_POST["purchased"];
+$switch = "";
+
+if ($purchased == "True")
+    $switch = "IN";
+else
+    $switch = "NOT IN";
 
 $queryText = "Select tank_turrets.name, tank_turrets.rotation_speed , tank_turrets.spread_x, tank_turrets.spread_y,
                 tank_turrets.fire_rate, tank_turrets.shot_force, tank_turrets.durability_mult,
@@ -16,7 +23,7 @@ $queryText = "Select tank_turrets.name, tank_turrets.rotation_speed , tank_turre
                 INNER join tank_turrets_sprites on tank_turrets.id = tank_turrets_sprites.turret_id
                 INNER JOIN projectiles on tank_turrets.projectile_id = projectiles.id
                 INNER join projectiles_sprites on projectiles.id = projectiles_sprites.projectile_id
-                where tank_turrets.id not IN 
+                where tank_turrets.id " . $switch . " 
                                 (SELECT tank_turrets.id                              
                                 from users_turrets 
                                 INNER join tank_turrets on users_turrets.tank_turret_id = tank_turrets.id

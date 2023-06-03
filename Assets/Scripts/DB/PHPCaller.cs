@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -18,8 +19,15 @@ public class PHPCaller
 
     public IEnumerator MakeCallWithNickname(string nickname)
     {
+        yield return MakeCallWithParameters(new Dictionary<string, string>() { { "nickname", nickname } });
+    }
+
+    public IEnumerator MakeCallWithParameters(Dictionary<string, string> parameters)
+    {
         WWWForm form = new();
-        form.AddField("nickname", DBManager.LoginedUserName);
+
+        foreach (var pair in parameters)
+            form.AddField(pair.Key, pair.Value);
 
         UnityWebRequest uwr = UnityWebRequest.Post(_url, form);
         yield return uwr.SendWebRequest();
