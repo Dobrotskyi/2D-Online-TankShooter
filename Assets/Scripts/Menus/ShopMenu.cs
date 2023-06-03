@@ -14,9 +14,24 @@ public class ShopMenu : MonoBehaviour
 
     public void ChangeContent()
     {
+        ClearContent();
         if (_toggles[1].isOn)
+        {
             ShowPartsInStore();
+            _toggles[1].interactable = false;
+        }
+        else if (_toggles[0].isOn)
+        {
+            _toggles[1].interactable = true;
+        }
 
+
+    }
+
+    private void ClearContent()
+    {
+        foreach (Transform child in _content.transform)
+            Destroy(child.gameObject);
     }
 
     private void Start()
