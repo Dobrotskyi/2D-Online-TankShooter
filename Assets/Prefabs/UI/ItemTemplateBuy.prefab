@@ -401,15 +401,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3545826973122165227, guid: edc83a3a298ae1948986723749136104, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UserBought
+      value: UserPressed
       objectReference: {fileID: 0}
     - target: {fileID: 3545826973122165227, guid: edc83a3a298ae1948986723749136104, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UserBuyHandler, Assembly-CSharp
+      value: UserShoppingTransacHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3545826973122165227, guid: edc83a3a298ae1948986723749136104, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589350022425026531, guid: edc83a3a298ae1948986723749136104, type: 3}
+      propertyPath: _turretItemColor.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4590330547298967266, guid: edc83a3a298ae1948986723749136104, type: 3}
       propertyPath: m_Name

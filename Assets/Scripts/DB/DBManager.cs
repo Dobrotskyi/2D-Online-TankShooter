@@ -18,6 +18,7 @@ public static class DBManager
     public const string MAIN_IN_STORE_URL = "http://localhost/topdowntankshooter/get_mains_in_store.php";
 
     public const string ADD_PART_TO_USER_URL = "http://localhost/topdowntankshooter/add_part_to_user.php";
+    public const string SELECT_NEW_PART_URL = "http://localhost/topdowntankshooter/select_new_part.php";
 
     private static string s_userName = "admin1";
     private static int s_money;

@@ -133,6 +133,7 @@ MonoBehaviour:
   _image: {fileID: 7627183647082824690}
   _description: {fileID: 8705094487314058018}
   _title: {fileID: 151292226422587753}
+  _turretItemColor: {r: 1, g: 0.40392157, b: 0, a: 1}
 --- !u!1 &5427909256619441882
 GameObject:
   m_ObjectHideFlags: 0
