@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private int _damage = -1;
+    private int _damage;
 
     public void IgnoreCollisionWith(GameObject obj)
     {
@@ -11,10 +11,7 @@ public class Projectile : MonoBehaviour
 
     public void SetDamage(int damage)
     {
-        if (_damage < 0)
-            _damage = damage;
-        else
-            throw new System.Exception("Damage amount was already set");
+        _damage = damage;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

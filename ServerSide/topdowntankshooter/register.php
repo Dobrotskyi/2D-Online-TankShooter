@@ -23,7 +23,7 @@ $hash = crypt($password, $salt);
 $insertuserQuery = "Insert INTO users (nickname, salt, hash) 
                     values ('" . $nickname . "', '" . $salt . "', '" . $hash . "');";
 
-mysqli_query($con, $insertuserQuery) or die("4 Insert player query failed");
+mysqli_query($con, $insertuserQuery) or die("4 " . $insertuserQuery);
 
 
 echo("0");

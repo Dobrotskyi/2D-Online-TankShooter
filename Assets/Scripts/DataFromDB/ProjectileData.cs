@@ -31,6 +31,7 @@ public class ProjectileData : PartData
 
         projectile.AddComponent<BoxCollider2D>();
         projectile.AddComponent<Projectile>().SetDamage(_damage);
+        MonoBehaviour.Destroy(projectile, _timeOfLife);
         projectile.name = _name;
         projectile.tag = "Projectile";
         return projectile;

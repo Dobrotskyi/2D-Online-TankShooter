@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text _playerDisplay;
-    [SerializeField] private Button[] _toggleableBtns;
+    [SerializeField] private Button[] _restrictedBtns;
 
     private void Start()
     {
         if (DBManager.IsLogged())
         {
             _playerDisplay.text = $"Welcome, {DBManager.LoginedUserName} ";
-            foreach (var b in _toggleableBtns)
+            foreach (var b in _restrictedBtns)
                 b.interactable = true;
         }
     }

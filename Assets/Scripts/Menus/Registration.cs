@@ -20,8 +20,6 @@ public class Registration : MonoBehaviour
 
     public void VerifyInputs()
     {
-        Debug.Log(_password.text);
-        Debug.Log(_password.text != _password.placeholder.GetComponent<TextMeshProUGUI>().text);
         _submitButton.interactable = (_nicknameField.text.Length >= DBManager.MIN_NAME_LENGTH
                                       && _password.text.Length >= DBManager.MIN_PASSW_LENGTH
                                       && _nicknameField.text.Length < DBManager.MAX_NAME_LENGTH);
