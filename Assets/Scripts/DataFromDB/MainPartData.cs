@@ -22,7 +22,7 @@ public class MainPartData : PartData
     public int AmmoStorage => _ammoStorage;
     public Vector2 TurretPlacement => _turretPlacement;
 
-    public MainPartData(string name, float acceleration, float maxSpeed, float angularSpeed, float durability, int ammo, Vector2 turretPos, Sprite sprite) : base(name, sprite)
+    public MainPartData(int id, string name, float acceleration, float maxSpeed, float angularSpeed, float durability, int ammo, Vector2 turretPos, Sprite sprite) : base(id, name, sprite)
     {
         _acceleration = acceleration;
         _maxSpeed = maxSpeed;

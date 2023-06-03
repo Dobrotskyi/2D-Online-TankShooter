@@ -5,6 +5,14 @@ public abstract class ObjectFromDBBuilder
 {
     public ObjectFromDBBuilder() { }
 
+    protected int _id;
+
+    protected ObjectFromDBBuilder SetId(int id)
+    {
+        _id = id;
+        return this;
+    }
+
     public PartData Build()
     {
         if (Verify())

@@ -4,12 +4,15 @@ public abstract class PartData
 {
     protected string _name = null;
     protected Sprite _sprite;
+    protected readonly int _id;
 
     public string Name => _name.Replace("_", " ");
     public Sprite Sprite => _sprite;
+    public int Id => _id;
 
-    public PartData(string name, Sprite sprite)
+    public PartData(int id, string name, Sprite sprite)
     {
+        _id = id;
         _name = name;
         _sprite = sprite;
     }

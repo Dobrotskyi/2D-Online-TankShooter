@@ -37,6 +37,7 @@ public class PHPCaller
         {
             Debug.Log(uwr.result.ToString());
             Debug.Log(uwr.downloadHandler.text);
+            yield return new System.Exception(uwr.result.ToString());
             yield break;
         }
 
@@ -46,7 +47,7 @@ public class PHPCaller
             Debug.Log("Smth went wrong");
             Debug.Log(result);
             uwr.Dispose();
-            yield return new System.Exception();
+            yield return new System.Exception($"Smth went wrong: {result}");
             yield break;
         }
         uwr.Dispose();

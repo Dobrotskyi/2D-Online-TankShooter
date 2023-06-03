@@ -19,8 +19,8 @@ public class TurretData : PartData
     public float DurabilityMultiplier => _durabilityMultiplier;
     public ProjectileData ProjData => _projData;
 
-    public TurretData(string name, float rotationSpeed, Vector2 spread, float fireRate, float shotForce,
-        float dm, float damageMult, Sprite sprite, ProjectileData projData) : base(name, sprite)
+    public TurretData(int id, string name, float rotationSpeed, Vector2 spread, float fireRate, float shotForce,
+        float dm, float damageMult, Sprite sprite, ProjectileData projData) : base(id, name, sprite)
     {
         _rotationSpeed = rotationSpeed;
         _fireRate = fireRate;

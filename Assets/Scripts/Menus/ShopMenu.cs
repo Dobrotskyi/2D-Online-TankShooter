@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public class ShopMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject _itemTemplate;
+    [SerializeField] private GameObject[] _itemTemplates;
     [SerializeField] private GameObject _content;
     [SerializeField] private Toggle[] _toggles;
     [SerializeField] private ToggleGroup _group;
@@ -87,7 +88,13 @@ public class ShopMenu : MonoBehaviour
 
     private void DisplayItemOnScreen(ObjectFromDBBuilder builder)
     {
-        GameObject item = Instantiate(_itemTemplate, _content.transform);
+        GameObject template;
+        if (_group.GetFirstActiveToggle() == _toggles[0])
+            template = _itemTemplates[0];
+        else
+            template = _itemTemplates[1];
+
+        GameObject item = Instantiate(template, _content.transform);
         item.GetComponent<ItemTemplateFiller>().Fill(builder.Build());
     }
 }

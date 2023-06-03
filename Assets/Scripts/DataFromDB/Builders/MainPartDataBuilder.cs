@@ -62,20 +62,21 @@ public class MainPartDataBuilder : ObjectFromDBBuilder
 
     public override void ParseData(string[] info)
     {
-        Vector2 turretPlacement = new Vector2(float.Parse(info[6], CultureInfo.InvariantCulture), float.Parse(info[7], CultureInfo.InvariantCulture));
+        Vector2 turretPlacement = new Vector2(float.Parse(info[7], CultureInfo.InvariantCulture), float.Parse(info[8], CultureInfo.InvariantCulture));
         int i = 0;
+        SetId(i++);
         this.SetName(info[i++]).SetAcceleration(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetMaxSpeed(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetAngularSpeed(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetDurability(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetCapacity(int.Parse(info[i++], CultureInfo.InvariantCulture)).
-                SetTurretPlace(turretPlacement).SetSprite(ImageLoader.MakeSprite(info[8], new Vector2(0.5f, 0.5f)));
+                SetTurretPlace(turretPlacement).SetSprite(ImageLoader.MakeSprite(info[9], new Vector2(0.5f, 0.5f)));
 
     }
 
     protected override PartData MakePart()
     {
-        return new MainPartData(_name, _acceleration, _maxSpeed, _angularSpeed,
+        return new MainPartData(_id, _name, _acceleration, _maxSpeed, _angularSpeed,
                 _durability, _ammoStorage, _turretPlacement, _sprite);
 
     }

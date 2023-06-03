@@ -7,7 +7,7 @@ if (mysqli_connect_errno()) {
 }
 $nickname = $_POST["nickname"];
 
-$queryText = "Select tank_turrets.name, tank_turrets.rotation_speed , tank_turrets.spread_x, tank_turrets.spread_y,
+$queryText = "Select tank_turrets.id, tank_turrets.name, tank_turrets.rotation_speed , tank_turrets.spread_x, tank_turrets.spread_y,
               tank_turrets.fire_rate, tank_turrets.shot_force, tank_turrets.durability_mult,
               tank_turrets.damage_mult, tank_turrets_sprites.sprite as 'turret_sprite',
               projectiles.name as 'projectile_name',

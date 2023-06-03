@@ -6,7 +6,7 @@ if (mysqli_connect_errno()) {
     exit();
 }
 $nickname = $_POST["nickname"];
-$queryText = "SELECT tank_main_part.name, tank_main_part.acceleration, tank_main_part.max_speed, tank_main_part.angular_speed, tank_main_part.durability, tank_main_part.ammo_storage, tank_main_part.turret_placement_x, tank_main_part.turret_placement_y, tank_main_part_sprites.sprite 
+$queryText = "SELECT tank_main_part.id, tank_main_part.name, tank_main_part.acceleration, tank_main_part.max_speed, tank_main_part.angular_speed, tank_main_part.durability, tank_main_part.ammo_storage, tank_main_part.turret_placement_x, tank_main_part.turret_placement_y, tank_main_part_sprites.sprite 
               FROM selected_parts
               INNER join users on selected_parts.user_id = users.id
               INNER join tank_main_part on selected_parts.selected_main_part = tank_main_part.id

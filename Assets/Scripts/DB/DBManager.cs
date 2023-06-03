@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+
 public static class DBManager
 {
     public const int MAX_NAME_LENGTH = 10;
@@ -12,6 +15,9 @@ public static class DBManager
 
     public const string TURRETS_IN_STORE_URL = "http://localhost/topdowntankshooter/get_turrets_in_store.php";
     public const string MAIN_IN_STORE_URL = "http://localhost/topdowntankshooter/get_mains_in_store.php";
+
+    public const string USERS_TURRETS_ADD_URL = "";
+    public const string USERS_MAIN_ADD_URL = "";
 
     private static string s_userName = "admin1";
     private static int s_money;
@@ -34,6 +40,20 @@ public static class DBManager
     {
         s_userName = null;
         s_money = -1;
+    }
+
+    public static IEnumerator AddToUsersItems(int id, PartData _part)
+    {
+        PHPCaller caller;
+        if (_part is TurretData)
+            caller = new(USERS_TURRETS_ADD_URL);
+        else
+            caller = new(USERS_MAIN_ADD_URL);
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>() { { "nickname", LoginedUserName }, { "id", _part.Id.ToString() } };
+        yield return caller.MakeCallWithParameters(parameters);
+
+
     }
 
 }
