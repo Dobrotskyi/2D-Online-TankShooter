@@ -10,6 +10,7 @@ $nickname = $_POST["nickname"];
 $queryText = "Select tank_turrets.id, tank_turrets.name, tank_turrets.rotation_speed , tank_turrets.spread_x, tank_turrets.spread_y,
               tank_turrets.fire_rate, tank_turrets.shot_force, tank_turrets.durability_mult,
               tank_turrets.damage_mult, tank_turrets_sprites.sprite as 'turret_sprite',
+              projectiles.id as 'proj_id',
               projectiles.name as 'projectile_name',
               projectiles.damage, projectiles.time_of_life, projectiles.ammo_cost, projectiles_sprites.sprite as 'projectile_sprite'
               from selected_parts

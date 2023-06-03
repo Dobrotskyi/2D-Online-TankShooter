@@ -64,7 +64,7 @@ public class MainPartDataBuilder : ObjectFromDBBuilder
     {
         Vector2 turretPlacement = new Vector2(float.Parse(info[7], CultureInfo.InvariantCulture), float.Parse(info[8], CultureInfo.InvariantCulture));
         int i = 0;
-        SetId(i++);
+        SetId(int.Parse(info[i++], CultureInfo.InvariantCulture));
         this.SetName(info[i++]).SetAcceleration(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetMaxSpeed(float.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetAngularSpeed(float.Parse(info[i++], CultureInfo.InvariantCulture)).

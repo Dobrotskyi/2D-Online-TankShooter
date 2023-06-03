@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class DBManager
 {
@@ -16,8 +17,7 @@ public static class DBManager
     public const string TURRETS_IN_STORE_URL = "http://localhost/topdowntankshooter/get_turrets_in_store.php";
     public const string MAIN_IN_STORE_URL = "http://localhost/topdowntankshooter/get_mains_in_store.php";
 
-    public const string USERS_TURRETS_ADD_URL = "";
-    public const string USERS_MAIN_ADD_URL = "";
+    public const string ADD_PART_TO_USER_URL = "http://localhost/topdowntankshooter/add_part_to_user.php";
 
     private static string s_userName = "admin1";
     private static int s_money;
@@ -42,18 +42,11 @@ public static class DBManager
         s_money = -1;
     }
 
-    public static IEnumerator AddToUsersItems(int id, PartData _part)
+    public static IEnumerator AddToUsersItems(PartData _part)
     {
-        PHPCaller caller;
-        if (_part is TurretData)
-            caller = new(USERS_TURRETS_ADD_URL);
-        else
-            caller = new(USERS_MAIN_ADD_URL);
-
-        Dictionary<string, string> parameters = new Dictionary<string, string>() { { "nickname", LoginedUserName }, { "id", _part.Id.ToString() } };
+        PHPCaller caller = new PHPCaller(ADD_PART_TO_USER_URL);
+        Dictionary<string, string> parameters = new Dictionary<string, string>() { { "nickname", LoginedUserName }, { "id", _part.Id.ToString() }, { "part_type", _part.GetType().Name } };
         yield return caller.MakeCallWithParameters(parameters);
-
-
     }
 
 }
