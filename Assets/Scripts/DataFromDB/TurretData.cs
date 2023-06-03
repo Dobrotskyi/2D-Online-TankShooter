@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using UnityEngine;
 
@@ -57,6 +58,7 @@ public class TurretData : PartData
         sb.AppendLine($"Shot force: {_shotForce}");
         sb.AppendLine($"Durability multiplier: {_durabilityMultiplier}");
         sb.AppendLine($"Damage multiplier: {_damageMult}");
+        sb.Append(Environment.NewLine);
         sb.AppendLine($"Projectile data:");
         sb.AppendLine(_projData.GetDescription());
         return sb.ToString();

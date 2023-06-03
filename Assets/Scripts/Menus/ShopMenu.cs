@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
@@ -9,24 +10,31 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private GameObject _itemTemplate;
     [SerializeField] private GameObject _content;
     [SerializeField] private Toggle[] _toggles;
+    [SerializeField] private ToggleGroup _group;
+    [SerializeField] private TextMeshProUGUI _textTMP;
+    private Toggle _lastToggled;
+
 
     private const char DETERM = '\t';
 
     public void ChangeContent()
     {
+        Toggle selected = _group.GetFirstActiveToggle();
+        if (_lastToggled == null)
+            _lastToggled = selected;
+        else if (_lastToggled == selected)
+            return;
+        _lastToggled = selected;
         ClearContent();
         ShowParts();
+    }
 
-        if (_toggles[1].isOn)
-        {
-            _toggles[1].interactable = false;
-            _toggles[0].interactable = true;
-        }
-        else if (_toggles[0].isOn)
-        {
-            _toggles[0].interactable = false;
-            _toggles[1].interactable = true;
-        }
+    public void UpdateSelectedCategorie()
+    {
+        if (_toggles[0].isOn)
+            _textTMP.text = "Items you own";
+        else
+            _textTMP.text = "Items at store";
     }
 
     private void ClearContent()
@@ -38,6 +46,7 @@ public class ShopMenu : MonoBehaviour
     private void Start()
     {
         ShowParts();
+        UpdateSelectedCategorie();
     }
 
     private void ShowParts()
