@@ -41,12 +41,4 @@ public static class DBManager
         s_userName = null;
         s_money = -1;
     }
-
-    public static IEnumerator AddToUsersItems(PartData _part)
-    {
-        PHPCaller caller = new PHPCaller(ADD_PART_TO_USER_URL);
-        Dictionary<string, string> parameters = new Dictionary<string, string>() { { "nickname", LoginedUserName }, { "id", _part.Id.ToString() }, { "part_type", _part.GetType().Name } };
-        yield return caller.MakeCallWithParameters(parameters);
-    }
-
 }
