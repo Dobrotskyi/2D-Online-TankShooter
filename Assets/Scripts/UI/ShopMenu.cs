@@ -26,6 +26,11 @@ public class ShopMenu : MonoBehaviour
         else if (_lastToggled == selected)
             return;
         _lastToggled = selected;
+        ChangeContentWithoutCheck();
+    }
+
+    public void ChangeContentWithoutCheck()
+    {
         ClearContent();
         ShowParts();
     }
