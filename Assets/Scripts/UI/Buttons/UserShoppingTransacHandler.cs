@@ -13,6 +13,9 @@ public abstract class UserShoppingTransacHandler : MonoBehaviour
 
     private IEnumerator MakeTransaction()
     {
+        if (ValidateTransaction() == false)
+            yield break;
+
         PHPCaller caller = new PHPCaller(URL);
         Dictionary<string, string> parameters = new Dictionary<string, string>() { { "nickname", DBManager.LoginedUserName },
                                                                                     { "id", filler.PartData.Id.ToString() },
@@ -22,5 +25,6 @@ public abstract class UserShoppingTransacHandler : MonoBehaviour
             yield return FinishTransaction();
     }
 
+    protected virtual bool ValidateTransaction() { return true; }
     protected abstract IEnumerator FinishTransaction();
 }

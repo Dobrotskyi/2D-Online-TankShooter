@@ -608,3 +608,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filler: {fileID: 8677122210988950474}
+  _coinsField: {fileID: 2717480713380794247}

@@ -62,7 +62,6 @@ public class MainPartData : PartData, IBuyable
     {
         StringBuilder sb = new();
         sb.AppendLine($"Acceleration: {_acceleration}");
-        sb.AppendLine($"Max speed: {_maxSpeed}");
         sb.AppendLine($"Angular speed: {_angularSpeed}");
         sb.AppendLine($"Durability: {_durability}");
         sb.AppendLine($"Ammo capacity: {_ammoStorage}");

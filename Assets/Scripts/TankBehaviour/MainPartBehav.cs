@@ -11,7 +11,8 @@ public class MainPartBehav : MonoBehaviour
     public void Move(float direction)
     {
         _rb.AddForce(_rb.transform.up * direction * _data.Acceleration * ACCELERATION_MULT, ForceMode2D.Force);
-        _rb.velocity = Vector2.ClampMagnitude(_rb.velocity, _data.MaxSpeed * MAX_SPEED_MULT);
+        if (_rb.velocity.magnitude > _data.MaxSpeed)
+            _rb.velocity = Vector2.ClampMagnitude(_rb.velocity, _data.MaxSpeed);
     }
 
     public void Rotate(float side)
