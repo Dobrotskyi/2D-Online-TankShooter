@@ -4,13 +4,14 @@ public class TurretPartBehav : MonoBehaviour
 {
     private const float MIN_AIMING_DIST = 1f;
 
-    public bool Loaded = true;
+    public bool Loaded = false;
 
     private TurretData _turretData;
     private Transform _barrel;
     private Transform _mainPart;
     private float _fireRateMultiplier = 1f;
     private float _lastShotTime = 0f;
+    private AmmoStorage _ammoStorage;
 
     public void SetData(TurretData data)
     {
@@ -57,11 +58,9 @@ public class TurretPartBehav : MonoBehaviour
         }
     }
 
-    public void LoadTurret(AmmoStorage storage)
+    public void SetAmmoSource(AmmoStorage ammoStorage)
     {
-        if (Loaded)
-            return;
-        Loaded = storage.GiveAmmo(_turretData.ProjData.ShotCost);
+        _ammoStorage = ammoStorage;
     }
 
     public bool CanShoot => ReadyToShoot() && Loaded;
@@ -69,7 +68,10 @@ public class TurretPartBehav : MonoBehaviour
     private bool ReadyToShoot()
     {
         if (Time.time >= _lastShotTime + _turretData.FireRate * _fireRateMultiplier)
+        {
+            Loaded = _ammoStorage.GiveAmmo(_turretData.ProjData.ShotCost);
             return true;
+        }
         else
             return false;
     }

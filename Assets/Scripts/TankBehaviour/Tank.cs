@@ -53,7 +53,6 @@ public class Tank : MonoBehaviour, ITakeDamage
         if (_setupInProgress)
             return;
         _turret.Shoot();
-        _turret.LoadTurret(_ammoStorage);
     }
 
     public void Aim(Vector2 target)
@@ -101,6 +100,7 @@ public class Tank : MonoBehaviour, ITakeDamage
         _projectileData = turretData.ProjData;
 
         _ammoStorage = new AmmoStorage(mainPartData.AmmoStorage);
+        _turret.SetAmmoSource(_ammoStorage);
         int maxHealth = Mathf.FloorToInt(mainPartData.Durability * turretData.DurabilityMultiplier);
         _health = new Health(maxHealth);
         _health.ZeroHealth += DestroyThisTank;

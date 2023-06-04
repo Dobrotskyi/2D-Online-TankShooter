@@ -5091,10 +5091,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 12, y: 5}
-      - {x: -11, y: 5}
-      - {x: -11, y: -12}
-      - {x: 12, y: -12.005274}
+    - - {x: 11.8, y: 4.8}
+      - {x: -10.8, y: 4.8}
+      - {x: -10.8, y: -11.8}
+      - {x: 11.8, y: -11.8}
 --- !u!1 &999572424
 GameObject:
   m_ObjectHideFlags: 0
@@ -5388,7 +5388,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061781942}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 0.99, y: 0.99, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0

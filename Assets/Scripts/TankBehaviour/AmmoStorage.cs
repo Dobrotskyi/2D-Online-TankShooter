@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class AmmoStorage : TankProperty
 {
     public override int Current
@@ -11,6 +13,7 @@ public class AmmoStorage : TankProperty
                 _current = _max;
             if (_current < 0)
                 _current = 0;
+
             RaiseValueChanged();
         }
     }
