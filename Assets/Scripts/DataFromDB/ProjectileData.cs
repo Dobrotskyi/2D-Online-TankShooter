@@ -6,6 +6,7 @@ public class ProjectileData : PartData
     private int _damage;
     private float _timeOfLife;
     private int _ammoCost;
+    private float _damageMultiplier;
 
     public float Damage => _damage;
     public float TimeOfLife => _timeOfLife;
@@ -18,7 +19,11 @@ public class ProjectileData : PartData
         _ammoCost = cost;
     }
 
-    public void ApplyDamageMultiplier(float dmgMultiplier) => _damage = (int)(_damage * dmgMultiplier);
+    public void ApplyDamageMultiplier(float dmgMultiplier)
+    {
+        _damage = (int)(_damage * dmgMultiplier);
+        _damageMultiplier = dmgMultiplier;
+    }
 
     public override GameObject SpawnInstance(Transform parent)
     {
@@ -30,7 +35,7 @@ public class ProjectileData : PartData
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         projectile.AddComponent<BoxCollider2D>();
-        projectile.AddComponent<Projectile>().SetInfo(_damage, _timeOfLife);
+        projectile.AddComponent<Projectile>().SetInfo(_damage, _timeOfLife, _damageMultiplier);
         projectile.name = _name;
         projectile.tag = "Projectile";
         return projectile;

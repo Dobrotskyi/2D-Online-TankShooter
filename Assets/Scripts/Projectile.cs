@@ -5,16 +5,18 @@ public class Projectile : MonoBehaviour
 {
     private int _damage;
     private float _timeOfLife;
+    private float _multiplier;
 
     public void IgnoreCollisionWith(GameObject obj)
     {
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), obj.GetComponent<Collider2D>(), true);
     }
 
-    public void SetInfo(int damage, float timeOfLife)
+    public void SetInfo(int damage, float timeOfLife, float multiplier)
     {
         _damage = damage;
         _timeOfLife = timeOfLife;
+        _multiplier = multiplier;
         StartCoroutine(DestroyProjectile());
     }
 
@@ -48,6 +50,7 @@ public class Projectile : MonoBehaviour
         GameObject hitEffect = Instantiate(GameObject.FindGameObjectWithTag("EffectsContainer").GetComponent<EffectsContainer>().ProjectileHit);
         hitEffect.transform.position = transform.position;
         hitEffect.transform.rotation = transform.rotation;
+        hitEffect.transform.localScale *= _multiplier;
         Destroy(hitEffect, hitEffect.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
     }
