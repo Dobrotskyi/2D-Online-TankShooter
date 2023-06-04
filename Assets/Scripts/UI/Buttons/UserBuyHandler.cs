@@ -8,7 +8,8 @@ public class UserBuyHandler : UserShoppingTransacHandler
 
     protected override IEnumerator FinishTransaction()
     {
-        GameObject.FindObjectOfType(typeof(Canvas)).GetComponent<ShopMenu>().ChangeContentWithoutCheck();
+        GetComponent<Animator>().enabled = true;
+        Destroy(gameObject, this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
         yield return null;
     }
 }
