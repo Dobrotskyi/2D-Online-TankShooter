@@ -1,7 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
 public class ItemTemplateFiller : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class ItemTemplateFiller : MonoBehaviour
     [SerializeField] private Button _submitBtn;
     private PartData _part;
     public PartData PartData => _part;
+    public Button SubmitButton => _submitBtn;
 
     public void Fill(PartData data)
     {
@@ -29,5 +29,37 @@ public class ItemTemplateFiller : MonoBehaviour
         _title.text = data.Name;
         _description.text = data.GetDescription();
         _part = data;
+    }
+
+    public void UpdateSelected()
+    {
+        Debug.Log("Update selected");
+        if (_part is TurretData)
+        {
+            if (_part.Id == DBManager.SelectedTurretID)
+                _submitBtn.interactable = false;
+            else
+                _submitBtn.interactable = true;
+        }
+        else
+            if (_part.Id == DBManager.SelectedMainID) _submitBtn.interactable = false;
+        else
+            _submitBtn.interactable = true;
+    }
+
+    private void OnEnable()
+    {
+        if (TryGetComponent<UserSelectHandler>(out UserSelectHandler selectHandler))
+        {
+            UserSelectHandler.SelectTransactionFinished += UpdateSelected;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (TryGetComponent<UserSelectHandler>(out UserSelectHandler selectHandler))
+        {
+            UserSelectHandler.SelectTransactionFinished -= UpdateSelected;
+        }
     }
 }

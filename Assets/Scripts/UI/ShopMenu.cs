@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -19,8 +18,6 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private ToggleGroup _group;
     [SerializeField] private TextMeshProUGUI _textTMP;
     private Toggle _lastToggled;
-
-
 
     public void ChangeContent()
     {

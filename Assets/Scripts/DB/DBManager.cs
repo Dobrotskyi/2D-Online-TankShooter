@@ -45,7 +45,6 @@ public static class DBManager
 
     public static IEnumerator MakeCallGetSelectedIDs()
     {
-        Debug.Log(LoginedUserName);
         PHPCaller caller = new(GET_SELECTED_IDS_URL);
         yield return caller.MakeCallWithNickname(s_userName);
         while (caller.ResultStatus == UnityEngine.Networking.UnityWebRequest.Result.InProgress)
