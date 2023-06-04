@@ -53,7 +53,7 @@ public class Tank : MonoBehaviour, ITakeDamage
         if (_setupInProgress)
             return;
         _turret.Shoot();
-        _ammoStorage.LoadTurret(_turret);
+        _turret.LoadTurret(_ammoStorage);
     }
 
     public void Aim(Vector2 target)

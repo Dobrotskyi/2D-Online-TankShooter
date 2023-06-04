@@ -9,7 +9,7 @@ public class ProjectileData : PartData
 
     public float Damage => _damage;
     public float TimeOfLife => _timeOfLife;
-    public int AmmoCost => _ammoCost;
+    public int ShotCost => _ammoCost;
 
     public ProjectileData(int id, string name, int damage, float timeOfLife, int cost, Sprite sprite) : base(id, name, sprite)
     {

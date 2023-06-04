@@ -18,28 +18,13 @@ public class AmmoStorage : TankProperty
 
     public void RessuplyAmmo(int amt) => Current += amt;
 
-    public bool LoadTurret()
+    public bool GiveAmmo(int amt)
     {
-        if (Current > 0)
+        if (Current >= amt)
         {
-            Current--;
+            Current -= amt;
             return true;
         }
-        else
-            return false;
-    }
-
-    public void LoadTurret(TurretPartBehav turret)
-    {
-        if (turret.Loaded || Current == 0)
-            return;
-
-        if (Current > 0)
-        {
-            turret.Loaded = true;
-            Current--;
-        }
-        else
-            turret.Loaded = false;
+        return false;
     }
 }

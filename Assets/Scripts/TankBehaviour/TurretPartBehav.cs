@@ -6,7 +6,7 @@ public class TurretPartBehav : MonoBehaviour
 
     public bool Loaded = false;
 
-    private TurretData _data;
+    private TurretData _turretData;
     private Transform _barrel;
     private Transform _mainPart;
     private float _fireRateMultiplier = 1f;
@@ -14,9 +14,9 @@ public class TurretPartBehav : MonoBehaviour
 
     public void SetData(TurretData data)
     {
-        if (_data == null)
+        if (_turretData == null)
         {
-            _data = data;
+            _turretData = data;
         }
         else
             throw new System.Exception("Data for this turret was already set");
@@ -39,7 +39,7 @@ public class TurretPartBehav : MonoBehaviour
         Vector2 lookDirection = (target - (Vector2)_barrel.transform.position);
         float angleZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
         Quaternion rotation = Quaternion.AngleAxis(angleZ, _barrel.transform.forward);
-        gameObject.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, rotation, _data.RotationSpeed * Time.deltaTime);
+        gameObject.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, rotation, _turretData.RotationSpeed * Time.deltaTime);
     }
 
     public void Shoot()
@@ -47,9 +47,9 @@ public class TurretPartBehav : MonoBehaviour
         if (CanShoot)
         {
             Vector2 direction = (Vector2)_barrel.up +
-                new Vector2(Random.Range(-_data.Spread.x, _data.Spread.x), Random.Range(-_data.Spread.y, _data.Spread.y));
-            GameObject projectile = _data.ProjData.SpawnInstance(_barrel);
-            projectile.GetComponent<Rigidbody2D>().AddForce(direction * _data.ShotForce, ForceMode2D.Impulse);
+                new Vector2(Random.Range(-_turretData.Spread.x, _turretData.Spread.x), Random.Range(-_turretData.Spread.y, _turretData.Spread.y));
+            GameObject projectile = _turretData.ProjData.SpawnInstance(_barrel);
+            projectile.GetComponent<Rigidbody2D>().AddForce(direction * _turretData.ShotForce, ForceMode2D.Impulse);
             projectile.GetComponent<Projectile>().IgnoreCollisionWith(_mainPart.gameObject);
             _lastShotTime = Time.time;
 
@@ -57,11 +57,18 @@ public class TurretPartBehav : MonoBehaviour
         }
     }
 
+    public void LoadTurret(AmmoStorage storage)
+    {
+        if (Loaded)
+            return;
+        Loaded = storage.GiveAmmo(_turretData.ProjData.ShotCost);
+    }
+
     public bool CanShoot => ReadyToShoot() && Loaded;
 
     private bool ReadyToShoot()
     {
-        if (Time.time >= _lastShotTime + _data.FireRate * _fireRateMultiplier)
+        if (Time.time >= _lastShotTime + _turretData.FireRate * _fireRateMultiplier)
             return true;
         else
             return false;
