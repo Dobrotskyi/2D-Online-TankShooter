@@ -30,8 +30,7 @@ public class ProjectileData : PartData
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         projectile.AddComponent<BoxCollider2D>();
-        projectile.AddComponent<Projectile>().SetDamage(_damage);
-        MonoBehaviour.Destroy(projectile, _timeOfLife);
+        projectile.AddComponent<Projectile>().SetInfo(_damage, _timeOfLife);
         projectile.name = _name;
         projectile.tag = "Projectile";
         return projectile;

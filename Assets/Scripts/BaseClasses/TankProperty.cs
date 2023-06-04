@@ -8,14 +8,7 @@ public abstract class TankProperty
     protected int _current;
 
     public virtual int Current { get; protected set; }
-    public float CurrentInPercents
-    {
-        get
-        {
-            Debug.Log((float)_current / _max);
-            return (float)_current / _max;
-        }
-    }
+    public float CurrentInPercents => (float)_current / _max;
 
     public TankProperty(int max)
     {
