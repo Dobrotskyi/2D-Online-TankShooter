@@ -29,6 +29,7 @@ public class ProjectileData : PartData
     {
         GameObject projectile = base.SpawnInstance(parent);
         projectile.transform.SetParent(null);
+        projectile.GetComponent<SpriteRenderer>().sortingOrder = 3;
 
         Rigidbody2D rb = projectile.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0;

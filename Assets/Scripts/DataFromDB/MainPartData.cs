@@ -1,7 +1,7 @@
 using System.Text;
 using UnityEngine;
 
-public class MainPartData : PartData
+public class MainPartData : PartData, IBuyable
 {
     public static string TurretPlacementStr = "turretPlacement";
 
@@ -14,6 +14,7 @@ public class MainPartData : PartData
     private float _durability = -1;
     private int _ammoStorage = -1;
     private Vector2 _turretPlacement;
+    private int _price;
 
     public float Acceleration => _acceleration;
     public float MaxSpeed => _maxSpeed;
@@ -21,8 +22,9 @@ public class MainPartData : PartData
     public float Durability => _durability;
     public int AmmoStorage => _ammoStorage;
     public Vector2 TurretPlacement => _turretPlacement;
+    public int Price => _price;
 
-    public MainPartData(int id, string name, float acceleration, float maxSpeed, float angularSpeed, float durability, int ammo, Vector2 turretPos, Sprite sprite) : base(id, name, sprite)
+    public MainPartData(int id, string name, float acceleration, float maxSpeed, float angularSpeed, float durability, int ammo, Vector2 turretPos, Sprite sprite, int price) : base(id, name, sprite)
     {
         _acceleration = acceleration;
         _maxSpeed = maxSpeed;
@@ -30,6 +32,7 @@ public class MainPartData : PartData
         _durability = durability;
         _ammoStorage = ammo;
         _turretPlacement = turretPos;
+        _price = price;
     }
 
     public override GameObject SpawnInstance(Transform parent)

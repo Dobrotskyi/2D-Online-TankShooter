@@ -9,6 +9,10 @@ public class ItemTemplateFiller : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private Color _turretItemColor;
     [SerializeField] private Button _submitBtn;
+
+    [Header("Can leave empty")]
+    [SerializeField] private TextMeshProUGUI _priceDisplayer;
+
     private PartData _part;
     public PartData PartData => _part;
     public Button SubmitButton => _submitBtn;
@@ -29,11 +33,13 @@ public class ItemTemplateFiller : MonoBehaviour
         _title.text = data.Name;
         _description.text = data.GetDescription();
         _part = data;
+
+        if (_priceDisplayer != null)
+            _priceDisplayer.text = _part is IBuyable ? (_part as IBuyable).Price.ToString() : "0";
     }
 
     public void UpdateSelected()
     {
-        Debug.Log("Update selected");
         if (_part is TurretData)
         {
             if (_part.Id == DBManager.SelectedTurretID)

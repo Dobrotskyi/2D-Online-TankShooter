@@ -11,6 +11,7 @@ public class MainPartDataBuilder : ObjectFromDBBuilder
     private float _durability = -1;
     private int _ammoStorage = -1;
     private Vector2 _turretPlacement;
+    private int _price = 0;
 
     public MainPartDataBuilder SetName(string name)
     {
@@ -60,6 +61,12 @@ public class MainPartDataBuilder : ObjectFromDBBuilder
         return this;
     }
 
+    public MainPartDataBuilder SetPrice(int price)
+    {
+        _price = price;
+        return this;
+    }
+
     public override void ParseData(string[] info)
     {
         Vector2 turretPlacement = new Vector2(float.Parse(info[7], CultureInfo.InvariantCulture), float.Parse(info[8], CultureInfo.InvariantCulture));
@@ -72,12 +79,15 @@ public class MainPartDataBuilder : ObjectFromDBBuilder
                 SetCapacity(int.Parse(info[i++], CultureInfo.InvariantCulture)).
                 SetTurretPlace(turretPlacement).SetSprite(ImageLoader.MakeSprite(info[9], new Vector2(0.5f, 0.5f)));
 
+        if (info.Length > 10)
+            SetPrice(int.Parse(info[10], CultureInfo.InvariantCulture));
+
     }
 
     protected override PartData MakePart()
     {
         return new MainPartData(_id, _name, _acceleration, _maxSpeed, _angularSpeed,
-                _durability, _ammoStorage, _turretPlacement, _sprite);
+                _durability, _ammoStorage, _turretPlacement, _sprite, _price);
 
     }
 

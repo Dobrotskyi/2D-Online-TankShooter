@@ -12,6 +12,7 @@ public class TurretDataBuilder : ObjectFromDBBuilder
     private string _name;
     private Sprite _sprite;
     private ProjectileData _projectileData;
+    private int _price;
 
     public TurretDataBuilder() { }
 
@@ -63,6 +64,12 @@ public class TurretDataBuilder : ObjectFromDBBuilder
         return this;
     }
 
+    public TurretDataBuilder SetPrice(int price)
+    {
+        _price = price;
+        return this;
+    }
+
     public override void ParseData(string[] info)
     {
         Vector2 spread = new Vector2(float.Parse(info[3], CultureInfo.InvariantCulture), float.Parse(info[4], CultureInfo.InvariantCulture));
@@ -79,13 +86,16 @@ public class TurretDataBuilder : ObjectFromDBBuilder
             float.Parse(info[13], CultureInfo.InvariantCulture),
             int.Parse(info[14], CultureInfo.InvariantCulture),
             ImageLoader.MakeSprite(info[15], new Vector2(0.5f, 0.5f)));
+
+        if (info.Length > 16)
+            SetPrice(int.Parse(info[16], CultureInfo.InvariantCulture));
     }
 
     protected override PartData MakePart()
     {
         return new TurretData(_id, _name, _rotationSpeed,
                               _spread, _fireRate, _shotForce,
-                              _durabilityMultiplier, _damageMult, _sprite, _projectileData);
+                              _durabilityMultiplier, _damageMult, _sprite, _projectileData, _price);
     }
 
     protected override bool Verify()

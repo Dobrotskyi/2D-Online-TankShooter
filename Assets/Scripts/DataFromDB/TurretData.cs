@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-public class TurretData : PartData
+public class TurretData : PartData, IBuyable
 {
     private float _rotationSpeed = 40f;
     private Vector2 _spread = new Vector2(0.2f, 0.2f);
@@ -11,6 +11,7 @@ public class TurretData : PartData
     private float _durabilityMultiplier = 1f;
     private float _damageMult = 1f;
     private ProjectileData _projData;
+    private int _price = 0;
 
     public float RotationSpeed => _rotationSpeed;
     public Vector2 Spread => _spread;
@@ -18,9 +19,10 @@ public class TurretData : PartData
     public float ShotForce => _shotForce;
     public float DurabilityMultiplier => _durabilityMultiplier;
     public ProjectileData ProjData => _projData;
+    public int Price => _price;
 
     public TurretData(int id, string name, float rotationSpeed, Vector2 spread, float fireRate, float shotForce,
-        float dm, float damageMult, Sprite sprite, ProjectileData projData) : base(id, name, sprite)
+        float dm, float damageMult, Sprite sprite, ProjectileData projData, int price) : base(id, name, sprite)
     {
         _rotationSpeed = rotationSpeed;
         _fireRate = fireRate;
@@ -29,6 +31,7 @@ public class TurretData : PartData
         _damageMult = damageMult;
         _spread = spread;
         _projData = projData;
+        _price = price;
     }
 
     public override GameObject SpawnInstance(Transform parent)

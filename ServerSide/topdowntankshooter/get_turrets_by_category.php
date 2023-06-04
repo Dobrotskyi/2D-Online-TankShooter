@@ -19,7 +19,8 @@ $queryText = "Select tank_turrets.id, tank_turrets.name, tank_turrets.rotation_s
                 tank_turrets.damage_mult,ANY_VALUE(tank_turrets_sprites.sprite) as 'turret_sprite',
                 projectiles.id as 'proj_id',
                 projectiles.name as 'projectile_name',
-                projectiles.damage, projectiles.time_of_life, projectiles.ammo_cost, ANY_VALUE(projectiles_sprites.sprite) as 'projectile_sprite'
+                projectiles.damage, projectiles.time_of_life, projectiles.ammo_cost, ANY_VALUE(projectiles_sprites.sprite) as 'projectile_sprite',
+                price
                 from tank_turrets
                 INNER join tank_turrets_sprites on tank_turrets.id = tank_turrets_sprites.turret_id
                 INNER JOIN projectiles on tank_turrets.projectile_id = projectiles.id

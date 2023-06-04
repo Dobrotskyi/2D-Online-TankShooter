@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Globalization;
 using UnityEngine;
@@ -7,6 +8,8 @@ public static class DBManager
     public const int MAX_NAME_LENGTH = 10;
     public const int MIN_NAME_LENGTH = 5;
     public const int MIN_PASSW_LENGTH = 5;
+
+    public static event Action MoneyChanged;
 
     public const string LOGIN_URL = "http://localhost/topdowntankshooter/login.php";
     public const string REG_URL = "http://localhost/topdowntankshooter/register.php";
@@ -21,6 +24,7 @@ public static class DBManager
     public const string SELECT_NEW_PART_URL = "http://localhost/topdowntankshooter/select_new_part.php";
 
     public const string GET_SELECTED_IDS_URL = "http://localhost/topdowntankshooter/get_selected_ids.php";
+    private const string GET_MONEY = "http://localhost/topdowntankshooter/get_money.php";
 
     private static string s_userName = "admin1";
     private static int s_money;
@@ -34,7 +38,12 @@ public static class DBManager
     public static int Money
     {
         get => s_money;
-        set => s_money = value;
+        set
+        {
+            s_money = value;
+            Debug.Log("MoneyChanged?.Invoke();");
+            MoneyChanged?.Invoke();
+        }
     }
 
     public static int SelectedTurretID { get; private set; }
@@ -49,12 +58,22 @@ public static class DBManager
         yield return caller.MakeCallWithNickname(s_userName);
         while (caller.ResultStatus == UnityEngine.Networking.UnityWebRequest.Result.InProgress)
         {
-            Debug.Log("InProgress");
             yield return null;
         }
 
         SelectedTurretID = int.Parse(caller.Result[0], CultureInfo.InvariantCulture);
         SelectedMainID = int.Parse(caller.Result[1], CultureInfo.InvariantCulture);
+    }
+
+    public static IEnumerator UpdateMoneyAmt()
+    {
+        PHPCaller caller = new(GET_MONEY);
+        yield return caller.MakeCallWithNickname(s_userName);
+        while (caller.ResultStatus == UnityEngine.Networking.UnityWebRequest.Result.InProgress)
+        {
+            yield return null;
+        }
+        Money = int.Parse(caller.Result[0], CultureInfo.InvariantCulture);
     }
 
     public static void Logout()
