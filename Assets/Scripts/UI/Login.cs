@@ -38,6 +38,7 @@ public class Login : MonoBehaviour
         {
             DBManager.LoginedUserName = _nicknameField.text;
             DBManager.Money = int.Parse(result.Split("\t")[1]);
+            uwr.Dispose();
             SceneManager.LoadScene("MainMenu");
         }
         else
@@ -47,8 +48,6 @@ public class Login : MonoBehaviour
         }
 
         uwr.Dispose();
-        yield break;
-
     }
 
     public void VerifyInputs()

@@ -8,6 +8,11 @@ using UnityEngine.UI;
 
 public class ShopMenu : MonoBehaviour
 {
+    private const char DETERM = '\t';
+
+    public int SelectedMain { get; private set; }
+    public int SelectedTurret { get; private set; }
+
     [SerializeField] private GameObject[] _itemTemplates;
     [SerializeField] private GameObject _content;
     [SerializeField] private Toggle[] _toggles;
@@ -16,7 +21,6 @@ public class ShopMenu : MonoBehaviour
     private Toggle _lastToggled;
 
 
-    private const char DETERM = '\t';
 
     public void ChangeContent()
     {
@@ -31,6 +35,8 @@ public class ShopMenu : MonoBehaviour
 
     public void ChangeContentWithoutCheck()
     {
+        if (_lastToggled == _toggles[0] && _toggles[0].isOn)
+            StartCoroutine(DBManager.MakeCallGetSelectedIDs());
         ClearContent();
         ShowParts();
     }
@@ -57,8 +63,8 @@ public class ShopMenu : MonoBehaviour
 
     private void ShowParts()
     {
-        StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.TURRETS_IN_STORE_URL));
-        StartCoroutine(MakeCallToDB(new MainPartDataBuilder(), DBManager.MAIN_IN_STORE_URL));
+        StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.GET_TURRETS_BY_CATEGORY_URL));
+        StartCoroutine(MakeCallToDB(new MainPartDataBuilder(), DBManager.GET_MAINS_BY_CATEGORY_URL));
     }
 
     private IEnumerator MakeCallToDB(ObjectFromDBBuilder builder, string url)

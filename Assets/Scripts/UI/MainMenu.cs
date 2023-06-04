@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
             _playerDisplay.text = $"Welcome, {DBManager.LoginedUserName} ";
             foreach (var b in _restrictedBtns)
                 b.interactable = true;
+            StartCoroutine(DBManager.MakeCallGetSelectedIDs());
         }
     }
 
