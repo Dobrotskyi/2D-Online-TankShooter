@@ -126,6 +126,7 @@ public class Tank : MonoBehaviour, ITakeDamage
                 yOffset += 0.3f;
             }
             _bars[0].SetProperty(_health);
+            _bars[1].SetProperty(_ammoStorage);
         }
     }
 

@@ -4,7 +4,7 @@ public class TurretPartBehav : MonoBehaviour
 {
     private const float MIN_AIMING_DIST = 1f;
 
-    public bool Loaded = false;
+    public bool Loaded = true;
 
     private TurretData _turretData;
     private Transform _barrel;
