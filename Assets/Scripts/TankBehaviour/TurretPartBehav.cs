@@ -40,7 +40,7 @@ public class TurretPartBehav : MonoBehaviour
         Vector2 lookDirection = (target - (Vector2)_barrel.transform.position);
         float angleZ = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
         Quaternion rotation = Quaternion.AngleAxis(angleZ, _barrel.transform.forward);
-        gameObject.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, rotation, _turretData.RotationSpeed * Time.deltaTime);
+        gameObject.transform.rotation = Quaternion.Lerp(_barrel.transform.rotation, rotation, _turretData.RotationSpeed * Time.deltaTime);
     }
 
     public void Shoot()

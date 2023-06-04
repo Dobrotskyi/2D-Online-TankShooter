@@ -4,7 +4,6 @@ using UnityEngine;
 public class Tank : MonoBehaviour, ITakeDamage
 {
     [SerializeField] private PropertyBar[] _bars;
-    private ProjectileData _projectileData;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -97,7 +96,6 @@ public class Tank : MonoBehaviour, ITakeDamage
         _turret = obj.GetComponent<TurretPartBehav>();
         _turret.SetData(turretData);
         _turret.AttachToBase(_mainPart.SpawnedObj.transform);
-        _projectileData = turretData.ProjData;
 
         _ammoStorage = new AmmoStorage(mainPartData.AmmoStorage);
         _turret.SetAmmoSource(_ammoStorage);
@@ -138,5 +136,8 @@ public class Tank : MonoBehaviour, ITakeDamage
     private void DestroyThisTank()
     {
         Debug.Log("Destroying this tank");
+        Animator animator = GetComponent<Animator>();
+        animator.enabled = true;
+        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
     }
 }
