@@ -158,9 +158,6 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 
     private void DestroyThisTank()
     {
-        if (_view.IsMine == false)
-            return;
-
         Debug.Log("Destroying this tank");
         GameObject explosion = Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
     }
