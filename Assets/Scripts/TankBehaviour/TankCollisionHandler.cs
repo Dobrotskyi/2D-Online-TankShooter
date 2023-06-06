@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class TankCollisionHandler : MonoBehaviour
+public class TankCollisionHandler : MonoBehaviourPun
 {
     private Tank _tank;
 

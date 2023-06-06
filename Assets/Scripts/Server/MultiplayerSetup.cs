@@ -12,7 +12,6 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        Debug.Log(_createRoomInputField.text.Length);
         if (_createRoomInputField.text.Length == 0)
             throw new System.Exception("Name field for create room was empty");
         RoomOptions roomOptions = new();

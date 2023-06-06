@@ -33,6 +33,19 @@ public abstract class ObjectFromDBBuilder
         yield return null;
     }
 
+    public static IEnumerator GetSelectedByUser(ObjectFromDBBuilder builder, string url, string name)
+    {
+        PHPCaller caller = new(url);
+        yield return caller.MakeCallWithNickname(name);
+        while (caller.ResultStatus == UnityWebRequest.Result.InProgress)
+            yield return null;
+        if (caller.ResultStatus != UnityWebRequest.Result.Success)
+            yield return new System.Exception("Loading data was failed");
+
+        builder.ParseData(caller.Result);
+        yield return null;
+    }
+
     protected abstract bool Verify();
     protected abstract PartData MakePart();
     public abstract void ParseData(string[] result);

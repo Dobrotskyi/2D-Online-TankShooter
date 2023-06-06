@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class TurretPartBehav : MonoBehaviour
+public class TurretPartBehav : MonoBehaviourPun
 {
     private const float MIN_AIMING_DIST = 1f;
 

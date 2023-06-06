@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class MainPartBehav : MonoBehaviour
+public class MainPartBehav : MonoBehaviourPun
 {
     private const int MAX_SPEED_MULT = 10;
     private const int ACCELERATION_MULT = 10;

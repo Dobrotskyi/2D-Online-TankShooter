@@ -2,10 +2,9 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class Tank : MonoBehaviour, ITakeDamage
+public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 {
     [SerializeField] private PropertyBar[] _bars;
-    [SerializeField] private bool _isBot = false;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -29,8 +28,6 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void TakeDamage(int amt)
     {
-        if (_isBot == false && _view.IsMine == false)
-            return;
         if (_setupInProgress)
             return;
 
@@ -40,7 +37,7 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Move(float direction)
     {
-        if (_isBot == false && _view.IsMine == false)
+        if (_view.IsMine == false)
             return;
         if (_setupInProgress)
             return;
@@ -49,7 +46,7 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Rotate(float side)
     {
-        if (_isBot == false && _view.IsMine == false)
+        if (_view.IsMine == false)
             return;
         if (_setupInProgress)
             return;
@@ -58,7 +55,7 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Shoot()
     {
-        if (_isBot == false && _view.IsMine == false)
+        if (_view.IsMine == false)
             return;
         if (_setupInProgress)
             return;
@@ -67,7 +64,7 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Aim(Vector2 target)
     {
-        if (_isBot == false && _view.IsMine == false)
+        if (_view.IsMine == false)
             return;
         if (_setupInProgress)
             return;
@@ -76,35 +73,36 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void RestoreAmmo(int amt)
     {
-        if (_isBot == false && _view.IsMine == false)
+        if (_view.IsMine == false)
             return;
         _ammoStorage.RessuplyAmmo(amt);
     }
 
     public Transform GetCameraTarget()
     {
-        if (_setupInProgress)
+        if (_setupInProgress || !_view.IsMine)
             return null;
         else
             return _mainPart.SpawnedObj.transform;
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         TryGetComponent(out _view);
+
         StartCoroutine(SpawnTank());
     }
 
     private IEnumerator SpawnTank()
     {
-        if (_isBot == false && _view.IsMine == false)
-            yield break;
+        //if (_isBot == false && _view.IsMine == false)
+        //    yield break;
 
         TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
-        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(mainBuilder, DBManager.SELECTED_MAIN_URL));
-        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(turretBuilder, DBManager.SELECTED_TURRET_URL));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(mainBuilder, DBManager.SELECTED_MAIN_URL, photonView.Owner.NickName));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(turretBuilder, DBManager.SELECTED_TURRET_URL, photonView.Owner.NickName));
 
         MainPartData mainPartData = (MainPartData)mainBuilder.Build();
         _mainPart = new MainPart(mainPartData.SpawnInstance(transform));
@@ -122,18 +120,14 @@ public class Tank : MonoBehaviour, ITakeDamage
         _health.ZeroHealth += DestroyThisTank;
 
         while (_mainPart.SpawnedObj == null && _turret.gameObject == null)
-        {
-            Debug.Log("InProgress");
             yield return null;
-        }
+
         SetPropertyBars();
         _setupInProgress = false;
     }
 
     private void SetPropertyBars()
     {
-        if (_isBot == false && _view.IsMine == false)
-            return;
         if (_bars.Length != 0)
         {
             float halfSize = _mainPart.SpawnedObj.GetComponent<Collider2D>().bounds.size.y / 2;
@@ -148,17 +142,18 @@ public class Tank : MonoBehaviour, ITakeDamage
         }
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
-        if (_view.IsMine)
+        if (_view != null && _view.IsMine)
         {
             _health.ZeroHealth -= DestroyThisTank;
+            DestroyThisTank();
         }
     }
 
     private void DestroyThisTank()
     {
-        if (_isBot == false && _view.IsMine == false)
+        if (_view.IsMine == false)
             return;
         Debug.Log("Destroying this tank");
         Animator animator = GetComponent<Animator>();

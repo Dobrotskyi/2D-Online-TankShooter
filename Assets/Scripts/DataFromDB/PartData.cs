@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public abstract class PartData
@@ -28,6 +29,13 @@ public abstract class PartData
         sr.sprite = _sprite;
         sr.sortingOrder = 0;
         sr.transform.localScale = new Vector2(1.3f, 1.3f);
+
+        part.AddComponent<PhotonView>();
+        PhotonTransformViewClassic viewClassic = part.AddComponent<PhotonTransformViewClassic>();
+        viewClassic.m_PositionModel.SynchronizeEnabled = true;
+        viewClassic.m_RotationModel.SynchronizeEnabled = true;
+        if (parent.TryGetComponent(out PhotonView view))
+            view.ObservedComponents.Add(viewClassic);
 
         return part;
     }
