@@ -5,6 +5,7 @@ using UnityEngine;
 public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 {
     [SerializeField] private PropertyBar[] _bars;
+    [SerializeField] private GameObject _explosionAnim;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -31,7 +32,12 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
         if (_setupInProgress)
             return;
 
-        Debug.Log(amt);
+        _view.RPC("RPC_TakeDamage", RpcTarget.All, amt);
+    }
+
+    [PunRPC]
+    private void RPC_TakeDamage(int amt)
+    {
         _health.TakeDamage(amt);
     }
 
@@ -147,7 +153,6 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
         if (_view != null && _view.IsMine)
         {
             _health.ZeroHealth -= DestroyThisTank;
-            DestroyThisTank();
         }
     }
 
@@ -155,9 +160,8 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
     {
         if (_view.IsMine == false)
             return;
+
         Debug.Log("Destroying this tank");
-        Animator animator = GetComponent<Animator>();
-        animator.enabled = true;
-        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+        GameObject explosion = Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
     }
 }
