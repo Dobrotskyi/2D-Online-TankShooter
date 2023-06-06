@@ -11,20 +11,20 @@ public static class DBManager
 
     public static event Action MoneyChanged;
 
-    public const string LOGIN_URL = "http://localhost/topdowntankshooter/login.php";
-    public const string REG_URL = "http://localhost/topdowntankshooter/register.php";
+    public const string LOGIN_URL = "http://localhost/topdowntankshooter/phps/login.php";
+    public const string REG_URL = "http://localhost/topdowntankshooter/phps/register.php";
 
-    public const string SELECTED_TURRET_URL = "http://localhost/topdowntankshooter/get_selected_turret.php";
-    public const string SELECTED_MAIN_URL = "http://localhost/topdowntankshooter/get_selected_main.php";
+    public const string SELECTED_TURRET_URL = "http://localhost/topdowntankshooter/phps/get_selected_turret.php";
+    public const string SELECTED_MAIN_URL = "http://localhost/topdowntankshooter/phps/get_selected_main.php";
 
-    public const string GET_TURRETS_BY_CATEGORY_URL = "http://localhost/topdowntankshooter/get_turrets_by_category.php";
-    public const string GET_MAINS_BY_CATEGORY_URL = "http://localhost/topdowntankshooter/get_mains_by_category.php";
+    public const string GET_TURRETS_BY_CATEGORY_URL = "http://localhost/topdowntankshooter/phps/get_turrets_by_category.php";
+    public const string GET_MAINS_BY_CATEGORY_URL = "http://localhost/topdowntankshooter/phps/get_mains_by_category.php";
 
-    public const string ADD_PART_TO_USER_URL = "http://localhost/topdowntankshooter/add_part_to_user.php";
-    public const string SELECT_NEW_PART_URL = "http://localhost/topdowntankshooter/select_new_part.php";
+    public const string ADD_PART_TO_USER_URL = "http://localhost/topdowntankshooter/phps/add_part_to_user.php";
+    public const string SELECT_NEW_PART_URL = "http://localhost/topdowntankshooter/phps/select_new_part.php";
 
-    public const string GET_SELECTED_IDS_URL = "http://localhost/topdowntankshooter/get_selected_ids.php";
-    private const string GET_MONEY = "http://localhost/topdowntankshooter/get_money.php";
+    public const string GET_SELECTED_IDS_URL = "http://localhost/topdowntankshooter/phps/get_selected_ids.php";
+    private const string GET_MONEY = "http://localhost/topdowntankshooter/phps/get_money.php";
 
     private static string s_userName = "admin1";
     private static int s_money;

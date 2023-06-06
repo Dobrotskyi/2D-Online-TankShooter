@@ -21,6 +21,6 @@ public class MainMenu : MonoBehaviour
 
     public void LoadRegisterPage() => SceneManager.LoadScene("RegisterMenu");
     public void LoadLoginPage() => SceneManager.LoadScene("LoginMenu");
-    public void LoadGame() => SceneManager.LoadScene("Game");
+    public void LoadGame() => SceneManager.LoadScene("LoadingScreen");
     public void LoadShop() => SceneManager.LoadScene("StoreMenu");
 }

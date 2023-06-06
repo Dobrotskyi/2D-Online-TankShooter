@@ -1,12 +1,15 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
 public class Tank : MonoBehaviour, ITakeDamage
 {
     [SerializeField] private PropertyBar[] _bars;
+    [SerializeField] private bool _isBot = false;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
+    private PhotonView _view;
 
     private struct MainPart
     {
@@ -26,6 +29,8 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void TakeDamage(int amt)
     {
+        if (_isBot == false && _view.IsMine == false)
+            return;
         if (_setupInProgress)
             return;
 
@@ -35,6 +40,8 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Move(float direction)
     {
+        if (_isBot == false && _view.IsMine == false)
+            return;
         if (_setupInProgress)
             return;
         _mainPart.Script.Move(direction);
@@ -42,6 +49,8 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Rotate(float side)
     {
+        if (_isBot == false && _view.IsMine == false)
+            return;
         if (_setupInProgress)
             return;
         _mainPart.Script.Rotate(side);
@@ -49,6 +58,8 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Shoot()
     {
+        if (_isBot == false && _view.IsMine == false)
+            return;
         if (_setupInProgress)
             return;
         _turret.Shoot();
@@ -56,6 +67,8 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void Aim(Vector2 target)
     {
+        if (_isBot == false && _view.IsMine == false)
+            return;
         if (_setupInProgress)
             return;
         _turret.AimAtTarget(target);
@@ -63,7 +76,8 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     public void RestoreAmmo(int amt)
     {
-        Debug.Log($"ammo was added - + {amt}");
+        if (_isBot == false && _view.IsMine == false)
+            return;
         _ammoStorage.RessuplyAmmo(amt);
     }
 
@@ -77,11 +91,15 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private void OnEnable()
     {
+        TryGetComponent(out _view);
         StartCoroutine(SpawnTank());
     }
 
     private IEnumerator SpawnTank()
     {
+        if (_isBot == false && _view.IsMine == false)
+            yield break;
+
         TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
@@ -114,6 +132,8 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private void SetPropertyBars()
     {
+        if (_isBot == false && _view.IsMine == false)
+            return;
         if (_bars.Length != 0)
         {
             float halfSize = _mainPart.SpawnedObj.GetComponent<Collider2D>().bounds.size.y / 2;
@@ -130,11 +150,16 @@ public class Tank : MonoBehaviour, ITakeDamage
 
     private void OnDisable()
     {
-        _health.ZeroHealth -= DestroyThisTank;
+        if (_view.IsMine)
+        {
+            _health.ZeroHealth -= DestroyThisTank;
+        }
     }
 
     private void DestroyThisTank()
     {
+        if (_isBot == false && _view.IsMine == false)
+            return;
         Debug.Log("Destroying this tank");
         Animator animator = GetComponent<Animator>();
         animator.enabled = true;
