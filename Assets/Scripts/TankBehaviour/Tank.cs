@@ -31,6 +31,13 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
     {
         if (_setupInProgress)
             return;
+        if (_view.IsMine)
+            _view.RPC("RPC_TakeDamage", RpcTarget.All, amt);
+    }
+
+    [PunRPC]
+    private void RPC_TakeDamage(int amt)
+    {
         _health.TakeDamage(amt);
     }
 
