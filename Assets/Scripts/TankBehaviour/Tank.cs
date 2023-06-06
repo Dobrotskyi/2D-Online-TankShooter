@@ -31,13 +31,6 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
     {
         if (_setupInProgress)
             return;
-
-        _view.RPC("RPC_TakeDamage", RpcTarget.All, amt);
-    }
-
-    [PunRPC]
-    private void RPC_TakeDamage(int amt)
-    {
         _health.TakeDamage(amt);
     }
 
@@ -65,6 +58,12 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
             return;
         if (_setupInProgress)
             return;
+        _view.RPC("RPC_Shoot", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_Shoot()
+    {
         _turret.Shoot();
     }
 
@@ -81,6 +80,12 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
     {
         if (_view.IsMine == false)
             return;
+        _view.RPC("RPC_RestoreAmmo", RpcTarget.All, amt);
+    }
+
+    [PunRPC]
+    private void RPC_RestoreAmmo(int amt)
+    {
         _ammoStorage.RessuplyAmmo(amt);
     }
 
