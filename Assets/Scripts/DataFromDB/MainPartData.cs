@@ -49,6 +49,13 @@ public class MainPartData : PartData, IBuyable
 
         mainPart.AddComponent<BoxCollider2D>();
 
+        PhotonRigidbody2DView rbView = mainPart.AddComponent<PhotonRigidbody2DView>();
+        rbView.m_SynchronizeAngularVelocity = true;
+        rbView.m_SynchronizeVelocity = true;
+
+        mainPart.GetComponent<PhotonView>().ObservedComponents.Add(rbView);
+        parent.GetComponent<PhotonView>().ObservedComponents.Add(rbView);
+
         GameObject turretPlacement = new();
         turretPlacement.transform.SetParent(mainPart.transform);
         turretPlacement.transform.localPosition = _turretPlacement;
