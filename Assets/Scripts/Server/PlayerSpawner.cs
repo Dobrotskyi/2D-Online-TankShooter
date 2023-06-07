@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private List<Vector2> _spawnPoints = new();
+    [SerializeField] private List<Transform> _spawnPoints = new();
     [SerializeField] private GameObject _playerTank;
 
     private void Start()
     {
-        PhotonNetwork.Instantiate(_playerTank.name, _spawnPoints[0], Quaternion.identity);
+        int playersAmt = PhotonNetwork.PlayerList.Length;
+        PhotonNetwork.Instantiate(_playerTank.name, _spawnPoints[playersAmt - 1].position, Quaternion.identity);
         _spawnPoints.RemoveAt(0);
     }
 }
