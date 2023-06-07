@@ -13,7 +13,7 @@ public class TurretPartBehav : MonoBehaviourPun
     private float _fireRateMultiplier = 1f;
     private float _lastShotTime = 0f;
     private AmmoStorage _ammoStorage;
-    private PhotonView _view;
+    private string _playerNickname;
 
     public void SetData(TurretData data)
     {
@@ -49,9 +49,12 @@ public class TurretPartBehav : MonoBehaviourPun
     {
         if (CanShoot)
         {
-            GameObject projectile = _turretData.ProjData.SpawnInstance(_barrel);
-            projectile.GetComponent<Rigidbody2D>().AddForce(direction * _turretData.ShotForce, ForceMode2D.Impulse);
-            projectile.GetComponent<Projectile>().IgnoreCollisionWith(_mainPart.gameObject);
+            GameObject projectileGO = _turretData.ProjData.SpawnInstance(_barrel);
+            projectileGO.GetComponent<Rigidbody2D>().AddForce(direction * _turretData.ShotForce, ForceMode2D.Impulse);
+            Projectile proj = projectileGO.GetComponent<Projectile>();
+            proj.IgnoreCollisionWith(_mainPart.gameObject);
+            proj.ShooterName = _playerNickname;
+
             _lastShotTime = Time.time;
 
             Loaded = false;
@@ -86,6 +89,9 @@ public class TurretPartBehav : MonoBehaviourPun
     private void OnEnable()
     {
         _barrel = transform.Find("barrel");
+        Debug.Log(transform.parent.gameObject.GetComponent<PhotonView>());
+        PhotonView parentView = transform.parent.gameObject.GetComponent<PhotonView>();
+        _playerNickname = parentView.Owner.NickName;
     }
 
     private void LateUpdate()

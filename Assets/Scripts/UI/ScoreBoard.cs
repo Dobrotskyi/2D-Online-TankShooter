@@ -17,20 +17,22 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         RemoveFromeScoreboard(otherPlayer);
     }
 
+    public void UpdateScoreboard(string name)
+    {
+        _scoreboardPairs[name].AddKill();
+    }
+
     private void Start()
     {
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
-        {
             AddToScoreboard(player);
-        }
     }
 
     private void AddToScoreboard(Photon.Realtime.Player player)
     {
         ScoreboardItem scoreboardItem = Instantiate(_scoreboardItem, transform).GetComponent<ScoreboardItem>();
         scoreboardItem.Initialize(player);
-        _scoreboardPairs.Add(player.NickName, scoreboardItem);
-
+        _scoreboardPairs[player.NickName] = scoreboardItem;
     }
 
     private void RemoveFromeScoreboard(Photon.Realtime.Player player)
@@ -38,5 +40,4 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         Destroy(_scoreboardPairs[player.NickName].gameObject);
         _scoreboardPairs.Remove(player.NickName);
     }
-
 }

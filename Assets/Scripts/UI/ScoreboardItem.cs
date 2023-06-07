@@ -11,4 +11,9 @@ public class ScoreboardItem : MonoBehaviour
         _nicknameField.text = player.NickName;
         _scoreField.text = "0";
     }
+
+    public void AddKill()
+    {
+        _scoreField.text = (int.Parse(_scoreField.text) + 1).ToString();
+    }
 }

@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
+public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
 {
     public event Action TankWasDestroyed;
 
@@ -14,6 +14,7 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
     private Health _health;
     private bool _setupInProgress = true;
     private PhotonView _view;
+    private string _lastDamagerName;
 
     private struct MainPart
     {
@@ -31,7 +32,13 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 
     private MainPart _mainPart;
 
-    public void PlaceAtPos(Vector2 newPos) => _mainPart.SpawnedObj.transform.position = newPos;
+    public override void OnDisable()
+    {
+        if (_view != null && _view.IsMine)
+        {
+            _health.ZeroHealth -= DestroyThisTank;
+        }
+    }
 
     public void TakeDamage(int amt)
     {
@@ -41,9 +48,20 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt);
     }
 
-    [PunRPC]
-    private void RPC_TakeDamage(int amt)
+    public void TakeDamage(int amt, string damagerName)
     {
+        if (_setupInProgress || _player.Frozen)
+            return;
+        if (_view.IsMine)
+        {
+            _view.RPC("RPC_TakeDamage", RpcTarget.All, amt, damagerName);
+        }
+    }
+
+    [PunRPC]
+    private void RPC_TakeDamage(int amt, string damagerName)
+    {
+        _lastDamagerName = damagerName;
         _health.TakeDamage(amt);
     }
 
@@ -163,24 +181,17 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
         }
     }
 
-    public override void OnDisable()
-    {
-        if (_view != null && _view.IsMine)
-        {
-            _health.ZeroHealth -= DestroyThisTank;
-        }
-    }
-
     private void DestroyThisTank()
     {
-        TankWasDestroyed?.Invoke();
         GameObject explosion = Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
         _view.RPC("RPC_Respawn", RpcTarget.All, FindObjectOfType<PlayerSpawner>().GetRandomSpawnPoint());
+        GameObject.FindGameObjectWithTag("Scoreboard").GetComponent<ScoreBoard>().UpdateScoreboard(_lastDamagerName);
     }
 
     [PunRPC]
     private void RPC_Respawn(Vector2 newPos)
     {
+        TankWasDestroyed?.Invoke();
         _mainPart.SpawnedObj.transform.position = newPos;
         FullRepair();
     }

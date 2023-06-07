@@ -6,6 +6,17 @@ public class Projectile : MonoBehaviour
     private int _damage;
     private float _timeOfLife;
     private float _multiplier;
+    private string _shooterNickname;
+
+    public string ShooterName
+    {
+        get => _shooterNickname;
+        set
+        {
+            if (string.IsNullOrEmpty(_shooterNickname))
+                _shooterNickname = value;
+        }
+    }
 
     public void IgnoreCollisionWith(GameObject obj)
     {
@@ -22,19 +33,19 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Transform superTF = collision.transform;
-        while (superTF != null)
+        Transform superTransf = collision.transform;
+        while (superTransf != null)
         {
-            if (superTF.gameObject.TryGetComponent<ITakeDamage>(out ITakeDamage _takeDamageObj))
+            if (superTransf.gameObject.TryGetComponent(out ITakeDamageFromPlayer _takeDamageObj))
             {
-                _takeDamageObj.TakeDamage(_damage);
+                _takeDamageObj.TakeDamage(_damage, _shooterNickname);
                 break;
             }
 
-            if (superTF.parent == null)
+            if (superTransf.parent == null)
                 break;
 
-            superTF = superTF.parent;
+            superTransf = superTransf.parent;
         }
         Destroy();
     }
