@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Registration : MonoBehaviour
+public class Registration : Authorization
 {
     private const string REG_URL = DBManager.REG_URL;
 
@@ -42,15 +42,10 @@ public class Registration : MonoBehaviour
 
         string result = uwr.downloadHandler.text;
         if (result == "0")
-        {
-            Debug.Log("user was added succesfully");
-            SceneManager.LoadScene("MainMenu");
-        }
+            DisplayMessage("Registration was succesful", _submitButton.transform.position);
         else
-        {
-            Debug.Log($"Smth was wrong while trying to register user#");
-            Debug.Log(result);
-        }
+            DisplayMessage(result.Substring(1), _submitButton.transform.position);
+
         uwr.Dispose();
         yield break;
     }

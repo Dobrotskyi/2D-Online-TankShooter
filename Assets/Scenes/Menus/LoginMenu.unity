@@ -826,6 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e4cae94163a2c4a8ee3e4347d7029a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _notification: {fileID: 2615411954250217066, guid: ff23aee0c74681949b2ac704b820b092, type: 3}
   _nicknameField: {fileID: 1054468635}
   _passwordField: {fileID: 1049698457}
   _submitButton: {fileID: 640205569}

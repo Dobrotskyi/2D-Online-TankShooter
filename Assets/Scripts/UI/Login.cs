@@ -5,10 +5,11 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Login : MonoBehaviour
+public class Login : Authorization
 {
     private const string LOGIN_URL = DBManager.LOGIN_URL;
 
+    [SerializeField] private GameObject _notification;
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _passwordField;
     [SerializeField] private Button _submitButton;
@@ -30,6 +31,7 @@ public class Login : MonoBehaviour
         if (uwr.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(uwr.result.ToString());
+            DisplayMessage(uwr.result.ToString(), _submitButton.transform.position);
             yield break;
         }
 
@@ -44,7 +46,7 @@ public class Login : MonoBehaviour
         }
         else
         {
-            Debug.Log("Loggin failed");
+            DisplayMessage(uwr.downloadHandler.text, _submitButton.transform.position);
             Debug.Log(result);
         }
 
