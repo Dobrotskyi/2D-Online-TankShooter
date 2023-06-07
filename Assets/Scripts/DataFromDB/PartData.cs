@@ -30,10 +30,13 @@ public abstract class PartData
         sr.sortingOrder = 0;
         sr.transform.localScale = new Vector2(1.3f, 1.3f);
 
-        part.AddComponent<PhotonView>();
+        PhotonView phView = part.AddComponent<PhotonView>();
         PhotonTransformViewClassic viewClassic = part.AddComponent<PhotonTransformViewClassic>();
+        phView.ObservedComponents = new() { viewClassic };
         viewClassic.m_PositionModel.SynchronizeEnabled = true;
         viewClassic.m_RotationModel.SynchronizeEnabled = true;
+        viewClassic.m_PositionModel.InterpolateOption = PhotonTransformViewPositionModel.InterpolateOptions.SynchronizeValues;
+        viewClassic.m_PositionModel.ExtrapolateOption = PhotonTransformViewPositionModel.ExtrapolateOptions.SynchronizeValues;
         if (parent.TryGetComponent(out PhotonView view))
             view.ObservedComponents.Add(viewClassic);
 

@@ -50,12 +50,24 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
         _mainPart.Script.Move(direction);
     }
 
+    [PunRPC]
+    private void RPC_Move(float direction)
+    {
+        _mainPart.Script.Move(direction);
+    }
+
     public void Rotate(float side)
     {
         if (_view.IsMine == false)
             return;
         if (_setupInProgress)
             return;
+        _mainPart.Script.Rotate(side);
+    }
+
+    [PunRPC]
+    private void RPC_Rotate(float side)
+    {
         _mainPart.Script.Rotate(side);
     }
 

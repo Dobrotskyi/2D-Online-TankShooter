@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 7874436446049872804}
   - component: {fileID: -6543926573631110060}
   - component: {fileID: 5092203961435666483}
-  - component: {fileID: 3547482004817911272}
   m_Layer: 0
   m_Name: PlayerTank
   m_TagString: Player
@@ -114,10 +113,6 @@ MonoBehaviour:
   observableSearch: 0
   ObservedComponents:
   - {fileID: -6543926573631110060}
-  - {fileID: 1848012205427324215}
-  - {fileID: 6484637121183969770}
-  - {fileID: 7747659114646140235}
-  - {fileID: 751289311012075379}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -137,10 +132,10 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
+    ExtrapolateOption: 1
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
@@ -166,22 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a0fe8c420774840ada8a70c7cfcc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3547482004817911272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848094409800984583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1001 &1848094409391607929
 PrefabInstance:
   m_ObjectHideFlags: 0

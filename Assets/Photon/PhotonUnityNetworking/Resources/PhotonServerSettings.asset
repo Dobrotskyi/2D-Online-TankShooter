@@ -42,6 +42,8 @@ MonoBehaviour:
   - RPC_TakeDamage
   - RPC_Shoot
   - RPC_RestoreAmmo
+  - RPC_Move
+  - RPC_Rotate
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
