@@ -13,6 +13,7 @@ public class TurretPartBehav : MonoBehaviourPun
     private float _fireRateMultiplier = 1f;
     private float _lastShotTime = 0f;
     private AmmoStorage _ammoStorage;
+    private PhotonView _view;
 
     public void SetData(TurretData data)
     {
@@ -44,12 +45,10 @@ public class TurretPartBehav : MonoBehaviourPun
         gameObject.transform.rotation = Quaternion.Lerp(_barrel.transform.rotation, rotation, _turretData.RotationSpeed * Time.deltaTime);
     }
 
-    public void Shoot()
+    public void Shoot(Vector2 direction)
     {
         if (CanShoot)
         {
-            Vector2 direction = (Vector2)_barrel.up +
-                new Vector2(Random.Range(-_turretData.Spread.x, _turretData.Spread.x), Random.Range(-_turretData.Spread.y, _turretData.Spread.y));
             GameObject projectile = _turretData.ProjData.SpawnInstance(_barrel);
             projectile.GetComponent<Rigidbody2D>().AddForce(direction * _turretData.ShotForce, ForceMode2D.Impulse);
             projectile.GetComponent<Projectile>().IgnoreCollisionWith(_mainPart.gameObject);
@@ -57,6 +56,13 @@ public class TurretPartBehav : MonoBehaviourPun
 
             Loaded = false;
         }
+    }
+
+    public Vector2 GenereteDirection()
+    {
+        return (Vector2)_barrel.up +
+                new Vector2(Random.Range(-_turretData.Spread.x, _turretData.Spread.x), Random.Range(-_turretData.Spread.y, _turretData.Spread.y));
+
     }
 
     public void SetAmmoSource(AmmoStorage ammoStorage)
