@@ -9,7 +9,6 @@ public class Login : Authorization
 {
     private const string LOGIN_URL = DBManager.LOGIN_URL;
 
-    [SerializeField] private GameObject _notification;
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _passwordField;
     [SerializeField] private Button _submitButton;

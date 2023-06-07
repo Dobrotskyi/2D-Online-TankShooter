@@ -5,15 +5,36 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputHandler))]
 public class Player : MonoBehaviour
 {
+    private const float _freezeTime = 3f;
     PlayerInput _input;
     PlayerInputHandler _handler;
+    private bool _frozen = false;
+    public bool Frozen => _frozen;
+
+    private void FreezePlayer()
+    {
+        _frozen = true;
+        StartCoroutine(UnfreezeAfterTime());
+    }
+
+    private IEnumerator UnfreezeAfterTime()
+    {
+        yield return new WaitForSeconds(_freezeTime);
+        _frozen = false;
+    }
 
     private void OnEnable()
     {
         _input = GetComponent<PlayerInput>();
         _handler = GetComponent<PlayerInputHandler>();
+        GetComponent<Tank>().TankWasDestroyed += FreezePlayer;
 
         StartCoroutine(TrySetCameraFollow());
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<Tank>().TankWasDestroyed -= FreezePlayer;
     }
 
     private IEnumerator TrySetCameraFollow()
@@ -28,6 +49,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_frozen)
+            return;
         if (_input.Shoot)
             _handler.Shoot();
         if (_input.Move)

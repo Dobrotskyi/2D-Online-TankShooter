@@ -1,11 +1,15 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 {
+    public event Action TankWasDestroyed;
+
     [SerializeField] private PropertyBar[] _bars;
     [SerializeField] private GameObject _explosionAnim;
+    [SerializeField] private Player _player;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -27,9 +31,11 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 
     private MainPart _mainPart;
 
+    public void PlaceAtPos(Vector2 newPos) => _mainPart.SpawnedObj.transform.position = newPos;
+
     public void TakeDamage(int amt)
     {
-        if (_setupInProgress)
+        if (_setupInProgress || _player.Frozen)
             return;
         if (_view.IsMine)
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt);
@@ -50,24 +56,12 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
         _mainPart.Script.Move(direction);
     }
 
-    [PunRPC]
-    private void RPC_Move(float direction)
-    {
-        _mainPart.Script.Move(direction);
-    }
-
     public void Rotate(float side)
     {
         if (_view.IsMine == false)
             return;
         if (_setupInProgress)
             return;
-        _mainPart.Script.Rotate(side);
-    }
-
-    [PunRPC]
-    private void RPC_Rotate(float side)
-    {
         _mainPart.Script.Rotate(side);
     }
 
@@ -125,9 +119,6 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 
     private IEnumerator SpawnTank()
     {
-        //if (_isBot == false && _view.IsMine == false)
-        //    yield break;
-
         TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
@@ -182,7 +173,21 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamage
 
     private void DestroyThisTank()
     {
-        Debug.Log("Destroying this tank");
+        TankWasDestroyed?.Invoke();
         GameObject explosion = Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
+        _view.RPC("RPC_Respawn", RpcTarget.All, FindObjectOfType<PlayerSpawner>().GetRandomSpawnPoint());
+    }
+
+    [PunRPC]
+    private void RPC_Respawn(Vector2 newPos)
+    {
+        _mainPart.SpawnedObj.transform.position = newPos;
+        FullRepair();
+    }
+
+    private void FullRepair()
+    {
+        _health.RestoreHealth(1000);
+        _ammoStorage.RessuplyAmmo(1000);
     }
 }

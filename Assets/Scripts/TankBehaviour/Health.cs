@@ -25,4 +25,8 @@ public class Health : TankProperty, ITakeDamage
     public Health(int current) : base(current) { }
 
     public void TakeDamage(int damage) => Current -= damage;
+    public void RestoreHealth(int amt)
+    {
+        Current += amt;
+    }
 }
