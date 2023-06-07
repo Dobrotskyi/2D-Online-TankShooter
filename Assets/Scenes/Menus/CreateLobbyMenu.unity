@@ -1319,8 +1319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b56d998378c334dbe1595bf76df6a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _notification: {fileID: 2615411954250217066, guid: ff23aee0c74681949b2ac704b820b092, type: 3}
   _joinInputField: {fileID: 82251366}
   _createRoomInputField: {fileID: 892325799}
+  _spawnNotificationPos: {x: 760, y: -335, z: 0}
 --- !u!1001 &2060421171
 PrefabInstance:
   m_ObjectHideFlags: 0

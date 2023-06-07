@@ -2,7 +2,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Registration : Authorization
@@ -42,9 +41,9 @@ public class Registration : Authorization
 
         string result = uwr.downloadHandler.text;
         if (result == "0")
-            DisplayMessage("Registration was succesful", _submitButton.transform.position);
+            DisplayMessage("Registration was succesful", _submitButton.transform.position, MessageType.Success);
         else
-            DisplayMessage(result.Substring(1), _submitButton.transform.position);
+            DisplayMessage(result.Substring(1), _submitButton.transform.position, MessageType.Fail);
 
         uwr.Dispose();
         yield break;

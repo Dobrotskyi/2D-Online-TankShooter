@@ -55,7 +55,7 @@ public class ItemTemplateFiller : MonoBehaviour
 
     private void OnEnable()
     {
-        if (TryGetComponent<UserSelectHandler>(out UserSelectHandler selectHandler))
+        if (TryGetComponent(out UserSelectHandler selectHandler))
         {
             UserSelectHandler.SelectTransactionFinished += UpdateSelected;
         }
@@ -63,7 +63,7 @@ public class ItemTemplateFiller : MonoBehaviour
 
     private void OnDisable()
     {
-        if (TryGetComponent<UserSelectHandler>(out UserSelectHandler selectHandler))
+        if (TryGetComponent(out UserSelectHandler selectHandler))
         {
             UserSelectHandler.SelectTransactionFinished -= UpdateSelected;
         }
