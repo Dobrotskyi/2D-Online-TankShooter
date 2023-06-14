@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7295416395248313176}
   - component: {fileID: 3187723246061212342}
-  - component: {fileID: 4224415691649485663}
+  - component: {fileID: 3625141273711041357}
   m_Layer: 0
   m_Name: green_big_tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7295416395248313176
 Transform:
@@ -86,8 +86,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4224415691649485663
-BoxCollider2D:
+--- !u!58 &3625141273711041357
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -100,18 +100,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
-  m_EdgeRadius: 0
+  m_Radius: 1
 --- !u!1001 &4699826428211169197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,6 +184,10 @@ PrefabInstance:
     - target: {fileID: 9094457732808812302, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
       propertyPath: m_Name
       value: FallingLeavesPS
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094457732808812302, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}

@@ -410,6 +410,14 @@ PrefabInstance:
       propertyPath: m_RotationModel.SynchronizeEnabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2681163461694484914, guid: 480c76356e822a94a96ac24a1f24f23a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681163462598120895, guid: 480c76356e822a94a96ac24a1f24f23a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2681163462839341889, guid: 480c76356e822a94a96ac24a1f24f23a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -561,6 +569,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1848094409800984580}
     m_Modifications:
+    - target: {fileID: 2681163461694484914, guid: e40ef11a47afc0d419714e35c34e851f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681163462598120895, guid: e40ef11a47afc0d419714e35c34e851f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2681163462839341889, guid: e40ef11a47afc0d419714e35c34e851f, type: 3}
       propertyPath: m_RootOrder
       value: 0

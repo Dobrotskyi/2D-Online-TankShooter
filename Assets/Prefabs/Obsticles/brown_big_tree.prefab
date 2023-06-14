@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8341373079893318925}
   - component: {fileID: 6676058414964547266}
-  - component: {fileID: 3785742025247899577}
+  - component: {fileID: 2385747348886193009}
   m_Layer: 0
   m_Name: brown_big_tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8341373079893318925
 Transform:
@@ -86,8 +86,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3785742025247899577
-BoxCollider2D:
+--- !u!58 &2385747348886193009
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -100,18 +100,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
-  m_EdgeRadius: 0
+  m_Radius: 1
 --- !u!1001 &5899465802872451869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,12 +110,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 8341373079893318925}
     m_Modifications:
     - target: {fileID: 6495781445376191169, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
+      propertyPath: ShapeModule.type
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495781445376191169, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
       propertyPath: ShapeModule.m_Scale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6495781445376191169, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
       propertyPath: ShapeModule.m_Scale.y
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495781445376191169, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6495781445376191169, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -194,6 +192,10 @@ PrefabInstance:
     - target: {fileID: 9094457732808812302, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
       propertyPath: m_Name
       value: FallingLeavesPS
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094457732808812302, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d38d215efe5a2704eb65abbe44d01d39, type: 3}
