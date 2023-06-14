@@ -31,6 +31,7 @@ public class Login : Authorization
         {
             Debug.Log(uwr.result.ToString());
             DisplayMessage(uwr.result.ToString(), _submitButton.transform.position, MessageType.Fail);
+            uwr.Dispose();
             yield break;
         }
 

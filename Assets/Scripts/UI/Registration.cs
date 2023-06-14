@@ -36,6 +36,7 @@ public class Registration : Authorization
         if (uwr.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(uwr.result.ToString());
+            uwr.Dispose();
             yield break;
         }
 

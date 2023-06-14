@@ -5,16 +5,16 @@ public class PropertyBar : MonoBehaviour
     [SerializeField] private Transform _bar;
     private float _yOffset = 0.8f;
     private Transform _followedObj;
-    private TankProperty _tankProp;
+    private TankProperty _property;
 
 
     public PropertyBar SetProperty(TankProperty tankProp)
     {
-        if (_tankProp != null)
+        if (_property != null)
             return this;
 
-        _tankProp = tankProp;
-        _tankProp.ValueChanged += UpdateBar;
+        _property = tankProp;
+        _property.ValueChanged += UpdateBar;
         return this;
     }
 
@@ -34,13 +34,13 @@ public class PropertyBar : MonoBehaviour
     private void UpdateBar()
     {
         Vector3 updatedLocalScale = _bar.localScale;
-        updatedLocalScale.x = _tankProp.CurrentInPercents;
+        updatedLocalScale.x = _property.CurrentInPercents;
         _bar.localScale = updatedLocalScale;
     }
 
     private void LateUpdate()
     {
-        if (_tankProp == null)
+        if (_property == null)
             return;
         transform.rotation = Quaternion.identity;
         Vector2 newPos = _followedObj.position;
@@ -50,7 +50,7 @@ public class PropertyBar : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_tankProp != null)
-            _tankProp.ValueChanged -= UpdateBar;
+        if (_property != null)
+            _property.ValueChanged -= UpdateBar;
     }
 }

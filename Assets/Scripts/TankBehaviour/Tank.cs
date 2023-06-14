@@ -162,6 +162,7 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
             yield return null;
 
         SetPropertyBars();
+        SetupNameTagCanv();
         _setupInProgress = false;
     }
 
@@ -179,6 +180,15 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
             _bars[0].SetProperty(_health);
             _bars[1].SetProperty(_ammoStorage);
         }
+    }
+
+    private void SetupNameTagCanv()
+    {
+        Transform nameTagCanv = transform.Find("NameTagCanvas");
+        float halfSize = _mainPart.SpawnedObj.GetComponent<Collider2D>().bounds.size.y / 2;
+        float yOffset = halfSize + 0.3f;
+        nameTagCanv.GetComponent<NameTag>().SetupNameTag(_view.Owner.NickName, _mainPart.SpawnedObj.transform)
+                                           .SetYOffset(yOffset);
     }
 
     private void DestroyThisTank()
