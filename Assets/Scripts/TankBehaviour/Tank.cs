@@ -120,6 +120,19 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
         _ammoStorage.RessuplyAmmo(amt);
     }
 
+    public void RestoreHealth(int amt)
+    {
+        if (_view.IsMine == false)
+            return;
+        _view.RPC("RPC_RestoreHealth", RpcTarget.All, amt);
+    }
+
+    [PunRPC]
+    private void RPC_RestoreHealth(int amt)
+    {
+        _health.RestoreHealth(amt);
+    }
+
     public Transform GetCameraTarget()
     {
         if (_setupInProgress || !_view.IsMine)
@@ -164,6 +177,8 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
         SetPropertyBars();
         SetupNameTagCanv();
         _setupInProgress = false;
+
+        _health.TakeDamage(maxHealth / 2);
     }
 
     private void SetPropertyBars()
