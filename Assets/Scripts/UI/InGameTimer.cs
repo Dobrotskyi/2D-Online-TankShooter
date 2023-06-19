@@ -11,17 +11,14 @@ public class InGameTimer : MonoBehaviour
     [SerializeField] private TimeSpan _gameDuration = new(0, 1, 30);
     [SerializeField] private TextMeshProUGUI _timerText;
     private PhotonView _view;
-    private const float UPDATE_FREQ = 0.5f;
+    private const int UPDATE_FREQ_SEC = 1;
 
 
     private void Start()
     {
         _view = GetComponent<PhotonView>();
         if (PhotonNetwork.IsMasterClient)
-        {
             StartCoroutine(UpdateTimer());
-            StartCoroutine(SendMastersTime());
-        }
 
     }
 
@@ -29,20 +26,12 @@ public class InGameTimer : MonoBehaviour
     {
         while (_gameDuration > TimeSpan.Zero)
         {
-            _gameDuration = _gameDuration.Subtract(new(0, 0, 1));
+            _gameDuration = _gameDuration.Subtract(new(0, 0, UPDATE_FREQ_SEC));
             _timerText.text = _gameDuration.ToString(@"mm\:ss");
-            yield return new WaitForSeconds(1);
+            _view.RPC("SendNewTime", RpcTarget.OthersBuffered, _gameDuration.Minutes, _gameDuration.Seconds);
+            yield return new WaitForSeconds(UPDATE_FREQ_SEC);
         }
         TimeIsUp?.Invoke();
-    }
-
-    private IEnumerator SendMastersTime()
-    {
-        while (_gameDuration > TimeSpan.Zero)
-        {
-            _view.RPC("SendNewTime", RpcTarget.OthersBuffered, _gameDuration.Minutes, _gameDuration.Seconds);
-            yield return new WaitForSeconds(1);
-        }
     }
 
     [PunRPC]
