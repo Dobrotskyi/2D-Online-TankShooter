@@ -46,6 +46,9 @@ MonoBehaviour:
   - RPC_Rotate
   - RPC_RespawnPlayer
   - RPC_Respawn
+  - SubstractSecond
+  - SubstractFreq
+  - SendNewTime
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
