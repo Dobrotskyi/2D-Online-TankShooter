@@ -10,11 +10,10 @@ public class TankCollisionHandler : MonoBehaviourPun
         _tank = gameObject.GetComponentInParent<Tank>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<IResourceCrate>(out IResourceCrate crate))
-        {
+        if (collision.gameObject.TryGetComponent(out IResourceCrate crate))
             crate.UseMeOn(_tank);
-        }
+
     }
 }

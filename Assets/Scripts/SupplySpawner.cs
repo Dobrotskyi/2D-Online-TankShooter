@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class SupplySpawner : MonoBehaviour
 {
-    private const float SUPP_TIME_OF_LIFE = 4.9f;
-
-    [SerializeField] List<GameObject> _suppliesPrefs = new();
-    [SerializeField] List<Transform> _spawnPoints = new();
-    [SerializeField] Vector2 _minMaxTime = new(5, 10);
+    [SerializeField] List<ResourceCrate> _suppliesPrefs = new();
+    [SerializeField] List<SupplySpawnPoint> _spawnPoints = new();
+    [SerializeField] Vector2 _minMaxTime = new(2, 5);
     private PhotonView _view;
 
     private void Start()
@@ -23,20 +21,35 @@ public class SupplySpawner : MonoBehaviour
     {
         while (InGameTimer.GameTime)
         {
-            int prefInd = Random.Range(0, _suppliesPrefs.Count);
-            int spInd = Random.Range(0, _spawnPoints.Count);
-            Debug.Log(prefInd);
-            Debug.Log(spInd);
-            Debug.Log(_view);
-            _view.RPC("SpawnSupply", RpcTarget.All, prefInd, spInd);
-            yield return new WaitForSeconds(Random.Range(_minMaxTime.x, _minMaxTime.y));
+            int prefInd = UnityEngine.Random.Range(0, _suppliesPrefs.Count);
+            int spInd = GetRandomEmptySP();
+            if (spInd != -1)
+                _view.RPC("SpawnSupply", RpcTarget.All, prefInd, spInd);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(_minMaxTime.x, _minMaxTime.y));
         }
+    }
+
+    private int GetRandomEmptySP()
+    {
+        List<int> emptySPInd = new();
+
+        int i = 0;
+        foreach (var sp in _spawnPoints)
+        {
+            if (sp.IsEmpty)
+                emptySPInd.Add(i);
+            i++;
+        }
+
+        if (emptySPInd.Count > 0)
+            return emptySPInd[UnityEngine.Random.Range(0, emptySPInd.Count)];
+        else
+            return -1;
     }
 
     [PunRPC]
     private void SpawnSupply(int prefInd, int spInd)
     {
-        GameObject supp = Instantiate(_suppliesPrefs[prefInd], _spawnPoints[spInd].position, Quaternion.identity);
-        Destroy(supp, SUPP_TIME_OF_LIFE);
+        _spawnPoints[spInd].Spawn(_suppliesPrefs[prefInd]);
     }
 }

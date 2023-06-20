@@ -67,3 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70167e366ff4aef4e8514a1af8537ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _suppliesPrefs:
+  - {fileID: 4804251399444140216, guid: 6adaa15ffb928cf418f462ce874249a5, type: 3}
+  - {fileID: -7291723492626171020, guid: 9c1dfa936bc44534b8acc1a972a635a7, type: 3}
+  _spawnPoints: []
+  _minMaxTime: {x: 5, y: 10}
