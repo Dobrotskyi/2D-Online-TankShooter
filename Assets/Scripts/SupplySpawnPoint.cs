@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class SupplySpawnPoint : MonoBehaviour
@@ -7,13 +8,12 @@ public class SupplySpawnPoint : MonoBehaviour
 
     public bool Spawn(ResourceCrate crate)
     {
-        if (IsEmpty == false)
+        if (IsEmpty == false || PhotonNetwork.IsMasterClient == false)
             return false;
-
 
         IsEmpty = false;
 
-        _crate = Instantiate(crate, transform.position, Quaternion.identity);
+        _crate = PhotonNetwork.Instantiate(crate.name, transform.position, Quaternion.identity).GetComponent<ResourceCrate>();
         _crate.Destroyed += EmptySP;
 
         return _crate;

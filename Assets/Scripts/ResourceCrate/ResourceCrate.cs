@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -15,7 +16,8 @@ public abstract class ResourceCrate : MonoBehaviour, IResourceCrate
     public void OnEnable()
     {
         _capacity = UnityEngine.Random.Range((int)_minMaxCapacity.x, (int)_minMaxCapacity.y);
-        StartCoroutine(TimeOfLifeExpired());
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(TimeOfLifeExpired());
     }
 
     private IEnumerator TimeOfLifeExpired()
@@ -25,6 +27,12 @@ public abstract class ResourceCrate : MonoBehaviour, IResourceCrate
     }
 
     protected void DestroyThis()
+    {
+        GetComponent<PhotonView>().RPC("RPC_Destroy", RpcTarget.All);
+    }
+
+    [PunRPC]
+    protected void RPC_Destroy()
     {
         Destroyed?.Invoke();
         Destroy(gameObject);
