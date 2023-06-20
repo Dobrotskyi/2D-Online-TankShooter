@@ -7,15 +7,16 @@ using UnityEngine;
 public class InGameTimer : MonoBehaviour
 {
     public event Action TimeIsUp;
+    public static bool GameTime { get; private set; }
 
     [SerializeField] private TimeSpan _gameDuration = new(0, 1, 30);
     [SerializeField] private TextMeshProUGUI _timerText;
     private PhotonView _view;
     private const int UPDATE_FREQ_SEC = 1;
 
-
     private void Start()
     {
+        GameTime = true;
         _view = GetComponent<PhotonView>();
         if (PhotonNetwork.IsMasterClient)
             StartCoroutine(UpdateTimer());
@@ -32,6 +33,7 @@ public class InGameTimer : MonoBehaviour
             yield return new WaitForSeconds(UPDATE_FREQ_SEC);
         }
         TimeIsUp?.Invoke();
+        GameTime = false;
     }
 
     [PunRPC]

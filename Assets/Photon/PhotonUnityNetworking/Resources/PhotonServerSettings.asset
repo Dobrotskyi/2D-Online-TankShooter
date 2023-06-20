@@ -50,6 +50,7 @@ MonoBehaviour:
   - SubstractFreq
   - SendNewTime
   - RPC_RestoreHealth
+  - SpawnSupply
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
