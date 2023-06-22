@@ -9,14 +9,13 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_InputField _joinInputField;
     [SerializeField] private TMP_InputField _createRoomInputField;
     [SerializeField] private Vector3 _spawnNotificationPos;
+    private const int MAX_INPUT_LENGTH = 8;
 
     public void CreateRoom()
     {
-        if (_createRoomInputField.text.Length == 0)
-        {
-            DisplayError("Name field for creating was empty", _spawnNotificationPos);
+        if (ValidateInput(_createRoomInputField.text) == false)
             return;
-        }
+
         RoomOptions roomOptions = new();
         roomOptions.MaxPlayers = 4;
         PhotonNetwork.CreateRoom(_createRoomInputField.text, roomOptions);
@@ -24,17 +23,29 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
 
     public void JoinRoom()
     {
-        if (_joinInputField.text.Length == 0)
-        {
-            DisplayError("Name field for joining was empty", _spawnNotificationPos);
-            return;
-        }
-        PhotonNetwork.JoinRoom(_joinInputField.text);
+        if (ValidateInput(_joinInputField.text))
+            PhotonNetwork.JoinRoom(_joinInputField.text);
     }
 
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("Game");
+    }
+
+    private bool ValidateInput(string input)
+    {
+        if (input.Length == 0)
+        {
+            DisplayError("Field was empty", _spawnNotificationPos);
+            return false;
+        }
+
+        if (input.Length > MAX_INPUT_LENGTH)
+        {
+            DisplayError("To many characters in input", _spawnNotificationPos);
+            return false;
+        }
+        return true;
     }
 
     private void DisplayError(string text, Vector3 pos)
