@@ -32,7 +32,12 @@ public abstract class PartData
 
         PhotonView phView = part.AddComponent<PhotonView>();
         PhotonTransformViewClassic viewClassic = part.AddComponent<PhotonTransformViewClassic>();
-        phView.ObservedComponents = new() { viewClassic };
+        if (phView.ObservedComponents == null)
+            phView.ObservedComponents = new();
+        phView.ObservedComponents.Add(viewClassic);
+        phView.Synchronization = ViewSynchronization.Unreliable;
+
+
         viewClassic.m_PositionModel.SynchronizeEnabled = true;
         viewClassic.m_RotationModel.SynchronizeEnabled = true;
         viewClassic.m_PositionModel.InterpolateOption = PhotonTransformViewPositionModel.InterpolateOptions.Lerp;
