@@ -38,7 +38,7 @@ public class ShopMenu : MonoBehaviour
         ShowParts();
     }
 
-    public void UpdateSelectedCategorie()
+    public void UpdateSelectedCategory()
     {
         if (_toggles[0].isOn)
             _textTMP.text = "Items you own";
@@ -55,7 +55,7 @@ public class ShopMenu : MonoBehaviour
     private void Start()
     {
         ShowParts();
-        UpdateSelectedCategorie();
+        UpdateSelectedCategory();
     }
 
     private void ShowParts()
@@ -73,7 +73,7 @@ public class ShopMenu : MonoBehaviour
         while (caller.ResultStatus == UnityWebRequest.Result.InProgress)
             yield return null;
         if (caller.ResultStatus != UnityWebRequest.Result.Success)
-            yield return new System.Exception("\"Error occurred while making call to the server: \" + uwr.error");
+            yield return new System.Exception($"\"Error occurred while making call to the server: \"");
         DisplayAllParts(caller.Result, builder);
 
     }
@@ -87,14 +87,14 @@ public class ShopMenu : MonoBehaviour
             {
                 builder.ParseData(fields.ToArray());
                 fields.Clear();
-                DisplayItemOnScreen(builder);
+                DisplayPartOnScreen(builder);
                 continue;
             }
             fields.Add(info[i]);
         }
     }
 
-    private void DisplayItemOnScreen(ObjectFromDBBuilder builder)
+    private void DisplayPartOnScreen(ObjectFromDBBuilder builder)
     {
         GameObject template;
         if (_group.GetFirstActiveToggle() == _toggles[0])

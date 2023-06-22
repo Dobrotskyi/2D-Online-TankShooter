@@ -221,6 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 682046387254307605}
+  - component: {fileID: 8318275779085603622}
   m_Layer: 5
   m_Name: ServerListItem
   m_TagString: Untagged
@@ -249,6 +250,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 580, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8318275779085603622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5546110941444784071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750c04fb691d7ed46aeb720c647640c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serverNameTxt: {fileID: 9038441720210893139}
+  _playersAmt: {fileID: 7920413215514642787}
 --- !u!1 &7355347012286179330
 GameObject:
   m_ObjectHideFlags: 0

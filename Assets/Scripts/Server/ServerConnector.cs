@@ -16,5 +16,6 @@ public class ServerConnector : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         SceneManager.LoadScene("CreateLobbyMenu");
+        PhotonNetwork.JoinLobby();
     }
 }
