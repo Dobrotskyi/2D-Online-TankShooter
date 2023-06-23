@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
@@ -25,7 +26,9 @@ public static class DBManager
     public const string SELECT_NEW_PART_URL = "http://localhost/topdowntankshooter/phps/select_new_part.php";
 
     public const string GET_SELECTED_IDS_URL = "http://localhost/topdowntankshooter/phps/get_selected_ids.php";
-    private const string GET_MONEY = "http://localhost/topdowntankshooter/phps/get_money.php";
+    private const string GET_MONEY_URL = "http://localhost/topdowntankshooter/phps/get_money.php";
+
+    private const string ADD_MONEY_URL = "http://localhost/topdowntankshooter/phps/add_money.php";
 
     private static string s_userName = "admin1";
     private static int s_money;
@@ -58,9 +61,7 @@ public static class DBManager
         PHPCaller caller = new(GET_SELECTED_IDS_URL);
         yield return caller.MakeCallWithNickname(s_userName);
         while (caller.ResultStatus == UnityEngine.Networking.UnityWebRequest.Result.InProgress)
-        {
             yield return null;
-        }
 
         SelectedTurretID = int.Parse(caller.Result[0], CultureInfo.InvariantCulture);
         SelectedMainID = int.Parse(caller.Result[1], CultureInfo.InvariantCulture);
@@ -68,13 +69,20 @@ public static class DBManager
 
     public static IEnumerator UpdateMoneyAmt()
     {
-        PHPCaller caller = new(GET_MONEY);
+        PHPCaller caller = new(GET_MONEY_URL);
         yield return caller.MakeCallWithNickname(s_userName);
         while (caller.ResultStatus == UnityEngine.Networking.UnityWebRequest.Result.InProgress)
-        {
             yield return null;
-        }
+
         Money = int.Parse(caller.Result[0], CultureInfo.InvariantCulture);
+    }
+
+    public static IEnumerator AddMoney(int amt)
+    {
+        PHPCaller caller = new(ADD_MONEY_URL);
+        Dictionary<string, string> parameters = new() { {"nickname", s_userName },
+                                                        {"add_money", amt.ToString()} };
+        yield return caller.MakeCallWithParameters(parameters);
     }
 
     public static void Logout()

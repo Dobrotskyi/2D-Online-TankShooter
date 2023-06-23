@@ -25,5 +25,9 @@ public class GameOverMenu : MonoBehaviour
         _rewardTxt.text = (kills * DBManager.REWARD_FOR_KILL).ToString();
         _nickNameTxt.text = PhotonNetwork.NickName;
         transform.GetChild(0).gameObject.SetActive(true);
+
+        AddMoney();
     }
+
+    private void AddMoney() => StartCoroutine(DBManager.AddMoney(int.Parse(_rewardTxt.text)));
 }
