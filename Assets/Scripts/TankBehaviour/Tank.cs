@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
+public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
 {
     public event Action TankWasDestroyed;
 
@@ -32,12 +32,9 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
 
     private MainPart _mainPart;
 
-    public override void OnDisable()
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (_view != null && _view.IsMine)
-        {
-            _health.ZeroHealth -= DestroyThisTank;
-        }
+        throw new NotImplementedException();
     }
 
     public void TakeDamage(int amt)
@@ -141,10 +138,10 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
             return _mainPart.SpawnedObj.transform;
     }
 
-    public override void OnEnable()
+    private void OnEnable()
     {
-        TryGetComponent(out _view);
 
+        TryGetComponent(out _view);
         StartCoroutine(SpawnTank());
     }
 
@@ -225,5 +222,13 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
     {
         _health.RestoreHealth(1000);
         _ammoStorage.RessuplyAmmo(1000);
+    }
+
+    private void OnDisable()
+    {
+        if (_view != null && _view.IsMine)
+        {
+            _health.ZeroHealth -= DestroyThisTank;
+        }
     }
 }
