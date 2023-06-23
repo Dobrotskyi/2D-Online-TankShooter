@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class InGameTimer : MonoBehaviour
 {
-    public event Action TimeIsUp;
+    public static event Action TimeIsUp;
     public static bool GameTime { get; private set; }
 
-    [SerializeField] private TimeSpan _gameDuration = new(0, 1, 30);
+    [SerializeField] private TimeSpan _gameDuration = new(0, 0, 30);
     [SerializeField] private TextMeshProUGUI _timerText;
     private PhotonView _view;
     private const int UPDATE_FREQ_SEC = 1;
@@ -32,8 +32,14 @@ public class InGameTimer : MonoBehaviour
             _view.RPC("SendNewTime", RpcTarget.OthersBuffered, _gameDuration.Minutes, _gameDuration.Seconds);
             yield return new WaitForSeconds(UPDATE_FREQ_SEC);
         }
-        TimeIsUp?.Invoke();
+        _view.RPC("RPC_TimeIsUp", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_TimeIsUp()
+    {
         GameTime = false;
+        TimeIsUp?.Invoke();
     }
 
     [PunRPC]

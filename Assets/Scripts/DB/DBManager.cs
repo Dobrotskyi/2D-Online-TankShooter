@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class DBManager
 {
+    public const int REWARD_FOR_KILL = 50;
     public const int MAX_NAME_LENGTH = 10;
     public const int MIN_NAME_LENGTH = 5;
     public const int MIN_PASSW_LENGTH = 5;

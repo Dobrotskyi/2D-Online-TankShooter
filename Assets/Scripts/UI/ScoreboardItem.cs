@@ -5,6 +5,7 @@ public class ScoreboardItem : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _nicknameField;
     [SerializeField] private TextMeshProUGUI _scoreField;
+    public int Kills => int.Parse(_scoreField.text);
 
     public void Initialize(Photon.Realtime.Player player)
     {

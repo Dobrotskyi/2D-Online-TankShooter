@@ -5,7 +5,14 @@ using UnityEngine;
 public class ScoreBoard : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject _scoreboardItem;
-    Dictionary<string, ScoreboardItem> _scoreboardPairs = new Dictionary<string, ScoreboardItem>();
+    private Dictionary<string, ScoreboardItem> _scoreboardPairs = new Dictionary<string, ScoreboardItem>();
+
+    public int GetPlayerKills(string name)
+    {
+        if (_scoreboardPairs.ContainsKey(name))
+            return _scoreboardPairs[name].Kills;
+        return -1;
+    }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {

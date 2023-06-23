@@ -52,6 +52,7 @@ MonoBehaviour:
   - RPC_RestoreHealth
   - SpawnSupply
   - RPC_Destroy
+  - RPC_TimeIsUp
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
