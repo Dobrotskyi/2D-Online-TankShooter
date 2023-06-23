@@ -39,12 +39,12 @@ public abstract class ResourceCrate : MonoBehaviour, IResourceCrate
     protected void DestroyThis()
     {
         GetComponent<PhotonView>().RPC("RPC_Destroy", RpcTarget.All);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]
     protected void RPC_Destroy()
     {
         Destroyed?.Invoke();
-        Destroy(gameObject);
     }
 }

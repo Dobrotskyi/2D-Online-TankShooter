@@ -9,7 +9,7 @@ public class InGameTimer : MonoBehaviour
     public static event Action TimeIsUp;
     public static bool GameTime { get; private set; }
 
-    [SerializeField] private TimeSpan _gameDuration = new(0, 0, 30);
+    [SerializeField] private TimeSpan _gameDuration = new(0, 1, 30);
     [SerializeField] private TextMeshProUGUI _timerText;
     private PhotonView _view;
     private const int UPDATE_FREQ_SEC = 1;

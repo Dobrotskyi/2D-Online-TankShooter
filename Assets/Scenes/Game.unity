@@ -1280,7 +1280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.000008053144, y: -1.11, z: -10}
+  m_LocalPosition: {x: -0.0000000037252903, y: -1.11, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12384,10 +12384,10 @@ RectTransform:
   m_Father: {fileID: 1257537012}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 724.6992, y: 314.14807}
-  m_SizeDelta: {x: -1508.015, y: -783.456}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 704, y: -194.62305}
+  m_SizeDelta: {x: 411.985, y: 279.79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1702029168
 MonoBehaviour:
@@ -12455,13 +12455,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 50
-    m_Bottom: 20
-  m_ChildAlignment: 0
-  m_Spacing: 25
+    m_Top: 15
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_Spacing: 15
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -13151,6 +13151,10 @@ PrefabInstance:
     - target: {fileID: 1196825898880507270, guid: afd77fa93fc11c34e9a2462dae530cf2, type: 3}
       propertyPath: m_Name
       value: EndGameCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196825898880507270, guid: afd77fa93fc11c34e9a2462dae530cf2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1196825898880507386, guid: afd77fa93fc11c34e9a2462dae530cf2, type: 3}
       propertyPath: m_Pivot.x
