@@ -15,7 +15,7 @@ public abstract class ResourceCrate : MonoBehaviour, IResourceCrate
 
     public abstract void UseMeOn(Tank tank);
 
-    public void OnEnable()
+    private void OnEnable()
     {
         _animator = GetComponent<Animator>();
         AnimationClip[] clips = _animator.runtimeAnimatorController.animationClips;
@@ -39,12 +39,12 @@ public abstract class ResourceCrate : MonoBehaviour, IResourceCrate
     protected void DestroyThis()
     {
         GetComponent<PhotonView>().RPC("RPC_Destroy", RpcTarget.All);
-        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]
     protected void RPC_Destroy()
     {
         Destroyed?.Invoke();
+        Destroy(gameObject);
     }
 }

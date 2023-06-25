@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 7874436446049872804}
   - component: {fileID: -6543926573631110060}
   - component: {fileID: 5092203961435666483}
-  - component: {fileID: -2172491738905968289}
   m_Layer: 0
   m_Name: PlayerTank
   m_TagString: Player
@@ -134,7 +133,6 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 5
@@ -164,27 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a0fe8c420774840ada8a70c7cfcc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &-2172491738905968289
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848094409800984583}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &5121778618661579096
 GameObject:
   m_ObjectHideFlags: 0
