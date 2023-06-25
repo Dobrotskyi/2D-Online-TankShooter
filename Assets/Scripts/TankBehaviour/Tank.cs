@@ -16,15 +16,19 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
     private PhotonView _view;
     private string _lastDamagerName;
 
+    private Vector3 _netPos;
+    private Quaternion _netRot;
+    private Vector3 _netVelocity;
+
     private struct MainPart
     {
         public GameObject SpawnedObj { get; private set; }
-        public MainPartBehav Script { get; private set; }
+        public MainPartBehav Behav { get; private set; }
 
         public MainPart(GameObject spawnedPart)
         {
             SpawnedObj = spawnedPart;
-            Script = spawnedPart.GetComponent<MainPartBehav>();
+            Behav = spawnedPart.GetComponent<MainPartBehav>();
         }
     }
 
@@ -34,7 +38,31 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new NotImplementedException();
+        if (_setupInProgress)
+            return;
+
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_mainPart.SpawnedObj.transform.position);
+            stream.SendNext(_mainPart.SpawnedObj.transform.rotation);
+            stream.SendNext(_mainPart.Behav.Velocity);
+        }
+        else if (stream.IsReading)
+        {
+            _netPos = (Vector3)stream.ReceiveNext();
+            _netRot = (Quaternion)stream.ReceiveNext();
+            _mainPart.Behav.ChangeVelocity((Vector3)stream.ReceiveNext());
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            _netPos += (_mainPart.Behav.Velocity * lag);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_view.IsMine)
+            return;
+
+        _mainPart.Behav.ChangeTowards(_netPos, _netRot);
     }
 
     public void TakeDamage(int amt)
@@ -68,7 +96,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
             return;
         if (_setupInProgress)
             return;
-        _mainPart.Script.Move(direction);
+        _mainPart.Behav.Move(direction);
     }
 
     public void Rotate(float side)
@@ -77,7 +105,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
             return;
         if (_setupInProgress)
             return;
-        _mainPart.Script.Rotate(side);
+        _mainPart.Behav.Rotate(side);
     }
 
     public void Shoot()
