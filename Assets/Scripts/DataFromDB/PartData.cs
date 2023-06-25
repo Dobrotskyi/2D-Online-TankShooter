@@ -37,7 +37,8 @@ public abstract class PartData
         phView.ObservedComponents.Add(viewClassic);
         phView.Synchronization = ViewSynchronization.Unreliable;
 
-
+        viewClassic.m_PositionModel.TeleportEnabled = true;
+        viewClassic.m_PositionModel.TeleportIfDistanceGreaterThan = 1.5f;
         viewClassic.m_PositionModel.SynchronizeEnabled = true;
         viewClassic.m_RotationModel.SynchronizeEnabled = true;
         viewClassic.m_PositionModel.InterpolateOption = PhotonTransformViewPositionModel.InterpolateOptions.Lerp;
