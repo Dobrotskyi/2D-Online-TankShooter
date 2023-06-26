@@ -10,6 +10,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
     [SerializeField] private PropertyBar[] _bars;
     [SerializeField] private GameObject _explosionAnim;
     [SerializeField] private Player _player;
+    [SerializeField] private ParticleSystem _engineSmoke;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;

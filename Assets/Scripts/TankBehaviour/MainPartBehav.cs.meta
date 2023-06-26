@@ -3,7 +3,8 @@ guid: d15fc52ebc3056c42bce761445fc5faf
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _engineSmoke: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -94,6 +94,7 @@ MonoBehaviour:
   - {fileID: 5730821758045918296}
   _explosionAnim: {fileID: 2134785070113092265, guid: 46e2b6f95aa5bc046a108ce8690473db, type: 3}
   _player: {fileID: 1848094409800984578}
+  _engineSmoke: {fileID: 0}
 --- !u!114 &7874436446049872804
 MonoBehaviour:
   m_ObjectHideFlags: 0
