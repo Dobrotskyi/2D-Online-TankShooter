@@ -39,6 +39,7 @@ public class MainPartData : PartData, IBuyable
     public override GameObject SpawnInstance(Transform parent)
     {
         GameObject mainPart = base.SpawnInstance(parent);
+
         Rigidbody2D rb = mainPart.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.mass = MASS;
@@ -48,13 +49,6 @@ public class MainPartData : PartData, IBuyable
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         mainPart.AddComponent<BoxCollider2D>();
-
-        PhotonRigidbody2DView rbView = mainPart.AddComponent<PhotonRigidbody2DView>();
-        rbView.m_SynchronizeAngularVelocity = true;
-        rbView.m_SynchronizeVelocity = true;
-
-        mainPart.GetComponent<PhotonView>().ObservedComponents.Add(rbView);
-        parent.GetComponent<PhotonView>().ObservedComponents.Add(rbView);
 
         GameObject turretPlacement = new();
         turretPlacement.transform.SetParent(mainPart.transform);

@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 1848094409800984582}
   - component: {fileID: 1848094409800984579}
   - component: {fileID: 7874436446049872804}
-  - component: {fileID: -6543926573631110060}
-  - component: {fileID: 5092203961435666483}
+  - component: {fileID: 5891847881699485002}
   m_Layer: 0
   m_Name: PlayerTank
   m_TagString: Player
@@ -114,11 +113,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
-  - {fileID: -6543926573631110060}
+  - {fileID: 5891847881699485002}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-6543926573631110060
+--- !u!114 &5891847881699485002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,40 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1848094409800984583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 1.5
-    InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 5
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 2
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
---- !u!114 &5092203961435666483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848094409800984583}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a0fe8c420774840ada8a70c7cfcc66, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ecd782e095472746a7029b78d6a5fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5121778618661579096
