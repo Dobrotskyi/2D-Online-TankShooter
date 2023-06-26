@@ -10,7 +10,17 @@ if (mysqli_connect_errno()) {
 }
 
 $nickname = $_POST["nickname"];
+$nickname = mysqli_real_escape_string($con, $nickname);
+$nicknameclean = filter_var($nickname, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
+if($nickname != $nicknameclean)
+    die("Inappropriate nickname");
+
 $password = $_POST["password"];
+$password = mysqli_real_escape_string($con, $password);
+$passwordclean = filter_var($password, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
+
+if($password != $passwordclean)
+    die("Inappropriate password");
 
 if (nicknameIsUsed($con, $nickname) == false) {
     echo "No such user";
