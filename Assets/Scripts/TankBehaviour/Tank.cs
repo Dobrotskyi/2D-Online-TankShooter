@@ -142,8 +142,8 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
         TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
-        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(mainBuilder, DBManager.SELECTED_MAIN_URL, photonView.Owner.NickName));
-        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(turretBuilder, DBManager.SELECTED_TURRET_URL, photonView.Owner.NickName));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(mainBuilder, DBManager.ServerURLS.SELECTED_MAIN_URL, photonView.Owner.NickName));
+        yield return StartCoroutine(ObjectFromDBBuilder.GetSelectedByUser(turretBuilder, DBManager.ServerURLS.SELECTED_TURRET_URL, photonView.Owner.NickName));
 
         MainPartData mainPartData = (MainPartData)mainBuilder.Build();
         _mainPart = new MainPart(mainPartData.SpawnInstance(transform));

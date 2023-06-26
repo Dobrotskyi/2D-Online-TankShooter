@@ -8,7 +8,7 @@ public class UserBuyHandler : UserShoppingTransacHandler
     [SerializeField] private TextMeshProUGUI _coinsField;
     public event Action TransactionDeclined;
     public event Action ItemWasBought;
-    protected override string URL => DBManager.ADD_PART_TO_USER_URL;
+    protected override string URL => DBManager.ServerURLS.ADD_PART_TO_USER_URL;
 
     protected override IEnumerator FinishTransaction()
     {

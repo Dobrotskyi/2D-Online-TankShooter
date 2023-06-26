@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class Login : Authorization
 {
-    private const string LOGIN_URL = DBManager.LOGIN_URL;
-
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _passwordField;
     [SerializeField] private Button _submitButton;
@@ -24,7 +22,7 @@ public class Login : Authorization
         form.AddField("nickname", _nicknameField.text);
         form.AddField("password", _passwordField.text);
 
-        UnityWebRequest uwr = UnityWebRequest.Post(LOGIN_URL, form);
+        UnityWebRequest uwr = UnityWebRequest.Post(DBManager.ServerURLS.LOGIN_URL, form);
         yield return uwr.SendWebRequest();
 
         if (uwr.result != UnityWebRequest.Result.Success)

@@ -60,8 +60,8 @@ public class ShopMenu : MonoBehaviour
 
     private void ShowParts()
     {
-        StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.GET_TURRETS_BY_CATEGORY_URL));
-        StartCoroutine(MakeCallToDB(new MainPartDataBuilder(), DBManager.GET_MAINS_BY_CATEGORY_URL));
+        StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.ServerURLS.GET_TURRETS_BY_CATEGORY_URL));
+        StartCoroutine(MakeCallToDB(new MainPartDataBuilder(), DBManager.ServerURLS.GET_MAINS_BY_CATEGORY_URL));
     }
 
     private IEnumerator MakeCallToDB(ObjectFromDBBuilder builder, string url)

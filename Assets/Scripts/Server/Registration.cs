@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class Registration : Authorization
 {
-    private const string REG_URL = DBManager.REG_URL;
-
     [SerializeField] private TMP_InputField _nicknameField;
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private Button _submitButton;
@@ -30,7 +28,7 @@ public class Registration : Authorization
         form.AddField("nickname", _nicknameField.text);
         form.AddField("password", _password.text);
 
-        UnityWebRequest uwr = UnityWebRequest.Post(REG_URL, form);
+        UnityWebRequest uwr = UnityWebRequest.Post(DBManager.ServerURLS.REG_URL, form);
         yield return uwr.SendWebRequest();
 
         if (uwr.result != UnityWebRequest.Result.Success)
