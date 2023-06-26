@@ -1,5 +1,6 @@
 public class AmmoStorage : TankProperty
 {
+    private int _lastShotPrice = -1;
     public override int Current
     {
         get => _current;
@@ -11,10 +12,16 @@ public class AmmoStorage : TankProperty
                 _current = _max;
             if (_current < 0)
                 _current = 0;
+            if (_current < _lastShotPrice)
+                AmmoNotEnough = true;
+            else
+                AmmoNotEnough = false;
 
             RaiseValueChanged();
         }
     }
+
+    public bool AmmoNotEnough { get; private set; } = false;
 
     public AmmoStorage(int maxAmmoAmt) : base(maxAmmoAmt) { }
 
@@ -25,6 +32,8 @@ public class AmmoStorage : TankProperty
         if (Current >= amt)
         {
             Current -= amt;
+            if (_lastShotPrice != amt)
+                _lastShotPrice = amt;
             return true;
         }
         return false;

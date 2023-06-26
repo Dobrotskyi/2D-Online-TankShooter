@@ -5,7 +5,7 @@ public class TurretPartBehav : MonoBehaviourPun
 {
     private const float MIN_AIMING_DIST = 1f;
 
-    public bool Loaded = false;
+    private bool _loaded = false;
 
     private TurretData _turretData;
     private Transform _barrel;
@@ -57,7 +57,7 @@ public class TurretPartBehav : MonoBehaviourPun
 
             _lastShotTime = Time.time;
 
-            Loaded = false;
+            _loaded = false;
         }
     }
 
@@ -73,13 +73,13 @@ public class TurretPartBehav : MonoBehaviourPun
         _ammoStorage = ammoStorage;
     }
 
-    public bool CanShoot => ReadyToShoot() && Loaded;
+    public bool CanShoot => ReadyToShoot() && _loaded;
 
     private bool ReadyToShoot()
     {
         if (Time.time >= _lastShotTime + _turretData.FireRate * _fireRateMultiplier)
         {
-            Loaded = _ammoStorage.GiveAmmo(_turretData.ProjData.ShotCost);
+            _loaded = _ammoStorage.GiveAmmo(_turretData.ProjData.ShotCost);
             return true;
         }
         else

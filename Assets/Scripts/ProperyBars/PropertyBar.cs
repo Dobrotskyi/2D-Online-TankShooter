@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class PropertyBar : MonoBehaviour
 {
-    [SerializeField] private Transform _bar;
     private float _yOffset = 0.8f;
     private Transform _followedObj;
-    private TankProperty _property;
-
+    [SerializeField] protected Transform _bar;
+    protected TankProperty _property;
 
     public PropertyBar SetProperty(TankProperty tankProp)
     {
@@ -36,7 +35,12 @@ public class PropertyBar : MonoBehaviour
         Vector3 updatedLocalScale = _bar.localScale;
         updatedLocalScale.x = _property.CurrentInPercents;
         _bar.localScale = updatedLocalScale;
+
+        AdditionalUpdate();
     }
+
+    protected virtual void AdditionalUpdate()
+    { }
 
     private void LateUpdate()
     {
