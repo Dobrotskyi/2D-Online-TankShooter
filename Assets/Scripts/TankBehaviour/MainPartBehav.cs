@@ -5,27 +5,8 @@ public class MainPartBehav : MonoBehaviourPun
 {
     private const int ACCELERATION_MULT = 500;
 
-    public Vector3 Velocity => _rb.velocity;
-    public float AngularVelocity => _rb.angularVelocity;
-
     private Rigidbody2D _rb;
     private MainPartData _data;
-
-    public void ChangeTowards(Vector3 pos, Quaternion rotation)
-    {
-        _rb.position = Vector3.MoveTowards(_rb.position, pos, Time.fixedDeltaTime);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, Time.fixedDeltaTime * 100.0f);
-    }
-
-    public void ChangeVelocity(Vector3 velocity)
-    {
-        _rb.velocity = velocity;
-    }
-
-    public void ChangeAngularVelocity(float velocity)
-    {
-        _rb.angularVelocity = velocity;
-    }
 
     public void Move(float direction)
     {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1848094409800984582}
   - component: {fileID: 1848094409800984579}
   - component: {fileID: 7874436446049872804}
-  - component: {fileID: 5092203961435666483}
+  - component: {fileID: 5891847881699485002}
   m_Layer: 0
   m_Name: PlayerTank
   m_TagString: Player
@@ -113,20 +113,20 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
-  - {fileID: 1848094409800984579}
+  - {fileID: 5891847881699485002}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &5092203961435666483
+--- !u!114 &5891847881699485002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848094409800984583}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a0fe8c420774840ada8a70c7cfcc66, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ecd782e095472746a7029b78d6a5fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5121778618661579096

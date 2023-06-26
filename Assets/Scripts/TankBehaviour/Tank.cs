@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
+public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 {
     public event Action TankWasDestroyed;
 
@@ -15,9 +15,6 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
     private bool _setupInProgress = true;
     private PhotonView _view;
     private string _lastDamagerName;
-
-    private Vector3 _netPos;
-    private Quaternion _netRot;
 
     private struct MainPart
     {
@@ -34,40 +31,6 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
     private TurretPartBehav _turret;
 
     private MainPart _mainPart;
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (_setupInProgress)
-            return;
-
-        if (stream.IsWriting)
-        {
-            stream.SendNext(_mainPart.SpawnedObj.transform.position);
-            stream.SendNext(_mainPart.SpawnedObj.transform.rotation);
-            stream.SendNext(_mainPart.Behav.Velocity);
-            stream.SendNext(_mainPart.Behav.AngularVelocity);
-        }
-        else if (stream.IsReading)
-        {
-            _netPos = (Vector3)stream.ReceiveNext();
-            _netRot = (Quaternion)stream.ReceiveNext();
-            _mainPart.Behav.ChangeVelocity((Vector3)stream.ReceiveNext());
-            _mainPart.Behav.ChangeAngularVelocity((float)stream.ReceiveNext());
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            _netPos += (_mainPart.Behav.Velocity * lag);
-
-            Quaternion lagRotation = Quaternion.Euler(0, 0, _mainPart.Behav.AngularVelocity * lag);
-            _netRot = Quaternion.Euler(_netRot.eulerAngles + lagRotation.eulerAngles);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (_view.IsMine)
-            return;
-
-        _mainPart.Behav.ChangeTowards(_netPos, _netRot);
-    }
 
     public void TakeDamage(int amt)
     {
