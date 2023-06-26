@@ -10,6 +10,12 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+
+#if UNITY_EDITOR
+        if (DBManager.IsLogged() == false)
+            DBManager.LoginedUserName = "admin1";
+#endif
+
         if (DBManager.IsLogged())
         {
             _playerDisplay.text = $"Welcome, {DBManager.LoginedUserName} ";

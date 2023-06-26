@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
+using WebSocketSharp;
 
 public static class DBManager
 {
@@ -27,7 +28,7 @@ public static class DBManager
         }
     }
 
-    private static string s_userName = "admin1";
+    private static string s_userName;
     private static int s_money;
 
     public static string LoginedUserName
@@ -51,7 +52,7 @@ public static class DBManager
 
     public static int SelectedMainID { get; private set; }
 
-    public static bool IsLogged() => s_userName != null;
+    public static bool IsLogged() => !s_userName.IsNullOrEmpty();
 
     public static IEnumerator MakeCallGetSelectedIDs()
     {
