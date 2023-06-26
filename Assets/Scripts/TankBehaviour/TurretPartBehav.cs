@@ -10,6 +10,7 @@ public class TurretPartBehav : MonoBehaviourPun
     private TurretData _turretData;
     private Transform _barrel;
     private Transform _mainPart;
+    private Transform _turretPlacement;
     private float _fireRateMultiplier = 1f;
     private float _lastShotTime = 0f;
     private AmmoStorage _ammoStorage;
@@ -28,7 +29,10 @@ public class TurretPartBehav : MonoBehaviourPun
     public void AttachToBase(Transform mainPart)
     {
         if (_mainPart == null)
+        {
             _mainPart = mainPart;
+            _turretPlacement = _mainPart.transform.Find(MainPartData.TurretPlacementStr);
+        }
         else
             throw new System.Exception("this turret already has a base");
     }
@@ -45,11 +49,12 @@ public class TurretPartBehav : MonoBehaviourPun
         gameObject.transform.rotation = Quaternion.Lerp(_barrel.transform.rotation, rotation, _turretData.RotationSpeed * Time.deltaTime);
     }
 
-    public void Shoot(Vector2 direction)
+    public void Shoot(Vector2 direction, Vector2 pos)
     {
         if (CanShoot)
         {
             GameObject projectileGO = _turretData.ProjData.SpawnInstance(_barrel);
+            projectileGO.transform.position = pos;
             projectileGO.GetComponent<Rigidbody2D>().AddForce(direction * _turretData.ShotForce, ForceMode2D.Impulse);
             Projectile proj = projectileGO.GetComponent<Projectile>();
             proj.IgnoreCollisionWith(_mainPart.gameObject);
@@ -61,12 +66,11 @@ public class TurretPartBehav : MonoBehaviourPun
         }
     }
 
-    public Vector2 GenereteDirection()
-    {
-        return (Vector2)_barrel.up +
-                new Vector2(Random.Range(-_turretData.Spread.x, _turretData.Spread.x), Random.Range(-_turretData.Spread.y, _turretData.Spread.y));
+    public Vector2 GetDirection =>
+         (Vector2)_barrel.up +
+         new Vector2(Random.Range(-_turretData.Spread.x, _turretData.Spread.x), Random.Range(-_turretData.Spread.y, _turretData.Spread.y));
 
-    }
+    public Vector2 GetBarrelPos => _barrel.transform.position;
 
     public void SetAmmoSource(AmmoStorage ammoStorage)
     {
@@ -97,6 +101,6 @@ public class TurretPartBehav : MonoBehaviourPun
     private void LateUpdate()
     {
         if (_mainPart != null)
-            transform.position = _mainPart.transform.Find(MainPartData.TurretPlacementStr).position;
+            transform.position = _turretPlacement.position;
     }
 }

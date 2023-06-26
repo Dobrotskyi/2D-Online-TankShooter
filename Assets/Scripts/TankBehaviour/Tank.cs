@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
+public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 {
     public event Action TankWasDestroyed;
 
@@ -19,26 +19,18 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
     private struct MainPart
     {
         public GameObject SpawnedObj { get; private set; }
-        public MainPartBehav Script { get; private set; }
+        public MainPartBehav Behav { get; private set; }
 
         public MainPart(GameObject spawnedPart)
         {
             SpawnedObj = spawnedPart;
-            Script = spawnedPart.GetComponent<MainPartBehav>();
+            Behav = spawnedPart.GetComponent<MainPartBehav>();
         }
     }
 
     private TurretPartBehav _turret;
 
     private MainPart _mainPart;
-
-    public override void OnDisable()
-    {
-        if (_view != null && _view.IsMine)
-        {
-            _health.ZeroHealth -= DestroyThisTank;
-        }
-    }
 
     public void TakeDamage(int amt)
     {
@@ -53,9 +45,7 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
         if (_setupInProgress || _player.Frozen)
             return;
         if (_view.IsMine)
-        {
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt, damagerName);
-        }
     }
 
     [PunRPC]
@@ -71,7 +61,7 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
             return;
         if (_setupInProgress)
             return;
-        _mainPart.Script.Move(direction);
+        _mainPart.Behav.Move(direction);
     }
 
     public void Rotate(float side)
@@ -80,7 +70,7 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
             return;
         if (_setupInProgress)
             return;
-        _mainPart.Script.Rotate(side);
+        _mainPart.Behav.Rotate(side);
     }
 
     public void Shoot()
@@ -89,13 +79,13 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
             return;
         if (_setupInProgress)
             return;
-        _view.RPC("RPC_Shoot", RpcTarget.All, _turret.GenereteDirection());
+        _view.RPC("RPC_Shoot", RpcTarget.All, _turret.GetDirection, _turret.GetBarrelPos);
     }
 
     [PunRPC]
-    private void RPC_Shoot(Vector2 direction)
+    private void RPC_Shoot(Vector2 direction, Vector2 barrelPos)
     {
-        _turret.Shoot(direction);
+        _turret.Shoot(direction, barrelPos);
     }
 
     public void Aim(Vector2 target)
@@ -141,10 +131,9 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
             return _mainPart.SpawnedObj.transform;
     }
 
-    public override void OnEnable()
+    private void OnEnable()
     {
         TryGetComponent(out _view);
-
         StartCoroutine(SpawnTank());
     }
 
@@ -208,8 +197,9 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
 
     private void DestroyThisTank()
     {
-        GameObject explosion = Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
-        _view.RPC("RPC_Respawn", RpcTarget.All, FindObjectOfType<PlayerSpawner>().GetRandomSpawnPoint());
+        Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
+        if (_view.IsMine)
+            _view.RPC("RPC_Respawn", RpcTarget.All, FindObjectOfType<PlayerSpawner>().GetRandomSpawnPoint());
         GameObject.FindGameObjectWithTag("Scoreboard").GetComponent<ScoreBoard>().UpdateScoreboard(_lastDamagerName);
     }
 
@@ -217,7 +207,9 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
     private void RPC_Respawn(Vector2 newPos)
     {
         TankWasDestroyed?.Invoke();
+        _mainPart.SpawnedObj.SetActive(false);
         _mainPart.SpawnedObj.transform.position = newPos;
+        _mainPart.SpawnedObj.SetActive(true);
         FullRepair();
     }
 
@@ -225,5 +217,13 @@ public class Tank : MonoBehaviourPunCallbacks, ITakeDamageFromPlayer
     {
         _health.RestoreHealth(1000);
         _ammoStorage.RessuplyAmmo(1000);
+    }
+
+    private void OnDisable()
+    {
+        if (_view != null && _view.IsMine)
+        {
+            _health.ZeroHealth -= DestroyThisTank;
+        }
     }
 }
