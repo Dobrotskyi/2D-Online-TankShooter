@@ -18,7 +18,6 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
 
     private Vector3 _netPos;
     private Quaternion _netRot;
-    private Vector3 _netVelocity;
 
     private struct MainPart
     {
@@ -46,14 +45,19 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer, IPunObservable
             stream.SendNext(_mainPart.SpawnedObj.transform.position);
             stream.SendNext(_mainPart.SpawnedObj.transform.rotation);
             stream.SendNext(_mainPart.Behav.Velocity);
+            stream.SendNext(_mainPart.Behav.AngularVelocity);
         }
         else if (stream.IsReading)
         {
             _netPos = (Vector3)stream.ReceiveNext();
             _netRot = (Quaternion)stream.ReceiveNext();
             _mainPart.Behav.ChangeVelocity((Vector3)stream.ReceiveNext());
+            _mainPart.Behav.ChangeAngularVelocity((float)stream.ReceiveNext());
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             _netPos += (_mainPart.Behav.Velocity * lag);
+
+            Quaternion lagRotation = Quaternion.Euler(0, 0, _mainPart.Behav.AngularVelocity * lag);
+            _netRot = Quaternion.Euler(_netRot.eulerAngles + lagRotation.eulerAngles);
         }
     }
 

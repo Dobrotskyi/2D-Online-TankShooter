@@ -3,15 +3,10 @@ using UnityEngine;
 
 public class MainPartBehav : MonoBehaviourPun
 {
-    public Vector3 Velocity
-    {
-        get
-        {
-            return _rb.velocity;
-        }
-    }
-
     private const int ACCELERATION_MULT = 500;
+
+    public Vector3 Velocity => _rb.velocity;
+    public float AngularVelocity => _rb.angularVelocity;
 
     private Rigidbody2D _rb;
     private MainPartData _data;
@@ -22,9 +17,14 @@ public class MainPartBehav : MonoBehaviourPun
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, Time.fixedDeltaTime * 100.0f);
     }
 
-    public void ChangeVelocity(Vector3 newVelocity)
+    public void ChangeVelocity(Vector3 velocity)
     {
-        _rb.velocity = newVelocity;
+        _rb.velocity = velocity;
+    }
+
+    public void ChangeAngularVelocity(float velocity)
+    {
+        _rb.angularVelocity = velocity;
     }
 
     public void Move(float direction)
