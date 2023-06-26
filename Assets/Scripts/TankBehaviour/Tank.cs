@@ -45,9 +45,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
         if (_setupInProgress || _player.Frozen)
             return;
         if (_view.IsMine)
-        {
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt, damagerName);
-        }
     }
 
     [PunRPC]
@@ -135,7 +133,6 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
     private void OnEnable()
     {
-
         TryGetComponent(out _view);
         StartCoroutine(SpawnTank());
     }
@@ -200,8 +197,9 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
     private void DestroyThisTank()
     {
-        GameObject explosion = Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
-        _view.RPC("RPC_Respawn", RpcTarget.All, FindObjectOfType<PlayerSpawner>().GetRandomSpawnPoint());
+        Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
+        if (_view.IsMine)
+            _view.RPC("RPC_Respawn", RpcTarget.All, FindObjectOfType<PlayerSpawner>().GetRandomSpawnPoint());
         GameObject.FindGameObjectWithTag("Scoreboard").GetComponent<ScoreBoard>().UpdateScoreboard(_lastDamagerName);
     }
 
@@ -209,7 +207,9 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
     private void RPC_Respawn(Vector2 newPos)
     {
         TankWasDestroyed?.Invoke();
+        _mainPart.SpawnedObj.SetActive(false);
         _mainPart.SpawnedObj.transform.position = newPos;
+        _mainPart.SpawnedObj.SetActive(true);
         FullRepair();
     }
 

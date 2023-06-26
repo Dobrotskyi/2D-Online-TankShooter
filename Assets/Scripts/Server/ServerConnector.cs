@@ -8,8 +8,8 @@ public class ServerConnector : MonoBehaviourPunCallbacks
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Disconnected)
             PhotonNetwork.Disconnect();
         PhotonNetwork.NickName = DBManager.LoginedUserName;
-        PhotonNetwork.SendRate = 128;
-        PhotonNetwork.SerializationRate = 128;
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 40;
         PhotonNetwork.ConnectUsingSettings();
     }
 
