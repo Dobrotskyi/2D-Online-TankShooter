@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TankObservable : MonoBehaviour, IPunObservable
 {
+    private const float TELEPORT_IF_DISTANCE_GRATER_THAN = 1.5f;
+    private const float ROTATION_MULTIPLIER = 100f;
+
     private PhotonView _view;
 
     private Rigidbody2D _rb;
@@ -35,12 +38,12 @@ public class TankObservable : MonoBehaviour, IPunObservable
             _netRot = (Quaternion)stream.ReceiveNext();
             _rb.velocity = (Vector2)stream.ReceiveNext();
             _rb.angularVelocity = (float)stream.ReceiveNext();
+
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             _netPos += ((Vector3)_rb.velocity * lag);
 
             Quaternion lagRotation = Quaternion.Euler(0, 0, _rb.angularVelocity * lag);
             _netRot = Quaternion.Euler(_netRot.eulerAngles + lagRotation.eulerAngles);
-
 
             _netTurretRotation = (Quaternion)stream.ReceiveNext();
             _turretRotationDirection = Quaternion.Euler(_netTurretRotation.eulerAngles - _turret.transform.rotation.eulerAngles);
@@ -51,15 +54,18 @@ public class TankObservable : MonoBehaviour, IPunObservable
     {
         if (_view.IsMine || PreparationFinished() == false) return;
 
-        _rb.position = Vector3.MoveTowards(_rb.position, _netPos, Time.fixedDeltaTime);
-        _rb.transform.rotation = Quaternion.RotateTowards(_rb.transform.rotation, _netRot, Time.fixedDeltaTime * 100f);
+        if (Vector3.Distance(_rb.position, _netPos) > TELEPORT_IF_DISTANCE_GRATER_THAN)
+            _rb.position = _netPos;
 
+        _rb.position = Vector3.MoveTowards(_rb.position, _netPos, Time.fixedDeltaTime);
+        _rb.transform.rotation = Quaternion.RotateTowards(_rb.transform.rotation, _netRot, Time.fixedDeltaTime * ROTATION_MULTIPLIER);
     }
 
     private void Update()
     {
         if (_view.IsMine || PreparationFinished() == false) return;
-        _turret.transform.rotation = Quaternion.RotateTowards(_turret.transform.rotation, _netTurretRotation, Time.deltaTime * _turretRotationDirection.eulerAngles.magnitude * 100f);
+        float step = Time.deltaTime * _turretRotationDirection.eulerAngles.magnitude * ROTATION_MULTIPLIER;
+        _turret.transform.rotation = Quaternion.Lerp(_turret.transform.rotation, _netTurretRotation, step);
     }
 
     private bool PreparationFinished()

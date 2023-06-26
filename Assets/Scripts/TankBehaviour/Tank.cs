@@ -81,13 +81,13 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
             return;
         if (_setupInProgress)
             return;
-        _view.RPC("RPC_Shoot", RpcTarget.All, _turret.GenereteDirection());
+        _view.RPC("RPC_Shoot", RpcTarget.All, _turret.GetDirection, _turret.GetBarrelPos);
     }
 
     [PunRPC]
-    private void RPC_Shoot(Vector2 direction)
+    private void RPC_Shoot(Vector2 direction, Vector2 barrelPos)
     {
-        _turret.Shoot(direction);
+        _turret.Shoot(direction, barrelPos);
     }
 
     public void Aim(Vector2 target)
