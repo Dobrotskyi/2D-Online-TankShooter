@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-using WebSocketSharp;
 
 public static class DBManager
 {
+    private static bool LOCAL_BUILD = true;
+
     public const int REWARD_FOR_KILL = 50;
     public const int MAX_NAME_LENGTH = 10;
     public const int MIN_NAME_LENGTH = 5;
@@ -22,6 +23,9 @@ public static class DBManager
 #endif
 
 #if UNITY_WEBGL
+        if(LOCAL_BUILD)
+            return new LocalServerURLS();
+        else
             return new WebServerURLS();
 #endif
             return null;
@@ -52,7 +56,7 @@ public static class DBManager
 
     public static int SelectedMainID { get; private set; }
 
-    public static bool IsLogged() => !s_userName.IsNullOrEmpty();
+    public static bool IsLogged() => !string.IsNullOrEmpty(s_userName);
 
     public static IEnumerator MakeCallGetSelectedIDs()
     {
@@ -81,6 +85,7 @@ public static class DBManager
         Dictionary<string, string> parameters = new() { {"nickname", s_userName },
                                                         {"add_money", amt.ToString()} };
         yield return caller.MakeCallWithParameters(parameters);
+        yield return UpdateMoneyAmt();
     }
 
     public static void Logout()

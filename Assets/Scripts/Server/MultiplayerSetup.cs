@@ -29,7 +29,7 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Game");
+        PhotonNetwork.LoadLevel("Lobby");
     }
 
     private bool ValidateInput(string input)
