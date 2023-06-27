@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 {
+    public static event Action TankLoaded;
+
     public event Action TankWasDestroyed;
 
     [SerializeField] private PropertyBar[] _bars;
     [SerializeField] private GameObject _explosionAnim;
     [SerializeField] private Player _player;
-    [SerializeField] private ParticleSystem _engineSmoke;
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -166,9 +167,9 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
         SetPropertyBars();
         SetupNameTagCanv();
+        
         _setupInProgress = false;
-
-        _health.TakeDamage(maxHealth / 2);
+        TankLoaded?.Invoke();
     }
 
     private void SetPropertyBars()

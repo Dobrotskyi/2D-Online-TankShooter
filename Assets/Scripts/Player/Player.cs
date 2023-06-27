@@ -8,18 +8,18 @@ public class Player : MonoBehaviour
     private const float _freezeTime = 3f;
     PlayerInput _input;
     PlayerInputHandler _handler;
-    private bool _frozen = false;
+    private bool _frozen = true;
     public bool Frozen => _frozen;
 
     private void FreezePlayer()
     {
         _frozen = true;
-        StartCoroutine(UnfreezeAfterTime());
+        StartCoroutine(UnfreezeAfterTime(_freezeTime));
     }
 
-    private IEnumerator UnfreezeAfterTime()
+    private IEnumerator UnfreezeAfterTime(float timeInSeconds)
     {
-        yield return new WaitForSeconds(_freezeTime);
+        yield return new WaitForSeconds(timeInSeconds);
         _frozen = false;
     }
 
@@ -28,13 +28,17 @@ public class Player : MonoBehaviour
         _input = GetComponent<PlayerInput>();
         _handler = GetComponent<PlayerInputHandler>();
         GetComponent<Tank>().TankWasDestroyed += FreezePlayer;
+        PlayerPreparationChecker.Instance.GameIsReadyToLaunch += InstantUnfreeze;
 
         StartCoroutine(TrySetCameraFollow());
     }
 
+    private void InstantUnfreeze() => _frozen = false;
+
     private void OnDisable()
     {
         GetComponent<Tank>().TankWasDestroyed -= FreezePlayer;
+        PlayerPreparationChecker.Instance.GameIsReadyToLaunch -= InstantUnfreeze;
     }
 
     private IEnumerator TrySetCameraFollow()
