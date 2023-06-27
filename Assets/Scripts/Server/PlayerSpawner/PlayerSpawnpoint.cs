@@ -5,8 +5,6 @@ using Photon.Pun;
 
 public class PlayerSpawnpoint : MonoBehaviour
 {
-    public static event Action PlayerSpawned;
-
     [SerializeField] private float _spawnHereCoolDownTime = 3.5f;
     public bool IsBlocked { get; private set; } = false;
 

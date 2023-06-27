@@ -11112,7 +11112,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 1
+  sceneViewId: 7
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &870545216
@@ -11627,6 +11627,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1257537012}
     m_Modifications:
+    - target: {fileID: 1732532993748571914, guid: 72216de73f80e0f46aee8c71c1ff037b, type: 3}
+      propertyPath: _usesLoading
+      value: 
+      objectReference: {fileID: 1257537008}
     - target: {fileID: 3707140622197664711, guid: 72216de73f80e0f46aee8c71c1ff037b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -11910,8 +11914,11 @@ GameObject:
   - component: {fileID: 1257537011}
   - component: {fileID: 1257537010}
   - component: {fileID: 1257537009}
+  - component: {fileID: 1257537013}
+  - component: {fileID: 1257537014}
+  - component: {fileID: 1257537015}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GameCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12002,6 +12009,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1257537013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257537008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b2830542030c8c46945777480861779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1257537014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257537008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e045bf4cab7d4b49b7d7678a8df1648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1257537015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257537008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 5
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &1295603951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13241,11 +13294,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3024863377648302943, guid: a7c68240325723b4c94579715286b1b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.7
+      value: -3.78
       objectReference: {fileID: 0}
     - target: {fileID: 3024863377648302943, guid: a7c68240325723b4c94579715286b1b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.43
+      value: -2.22
       objectReference: {fileID: 0}
     - target: {fileID: 3024863377648302943, guid: a7c68240325723b4c94579715286b1b0, type: 3}
       propertyPath: m_LocalPosition.z

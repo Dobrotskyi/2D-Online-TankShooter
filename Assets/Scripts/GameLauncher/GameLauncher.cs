@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class GameLauncher : MonoBehaviourSingleton<GameLauncher>, IUseLoading
 {
     public event Action StartLoading;
     public event Action EndLoading;
 
-    private void Start()
+    private void Awake()
     {
         StartLoading?.Invoke();
         PlayerPreparationChecker.Instance.GameIsReadyToLaunch += LaunchGame;
