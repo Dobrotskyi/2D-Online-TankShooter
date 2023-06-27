@@ -141,6 +141,9 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
     private IEnumerator SpawnTank()
     {
+#if UNITY_EDITOR
+        yield return new WaitForSeconds(1f);
+#endif
         TurretDataBuilder turretBuilder = new();
         MainPartDataBuilder mainBuilder = new();
 
@@ -167,7 +170,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
         SetPropertyBars();
         SetupNameTagCanv();
-        
+
         _setupInProgress = false;
         TankLoaded?.Invoke();
     }
