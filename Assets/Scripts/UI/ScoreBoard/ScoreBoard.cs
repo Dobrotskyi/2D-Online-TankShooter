@@ -21,7 +21,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
-        RemoveFromeScoreboard(otherPlayer);
+        RemoveFromScoreboard(otherPlayer);
     }
 
     public void UpdateScoreboard(string name)
@@ -42,7 +42,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         _scoreboardPairs[player.NickName] = scoreboardItem;
     }
 
-    private void RemoveFromeScoreboard(Photon.Realtime.Player player)
+    private void RemoveFromScoreboard(Photon.Realtime.Player player)
     {
         Destroy(_scoreboardPairs[player.NickName].gameObject);
         _scoreboardPairs.Remove(player.NickName);
