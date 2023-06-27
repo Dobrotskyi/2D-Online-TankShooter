@@ -6,7 +6,7 @@ public class MainMenuReturner : MonoBehaviour
 {
     public void GoMeinMenu()
     {
-        if (SceneManager.GetActiveScene().name == "Game")
+        if (PhotonNetwork.IsConnected)
             PhotonNetwork.Disconnect();
         SceneManager.LoadScene("MainMenu");
     }
