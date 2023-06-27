@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,9 +6,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class ShopMenu : MonoBehaviour
+public class ShopMenu : MonoBehaviour, IUseLoading
 {
     private const char DETERM = '\t';
+    private const int CallsAmt = 2;
 
     public int SelectedMain { get; private set; }
     public int SelectedTurret { get; private set; }
@@ -17,7 +19,13 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private Toggle[] _toggles;
     [SerializeField] private ToggleGroup _group;
     [SerializeField] private TextMeshProUGUI _textTMP;
+    [SerializeField] private GameObject _loadingScreenPanel;
+
     private Toggle _lastToggled;
+
+    public event Action StartLoading;
+    public event Action EndLoading;
+    private int _finishedDisplayingCount = 0;
 
     public void ChangeContent()
     {
@@ -60,12 +68,18 @@ public class ShopMenu : MonoBehaviour
 
     private void ShowParts()
     {
+        _finishedDisplayingCount = 0;
+        StartLoading?.Invoke();
         StartCoroutine(MakeCallToDB(new TurretDataBuilder(), DBManager.ServerURLS.GET_TURRETS_BY_CATEGORY_URL));
         StartCoroutine(MakeCallToDB(new MainPartDataBuilder(), DBManager.ServerURLS.GET_MAINS_BY_CATEGORY_URL));
     }
 
     private IEnumerator MakeCallToDB(ObjectFromDBBuilder builder, string url)
     {
+#if UNITY_EDITOR
+        yield return new WaitForSeconds(1f);
+#endif
+
         PHPCaller caller = new(url);
         Dictionary<string, string> parameters = new Dictionary<string, string>() { { "nickname", DBManager.LoginedUserName },
                                                                                         {"purchased", _toggles[0].isOn.ToString() } };
@@ -76,6 +90,9 @@ public class ShopMenu : MonoBehaviour
             yield return new System.Exception($"\"Error occurred while making call to the server: \"");
         DisplayAllParts(caller.Result, builder);
 
+        _finishedDisplayingCount++;
+        if(_finishedDisplayingCount == CallsAmt)
+           EndLoading?.Invoke();
     }
 
     private void DisplayAllParts(string[] info, ObjectFromDBBuilder builder)
