@@ -10,6 +10,7 @@ public class ServerConnector : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = DBManager.LoginedUserName;
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 40;
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
     }
 

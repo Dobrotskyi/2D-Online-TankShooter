@@ -85,6 +85,7 @@ public static class DBManager
         Dictionary<string, string> parameters = new() { {"nickname", s_userName },
                                                         {"add_money", amt.ToString()} };
         yield return caller.MakeCallWithParameters(parameters);
+        yield return UpdateMoneyAmt();
     }
 
     public static void Logout()

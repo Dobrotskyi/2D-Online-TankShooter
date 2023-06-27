@@ -2,6 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Lobby : MonoBehaviourPunCallbacks
 {
@@ -9,6 +10,12 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private VerticalLayoutGroup _content;
     [SerializeField] private Button[] _buttons = new Button[2];
     private Dictionary<string, LobbyListItem> _players = new();
+
+    public void StartGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            SceneManager.LoadScene("Game");
+    }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
@@ -22,7 +29,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if(!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
             _buttons[1].gameObject.SetActive(false);
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
             AddToList(player);
