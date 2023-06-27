@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 6859786766787260487}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6859786766335269310
 GameObject:
@@ -150,7 +150,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1820, y: 580}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6859786766348289546
 CanvasRenderer:
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.56848174, g: 0.49519405, b: 0.9811321, a: 0.392}
+  m_Color: {r: 0.34242615, g: 0.764151, b: 0.5532311, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -262,4 +262,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29061a277da627246bd0399f4047bb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _usesLoading: {fileID: 0}
   _loadingPanel: {fileID: 5087352659671193861}

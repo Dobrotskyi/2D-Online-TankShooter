@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 {
+    public static event Action TankLoaded;
+
     public event Action TankWasDestroyed;
 
     [SerializeField] private PropertyBar[] _bars;
@@ -166,9 +168,9 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
         SetPropertyBars();
         SetupNameTagCanv();
+        
         _setupInProgress = false;
-
-        _health.TakeDamage(maxHealth / 2);
+        TankLoaded?.Invoke();
     }
 
     private void SetPropertyBars()

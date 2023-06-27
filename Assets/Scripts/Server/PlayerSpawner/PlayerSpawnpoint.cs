@@ -1,10 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Photon.Pun;
 
 public class PlayerSpawnpoint : MonoBehaviour
 {
+    public static event Action PlayerSpawned;
+
     [SerializeField] private float _spawnHereCoolDownTime = 3.5f;
     public bool IsBlocked { get; private set; } = false;
 
@@ -22,7 +24,7 @@ public class PlayerSpawnpoint : MonoBehaviour
     private IEnumerator UnblockSpawning()
     {
         yield return new WaitForSeconds(_spawnHereCoolDownTime);
-        IsBlocked = true;
+        IsBlocked = false;
     }
 
 }
