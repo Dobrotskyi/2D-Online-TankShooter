@@ -1016,6 +1016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileHit: {fileID: 2261125413743363640, guid: 6bca3e1a28b51ee4d8d0dec1eb831ce0, type: 3}
+  _engineSmoke: {fileID: 8712692101722559685, guid: f91183861be5e95468c5c60c6bd59cff, type: 3}
 --- !u!4 &383614945
 Transform:
   m_ObjectHideFlags: 0
