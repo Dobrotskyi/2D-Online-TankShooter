@@ -7,15 +7,17 @@ public class GameOverMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _killedEnemiesTxt;
     [SerializeField] private TextMeshProUGUI _rewardTxt;
     [SerializeField] private TextMeshProUGUI _nickNameTxt;
+    private GameTimeTimer _timer;
 
     private void Awake()
     {
-        InGameTimer.TimeIsUp += ShowMenu;
+        _timer = FindObjectOfType<GameTimeTimer>();
+        _timer.TimeIsUp += ShowMenu;
     }
 
     private void OnDisable()
     {
-        InGameTimer.TimeIsUp -= ShowMenu;
+        _timer.TimeIsUp -= ShowMenu;
     }
 
     private void ShowMenu()

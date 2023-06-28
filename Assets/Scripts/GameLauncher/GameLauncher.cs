@@ -19,5 +19,6 @@ public class GameLauncher : MonoBehaviourSingleton<GameLauncher>, IUseLoading
     private void LaunchGame()
     {
         EndLoading?.Invoke();
+        FindObjectOfType<FreezeTimeTimer>().LaunchTimer();
     }
 }

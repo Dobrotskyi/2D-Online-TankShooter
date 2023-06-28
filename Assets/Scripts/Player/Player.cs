@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_frozen || InGameTimer.GameTime == false)
+        if (_frozen || GameTimeTimer.GameTime == false)
             return;
 
         if (_input.Shoot)

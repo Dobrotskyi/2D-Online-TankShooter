@@ -19,7 +19,7 @@ public class SupplySpawner : MonoBehaviour
 
     private IEnumerator StartSpawning()
     {
-        while (InGameTimer.GameTime)
+        while (GameTimeTimer.GameTime)
         {
             int prefInd = UnityEngine.Random.Range(0, _suppliesPrefs.Count);
             int spInd = GetRandomEmptySP();
