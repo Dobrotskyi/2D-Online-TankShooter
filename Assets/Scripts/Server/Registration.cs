@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Registration : Authorization
@@ -17,9 +18,9 @@ public class Registration : Authorization
 
     public void VerifyInputs()
     {
-        _submitButton.interactable = (_nicknameField.text.Length >= DBManager.MIN_NAME_LENGTH
-                                      && _password.text.Length >= DBManager.MIN_PASSW_LENGTH
-                                      && _nicknameField.text.Length < DBManager.MAX_NAME_LENGTH);
+        _submitButton.interactable = (_nicknameField.text.Length >= MIN_NAME_LENGTH
+                                      && _password.text.Length >= MIN_PASSW_LENGTH
+                                      && _nicknameField.text.Length < MAX_NAME_LENGTH);
     }
 
     private IEnumerator Register()
@@ -40,7 +41,10 @@ public class Registration : Authorization
 
         string result = uwr.downloadHandler.text;
         if (result == "0")
+        {
             DisplayMessage("Registration was succesful", _submitButton.transform.position, MessageType.Success);
+            SceneManager.LoadScene("LoginMenu");
+        }
         else
             DisplayMessage(result.Substring(1), _submitButton.transform.position, MessageType.Fail);
 

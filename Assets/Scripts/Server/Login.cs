@@ -53,8 +53,8 @@ public class Login : Authorization
 
     public void VerifyInputs()
     {
-        _submitButton.interactable = (_nicknameField.text.Length >= DBManager.MIN_NAME_LENGTH
-                                      && _passwordField.text.Length >= DBManager.MIN_PASSW_LENGTH
-                                      && _nicknameField.text.Length < DBManager.MAX_NAME_LENGTH);
+        _submitButton.interactable = (_nicknameField.text.Length >= MIN_NAME_LENGTH
+                                      && _passwordField.text.Length >= MIN_PASSW_LENGTH
+                                      && _nicknameField.text.Length < MAX_NAME_LENGTH);
     }
 }

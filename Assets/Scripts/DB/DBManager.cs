@@ -9,9 +9,6 @@ public static class DBManager
     private static bool LOCAL_BUILD = true;
 
     public const int REWARD_FOR_KILL = 50;
-    public const int MAX_NAME_LENGTH = 10;
-    public const int MIN_NAME_LENGTH = 5;
-    public const int MIN_PASSW_LENGTH = 5;
 
     public static event Action MoneyChanged;
     public static ServerURLS ServerURLS
