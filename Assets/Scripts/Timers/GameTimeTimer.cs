@@ -1,8 +1,9 @@
 using Photon.Pun;
+using System;
 
 public class GameTimeTimer : Timer
 {
-    public static bool GameTime { get; private set; }
+    public static bool GameTime { get; private set; } = true;
 
     private FreezeTimeTimer _timer;
 

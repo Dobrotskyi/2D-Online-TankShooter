@@ -6,8 +6,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const float _freezeTime = 3f;
-    PlayerInput _input;
-    PlayerInputHandler _handler;
+    private PlayerInput _input;
+    private PlayerInputHandler _handler;
+    private FreezeTimeTimer _freezeTimeTimer;
+
     private bool _frozen = true;
     public bool Frozen => _frozen;
 
@@ -28,7 +30,8 @@ public class Player : MonoBehaviour
         _input = GetComponent<PlayerInput>();
         _handler = GetComponent<PlayerInputHandler>();
         GetComponent<Tank>().TankWasDestroyed += FreezePlayer;
-        PlayerPreparationChecker.Instance.GameIsReadyToLaunch += InstantUnfreeze;
+        _freezeTimeTimer = FindObjectOfType<FreezeTimeTimer>();
+        _freezeTimeTimer.TimeIsUp += InstantUnfreeze;
 
         StartCoroutine(TrySetCameraFollow());
     }
@@ -38,7 +41,7 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         GetComponent<Tank>().TankWasDestroyed -= FreezePlayer;
-        PlayerPreparationChecker.Instance.GameIsReadyToLaunch -= InstantUnfreeze;
+        _freezeTimeTimer.TimeIsUp -= InstantUnfreeze;
     }
 
     private IEnumerator TrySetCameraFollow()

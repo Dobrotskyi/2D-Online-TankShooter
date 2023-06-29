@@ -12,7 +12,7 @@ public class TankObservable : MonoBehaviour, IPunObservable
     private Rigidbody2D _rb;
     private Transform _turret;
 
-    private Vector3 _netPos;
+    private Vector2 _netPos;
     private Quaternion _netRot;
 
     private Quaternion _turretRotationDirection;
@@ -40,7 +40,7 @@ public class TankObservable : MonoBehaviour, IPunObservable
             _rb.angularVelocity = (float)stream.ReceiveNext();
 
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            _netPos += ((Vector3)_rb.velocity * lag);
+            _netPos += _rb.velocity * lag;
 
             Quaternion lagRotation = Quaternion.Euler(0, 0, _rb.angularVelocity * lag);
             _netRot = Quaternion.Euler(_netRot.eulerAngles + lagRotation.eulerAngles);

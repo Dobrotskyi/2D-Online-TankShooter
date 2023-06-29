@@ -23,10 +23,10 @@ public static class DBManager
 #endif
 
 #if UNITY_WEBGL
-        if(LOCAL_BUILD)
-            return new LocalServerURLS();
-        else
-            return new WebServerURLS();
+            if (LOCAL_BUILD)
+                return new LocalServerURLS();
+            else
+                return new WebServerURLS();
 #endif
             return null;
         }

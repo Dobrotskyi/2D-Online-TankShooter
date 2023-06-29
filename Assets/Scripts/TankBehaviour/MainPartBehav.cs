@@ -10,14 +10,14 @@ public class MainPartBehav : MonoBehaviourPun
 
     public void Move(float direction)
     {
-        _rb.AddForce(_rb.transform.up * direction * _data.Acceleration * ACCELERATION_MULT * Time.deltaTime, ForceMode2D.Force);
+        _rb.AddForce(_rb.transform.up * direction * _data.Acceleration * ACCELERATION_MULT * Time.fixedDeltaTime, ForceMode2D.Force);
         if (_rb.velocity.magnitude > _data.MaxSpeed)
             _rb.velocity = Vector2.ClampMagnitude(_rb.velocity, _data.MaxSpeed);
     }
 
     public void Rotate(float side)
     {
-        _rb.AddTorque(-side * _data.AngularSpeed * Time.deltaTime, ForceMode2D.Impulse);
+        _rb.AddTorque(-side * _data.AngularSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
 
     public void SetData(MainPartData data)
