@@ -10,14 +10,29 @@ public class SupplySpawner : MonoBehaviour
     [SerializeField] Vector2 _minMaxTime = new(2, 5);
     private PhotonView _view;
 
+    private GameTimeTimer _timer;
+
     private void Start()
     {
         _view = GetComponent<PhotonView>();
+        _timer = FindObjectOfType<GameTimeTimer>();
         if (PhotonNetwork.IsMasterClient)
-            StartCoroutine(StartSpawning());
+        {
+            _timer.GameTimeStarted += StartSpawning;
+        }
     }
 
-    private IEnumerator StartSpawning()
+    private void OnDisable()
+    {
+        _timer.GameTimeStarted -= StartSpawning;
+    }
+
+    private void StartSpawning()
+    {
+        StartCoroutine(Spawning());
+    }
+
+    private IEnumerator Spawning()
     {
         while (GameTimeTimer.GameTime)
         {

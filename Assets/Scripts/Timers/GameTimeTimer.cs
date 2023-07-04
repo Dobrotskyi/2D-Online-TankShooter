@@ -1,8 +1,10 @@
 using Photon.Pun;
+using System;
 
 public class GameTimeTimer : Timer
 {
     public static bool GameTime { get; private set; } = true;
+    public event Action GameTimeStarted;
 
     private FreezeTimeTimer _timer;
 
@@ -10,6 +12,7 @@ public class GameTimeTimer : Timer
     {
         GameTime = true;
         base.LaunchTimer();
+        GameTimeStarted?.Invoke();
     }
 
     private void Start()

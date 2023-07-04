@@ -22,7 +22,7 @@ public class GameOverMenu : MonoBehaviour
 
     private void ShowMenu()
     {
-        int kills = FindObjectOfType<ScoreBoard>().GetPlayerKills(PhotonNetwork.NickName);
+        int kills = FindObjectOfType<Scoreboard>().GetPlayerKills(PhotonNetwork.NickName);
         _killedEnemiesTxt.text = kills.ToString();
         _rewardTxt.text = (kills * DBManager.REWARD_FOR_KILL).ToString();
         _nickNameTxt.text = PhotonNetwork.NickName;

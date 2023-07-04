@@ -1,8 +1,9 @@
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class ScoreBoard : MonoBehaviourPunCallbacks
+public class Scoreboard : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject _scoreboardItem;
     private Dictionary<string, ScoreboardItem> _scoreboardPairs = new Dictionary<string, ScoreboardItem>();
@@ -24,9 +25,25 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         RemoveFromScoreboard(otherPlayer);
     }
 
-    public void UpdateScoreboard(string name)
+    public void AddKillTo(string name)
     {
         _scoreboardPairs[name].AddKill();
+        UpdateStandings();
+    }
+
+    private void UpdateStandings()
+    {
+        _scoreboardPairs = _scoreboardPairs.OrderByDescending(x => x.Value.Kills).ToDictionary(x => x.Key, x => x.Value);
+
+        int i = 0;
+        foreach (var item in _scoreboardPairs.Values)
+            item.SetSiblingIndex(i++);
+    }
+
+    private void RemoveFromScoreboard(Photon.Realtime.Player player)
+    {
+        Destroy(_scoreboardPairs[player.NickName].gameObject);
+        _scoreboardPairs.Remove(player.NickName);
     }
 
     private void Start()
@@ -40,11 +57,5 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         ScoreboardItem scoreboardItem = Instantiate(_scoreboardItem, transform).GetComponent<ScoreboardItem>();
         scoreboardItem.Initialize(player);
         _scoreboardPairs[player.NickName] = scoreboardItem;
-    }
-
-    private void RemoveFromScoreboard(Photon.Realtime.Player player)
-    {
-        Destroy(_scoreboardPairs[player.NickName].gameObject);
-        _scoreboardPairs.Remove(player.NickName);
     }
 }

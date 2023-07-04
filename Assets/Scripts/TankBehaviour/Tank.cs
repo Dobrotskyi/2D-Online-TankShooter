@@ -13,8 +13,6 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
     [SerializeField] private GameObject _explosionAnim;
     [SerializeField] private Player _player;
 
-    public bool TestIsPlayer;
-
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -39,7 +37,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
     public void TakeDamage(int amt)
     {
-        if (_setupInProgress || (TestIsPlayer && _player.Frozen))
+        if (_setupInProgress || _player.Frozen)
             return;
         if (_view.IsMine)
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt);
@@ -47,7 +45,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
     public void TakeDamage(int amt, string damagerName)
     {
-        if (_setupInProgress || (TestIsPlayer && _player.Frozen))
+        if (_setupInProgress || _player.Frozen)
             return;
         if (_view.IsMine)
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt, damagerName);
@@ -208,7 +206,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
         Instantiate(_explosionAnim, _mainPart.SpawnedObj.transform.position, Quaternion.identity);
         if (_view.IsMine)
             _view.RPC("RPC_Respawn", RpcTarget.All, FindObjectOfType<PlayerSpawner>().GetRandomSpawnPoint());
-        GameObject.FindGameObjectWithTag("Scoreboard").GetComponent<ScoreBoard>().UpdateScoreboard(_lastDamagerName);
+        GameObject.FindGameObjectWithTag("Scoreboard").GetComponent<Scoreboard>().AddKillTo(_lastDamagerName);
     }
 
     [PunRPC]

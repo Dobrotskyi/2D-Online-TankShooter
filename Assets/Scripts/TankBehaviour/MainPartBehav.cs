@@ -34,8 +34,8 @@ public class MainPartBehav : MonoBehaviourPun
     private void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
-        //ParticleSystem engineSmoke = Instantiate(FindObjectOfType<EffectsContainer>().EngineSmoke, transform);
-        //engineSmoke.transform.rotation = Quaternion.identity;
-        //engineSmoke.transform.localPosition = new Vector3(0, 0 - GetComponent<BoxCollider2D>().size.y / 2, 0);
+        ParticleSystem engineSmoke = Instantiate(FindObjectOfType<EffectsContainer>().EngineSmoke, transform);
+        engineSmoke.transform.rotation = Quaternion.identity;
+        engineSmoke.transform.localPosition = new Vector3(0, 0 - GetComponent<BoxCollider2D>().size.y / 2, 0);
     }
 }

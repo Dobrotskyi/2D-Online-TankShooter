@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
@@ -9,24 +10,26 @@ public class Player : MonoBehaviour
     private PlayerInput _input;
     private PlayerInputHandler _handler;
     private FreezeTimeTimer _freezeTimeTimer;
+    private PhotonView _view;
 
     private bool _frozen = true;
     public bool Frozen => _frozen;
 
     private void FreezePlayer()
     {
-        _frozen = true;
+        _view.RPC("ChangeFreezeState", RpcTarget.All, true);
         StartCoroutine(UnfreezeAfterTime(_freezeTime));
     }
 
     private IEnumerator UnfreezeAfterTime(float timeInSeconds)
     {
         yield return new WaitForSeconds(timeInSeconds);
-        _frozen = false;
+        InstantUnfreeze();
     }
 
     private void OnEnable()
     {
+        _view = GetComponent<PhotonView>();
         _input = GetComponent<PlayerInput>();
         _handler = GetComponent<PlayerInputHandler>();
         GetComponent<Tank>().TankWasDestroyed += FreezePlayer;
@@ -36,7 +39,10 @@ public class Player : MonoBehaviour
         StartCoroutine(TrySetCameraFollow());
     }
 
-    private void InstantUnfreeze() => _frozen = false;
+    private void InstantUnfreeze() => _view.RPC("ChangeFreezeState", RpcTarget.All, false);
+
+    [PunRPC]
+    private void ChangeFreezeState(bool frozen) => _frozen = frozen;
 
     private void OnDisable()
     {
