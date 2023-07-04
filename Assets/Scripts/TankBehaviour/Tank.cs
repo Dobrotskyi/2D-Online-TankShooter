@@ -12,6 +12,9 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
     [SerializeField] private PropertyBar[] _bars;
     [SerializeField] private GameObject _explosionAnim;
     [SerializeField] private Player _player;
+
+    public bool TestIsPlayer;
+
     private AmmoStorage _ammoStorage;
     private Health _health;
     private bool _setupInProgress = true;
@@ -36,7 +39,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
     public void TakeDamage(int amt)
     {
-        if (_setupInProgress || _player.Frozen)
+        if (_setupInProgress || (TestIsPlayer && _player.Frozen))
             return;
         if (_view.IsMine)
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt);
@@ -44,7 +47,7 @@ public class Tank : MonoBehaviourPun, ITakeDamageFromPlayer
 
     public void TakeDamage(int amt, string damagerName)
     {
-        if (_setupInProgress || _player.Frozen)
+        if (_setupInProgress || (TestIsPlayer && _player.Frozen))
             return;
         if (_view.IsMine)
             _view.RPC("RPC_TakeDamage", RpcTarget.All, amt, damagerName);

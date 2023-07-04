@@ -7,13 +7,18 @@ public class TankObservable : MonoBehaviour, IPunObservable
     private const float TELEPORT_IF_DISTANCE_GRATER_THAN = 1.5f;
     private const float ROTATION_MULTIPLIER = 100f;
 
+    private float _tankRotationSpeed = -1;
+    private float _tankAcceleration = -1;
+
     private PhotonView _view;
 
     private Rigidbody2D _rb;
     private Transform _turret;
 
     private Vector2 _netPos;
-    private Quaternion _netRot;
+    private float _netRot;
+    private Vector2 _netVelocity;
+    private float _netAngularVelocity;
 
     private Quaternion _turretRotationDirection;
     private Quaternion _netTurretRotation;
@@ -26,7 +31,7 @@ public class TankObservable : MonoBehaviour, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(_rb.position);
-            stream.SendNext(_rb.transform.rotation);
+            stream.SendNext(_rb.rotation);
             stream.SendNext(_rb.velocity);
             stream.SendNext(_rb.angularVelocity);
 
@@ -35,15 +40,13 @@ public class TankObservable : MonoBehaviour, IPunObservable
         else if (stream.IsReading)
         {
             _netPos = (Vector2)stream.ReceiveNext();
-            _netRot = (Quaternion)stream.ReceiveNext();
-            _rb.velocity = (Vector2)stream.ReceiveNext();
-            _rb.angularVelocity = (float)stream.ReceiveNext();
+            _netRot = (float)stream.ReceiveNext();
+            _netVelocity = (Vector2)stream.ReceiveNext();
+            _netAngularVelocity = (float)stream.ReceiveNext();
 
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            _netPos += _rb.velocity * lag;
-
-            Quaternion lagRotation = Quaternion.Euler(0, 0, _rb.angularVelocity * lag);
-            _netRot = Quaternion.Euler(_netRot.eulerAngles + lagRotation.eulerAngles);
+            _netPos += _netVelocity * lag;
+            _netRot += _netAngularVelocity * lag;
 
             _netTurretRotation = (Quaternion)stream.ReceiveNext();
             _turretRotationDirection = Quaternion.Euler(_netTurretRotation.eulerAngles - _turret.transform.rotation.eulerAngles);
@@ -57,8 +60,14 @@ public class TankObservable : MonoBehaviour, IPunObservable
         if (Vector3.Distance(_rb.position, _netPos) > TELEPORT_IF_DISTANCE_GRATER_THAN)
             _rb.position = _netPos;
 
+        _rb.velocity = Vector3.Lerp(_rb.velocity, _netVelocity, Time.fixedDeltaTime * _tankAcceleration);
+        _rb.angularVelocity = Mathf.Lerp(_rb.angularVelocity, _netAngularVelocity, Time.fixedDeltaTime * _tankRotationSpeed);
+
         _rb.position = Vector3.MoveTowards(_rb.position, _netPos, Time.fixedDeltaTime);
-        _rb.transform.rotation = Quaternion.RotateTowards(_rb.transform.rotation, _netRot, Time.fixedDeltaTime * ROTATION_MULTIPLIER);
+        _rb.rotation = Quaternion.RotateTowards(Quaternion.Euler(0, 0, _rb.rotation),
+                       Quaternion.Euler(0, 0, _netRot), Time.fixedDeltaTime * _tankRotationSpeed * 0.8f)
+                       .eulerAngles.z;
+
     }
 
     private void Update()
@@ -86,7 +95,12 @@ public class TankObservable : MonoBehaviour, IPunObservable
         while (transform.GetComponentInChildren<MainPartBehav>() == null || transform.GetComponentInChildren<TurretPartBehav>() == null)
             yield return new WaitForEndOfFrame();
 
+
         _rb = transform.GetComponentInChildren<Rigidbody2D>();
+        MainPartBehav mainPartBehav = transform.GetComponentInChildren<MainPartBehav>();
         _turret = transform.GetComponentInChildren<TurretPartBehav>().transform;
+
+        _tankAcceleration = mainPartBehav.Acceleration;
+        _tankRotationSpeed = mainPartBehav.RotationSpeed;
     }
 }
