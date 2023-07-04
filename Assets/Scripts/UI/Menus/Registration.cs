@@ -42,11 +42,11 @@ public class Registration : Authorization
         string result = uwr.downloadHandler.text;
         if (result == "0")
         {
-            DisplayMessage("Registration was succesful", _submitButton.transform.position, MessageType.Success);
+            DisplayMessage("Registration was succesful", _submitButton.transform.position, NotificationType.Success);
             SceneManager.LoadScene("LoginMenu");
         }
         else
-            DisplayMessage(result.Substring(1), _submitButton.transform.position, MessageType.Fail);
+            DisplayMessage(result.Substring(1), _submitButton.transform.position, NotificationType.Fail);
 
         uwr.Dispose();
         yield break;

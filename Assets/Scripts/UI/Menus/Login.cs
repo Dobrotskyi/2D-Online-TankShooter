@@ -28,7 +28,7 @@ public class Login : Authorization
         if (uwr.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(uwr.result.ToString());
-            DisplayMessage(uwr.result.ToString(), _submitButton.transform.position, MessageType.Fail);
+            DisplayMessage(uwr.result.ToString(), _submitButton.transform.position, NotificationType.Fail);
             uwr.Dispose();
             yield break;
         }
@@ -44,7 +44,7 @@ public class Login : Authorization
         }
         else
         {
-            DisplayMessage(uwr.downloadHandler.text, _submitButton.transform.position, MessageType.Fail);
+            DisplayMessage(uwr.downloadHandler.text, _submitButton.transform.position, NotificationType.Fail);
             Debug.Log(result);
         }
 

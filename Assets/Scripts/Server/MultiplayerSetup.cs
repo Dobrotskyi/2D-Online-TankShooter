@@ -8,7 +8,7 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject _notification;
     [SerializeField] private TMP_InputField _joinInputField;
     [SerializeField] private TMP_InputField _createRoomInputField;
-    [SerializeField] private Vector3 _spawnNotificationPos;
+    [SerializeField] private Transform _spawnNotification;
     private const int MAX_INPUT_LENGTH = 8;
 
     public void CreateRoom()
@@ -36,13 +36,13 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
     {
         if (input.Length == 0)
         {
-            DisplayError("Field was empty", _spawnNotificationPos);
+            DisplayError("Field was empty", _spawnNotification.position);
             return false;
         }
 
         if (input.Length > MAX_INPUT_LENGTH)
         {
-            DisplayError("To many characters in input", _spawnNotificationPos);
+            DisplayError("To many characters in input", _spawnNotification.position);
             return false;
         }
         return true;
@@ -50,10 +50,6 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
 
     private void DisplayError(string text, Vector3 pos)
     {
-        GameObject notification = Instantiate(_notification);
-        notification.GetComponent<Notification>().DisplayNotification(text);
-        notification.transform.SetParent(transform);
-        notification.transform.localPosition = pos;
-        notification.transform.localScale = Vector3.one;
+        NotificationFabric.Instance.DisplayNotification(text, pos, NotificationType.Fail, transform);
     }
 }

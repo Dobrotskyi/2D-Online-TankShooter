@@ -1,9 +1,9 @@
 using Photon.Pun;
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PhotonView))]
 public class Lobby : MonoBehaviourPunCallbacks
@@ -11,13 +11,23 @@ public class Lobby : MonoBehaviourPunCallbacks
     [SerializeField] private LobbyListItem _lobbyListItem;
     [SerializeField] private VerticalLayoutGroup _content;
     [SerializeField] private Button[] _buttons = new Button[2];
+    [SerializeField] private Transform _notificationSpawnpoint;
     private Dictionary<string, LobbyListItem> _players = new();
     private PhotonView _view;
 
     public void StartGame()
     {
-        if (PhotonNetwork.IsMasterClient)
-            SceneManager.LoadScene("Game");
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        foreach (var player in _players.Values)
+            if (player.Status == PlayerReadyStatus.Not_Ready)
+            {
+                NotificationFabric.Instance.DisplayNotification($"Some players are not ready", _notificationSpawnpoint.position, NotificationType.Fail, transform);
+                return;
+            }
+
+        SceneManager.LoadScene("Game");
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
