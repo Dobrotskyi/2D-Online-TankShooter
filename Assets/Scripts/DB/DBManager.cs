@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class DBManager
 {
-    private static bool LOCAL_BUILD = true;
+    private static bool LOCAL_BUILD = false;
 
     public const int REWARD_FOR_KILL = 50;
 
