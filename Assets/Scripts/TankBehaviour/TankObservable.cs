@@ -17,6 +17,8 @@ public class TankObservable : MonoBehaviour, IPunObservable
 
     private Vector2 _netPos;
     private float _netRot;
+    private Vector2 _netVelocity;
+    private float _netAngularVelocity;
 
     private Quaternion _turretRotationDirection;
     private Quaternion _netTurretRotation;
@@ -39,12 +41,12 @@ public class TankObservable : MonoBehaviour, IPunObservable
         {
             _netPos = (Vector2)stream.ReceiveNext();
             _netRot = (float)stream.ReceiveNext();
-            _rb.velocity = (Vector2)stream.ReceiveNext();
-            _rb.angularVelocity = (float)stream.ReceiveNext();
+            _netVelocity = (Vector2)stream.ReceiveNext();
+            _netAngularVelocity = (float)stream.ReceiveNext();
 
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            _netPos += _rb.velocity * lag;
-            _netRot += _rb.angularVelocity * lag;
+            _netPos += _netVelocity * lag;
+            _netRot += _netAngularVelocity * lag;
 
             _netTurretRotation = (Quaternion)stream.ReceiveNext();
             _turretRotationDirection = Quaternion.Euler(_netTurretRotation.eulerAngles - _turret.transform.rotation.eulerAngles);
@@ -58,8 +60,12 @@ public class TankObservable : MonoBehaviour, IPunObservable
         if (Vector3.Distance(_rb.position, _netPos) > TELEPORT_IF_DISTANCE_GRATER_THAN)
             _rb.position = _netPos;
 
+        _rb.velocity = Vector3.Lerp(_rb.velocity, _netVelocity, Time.fixedDeltaTime * _tankAcceleration);
+        _rb.angularVelocity = Mathf.Lerp(_rb.angularVelocity, _netAngularVelocity, Time.fixedDeltaTime * _tankRotationSpeed);
+
         _rb.position = Vector3.MoveTowards(_rb.position, _netPos, Time.fixedDeltaTime);
-        _rb.rotation = Quaternion.RotateTowards(Quaternion.Euler(0, 0, _rb.rotation), Quaternion.Euler(0, 0, _netRot), Time.fixedDeltaTime * _tankRotationSpeed * 0.95f)
+        _rb.rotation = Quaternion.RotateTowards(Quaternion.Euler(0, 0, _rb.rotation),
+                       Quaternion.Euler(0, 0, _netRot), Time.fixedDeltaTime * _tankRotationSpeed * 0.8f)
                        .eulerAngles.z;
 
     }
