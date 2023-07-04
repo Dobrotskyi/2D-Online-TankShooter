@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class MainPartBehav : MonoBehaviourPun
 {
+    public float Acceleration => _data.Acceleration;
+    public float RotationSpeed => _data.AngularSpeed;
+
     private const int ACCELERATION_MULT = 500;
 
     private Rigidbody2D _rb;
