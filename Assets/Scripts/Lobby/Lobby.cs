@@ -40,17 +40,18 @@ public class Lobby : MonoBehaviourPunCallbacks
         RemoveFromList(otherPlayer);
     }
 
-    public void ReadyButtonPressed() => _view.RPC("ChangePlayerStatus", RpcTarget.All, PhotonNetwork.NickName);
-
-    [PunRPC]
-    private void ChangePlayerStatus(string nickname)
+    public void ReadyButtonPressed()
     {
-        _players[nickname].ChangeStatus();
-        if (_players[nickname].Status == PlayerReadyStatus.Ready)
+        _players[PhotonNetwork.NickName].ChangeStatus();
+        if (_players[PhotonNetwork.NickName].Status == PlayerReadyStatus.Ready)
             _buttons[0].transform.GetComponentInChildren<TextMeshProUGUI>().text = PlayerReadyStatus.Not_Ready.ToString().Replace("_", " ");
         else
             _buttons[0].transform.GetComponentInChildren<TextMeshProUGUI>().text = PlayerReadyStatus.Ready.ToString();
+        _view.RPC("ChangePlayerStatus", RpcTarget.Others, PhotonNetwork.NickName);
     }
+
+    [PunRPC]
+    private void ChangePlayerStatus(string nickname) => _players[nickname].ChangeStatus();
 
     private void Start()
     {
