@@ -37,6 +37,7 @@ public class PHPCaller
         {
             Debug.Log(uwr.result.ToString());
             Debug.Log(uwr.downloadHandler.text);
+            uwr.Dispose();
             yield return new System.Exception(uwr.result.ToString());
             yield break;
         }
