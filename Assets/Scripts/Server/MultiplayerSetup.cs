@@ -32,6 +32,16 @@ public class MultiplayerSetup : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Lobby");
     }
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        DisplayError(message, _spawnNotification.position);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        DisplayError(message, _spawnNotification.position);
+    }
+
     private bool ValidateInput(string input)
     {
         if (input.Length == 0)
