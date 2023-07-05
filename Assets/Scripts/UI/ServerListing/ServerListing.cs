@@ -7,6 +7,7 @@ public class ServerListing : MonoBehaviourPunCallbacks
 {
     [SerializeField] private RectTransform _content;
     [SerializeField] private ServerListItem _serverListItem;
+    [SerializeField] private GameObject _listIsEmptyPanel;
     private List<ServerListItem> _listItems = new();
 
 
@@ -35,6 +36,11 @@ public class ServerListing : MonoBehaviourPunCallbacks
                     _listItems[index].SetInfo(info);
             }
         }
+
+        if (_listItems.Count == 0)
+            _listIsEmptyPanel.SetActive(true);
+        else
+            _listIsEmptyPanel.SetActive(false);
     }
 
 }
