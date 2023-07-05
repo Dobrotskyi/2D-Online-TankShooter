@@ -27,6 +27,8 @@ public class Lobby : MonoBehaviourPunCallbacks
                 return;
             }
 
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         SceneManager.LoadScene("Game");
     }
 
