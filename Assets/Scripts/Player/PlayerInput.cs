@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -21,6 +23,20 @@ public class PlayerInput : MonoBehaviour
         Move = (Mathf.Abs(verticalInput) > _inputThreshold.y) ? true : false;
         MoveDirection = Move ? verticalInput : 0;
 
-        Shoot = (Input.GetMouseButton(0)) ? true : false;
+        Shoot = (Input.GetMouseButton(0) && !IsMouseOverUI()) ? true : false;
+    }
+
+    private bool IsMouseOverUI()
+    {
+        PointerEventData pointerEventData = new(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResults = new();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+        foreach (var result in raycastResults)
+            if (result.gameObject.GetComponent<MouseUIClickThrough>() != null)
+                raycastResults.Remove(result);
+
+        return raycastResults.Count > 0;
     }
 }
