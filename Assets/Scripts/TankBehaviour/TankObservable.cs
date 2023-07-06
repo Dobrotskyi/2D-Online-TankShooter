@@ -67,7 +67,6 @@ public class TankObservable : MonoBehaviour, IPunObservable
         _rb.rotation = Quaternion.RotateTowards(Quaternion.Euler(0, 0, _rb.rotation),
                        Quaternion.Euler(0, 0, _netRot), Time.fixedDeltaTime * _tankRotationSpeed * 0.8f)
                        .eulerAngles.z;
-
     }
 
     private void Update()

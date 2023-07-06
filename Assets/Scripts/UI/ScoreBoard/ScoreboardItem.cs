@@ -22,14 +22,13 @@ public class ScoreboardItem : MonoBehaviour
         _scoreField.text = _kills.ToString();
     }
 
-    public void SetSiblingIndex(int index)
+    public void ChangePlacement(int index)
     {
         transform.SetSiblingIndex(index);
+        TurnOffMedals();
 
         if (DeservesMedal(index))
             _medals[index].gameObject.SetActive(true);
-        else
-            TurnOffMedals();
     }
 
     private void Start()

@@ -37,7 +37,7 @@ public class Scoreboard : MonoBehaviourPunCallbacks
 
         int i = 0;
         foreach (var item in _scoreboardPairs.Values)
-            item.SetSiblingIndex(i++);
+            item.ChangePlacement(i++);
     }
 
     private void RemoveFromScoreboard(Photon.Realtime.Player player)
