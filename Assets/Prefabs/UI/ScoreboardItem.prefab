@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7004966860317666491}
   - component: {fileID: 3983010057249844558}
+  - component: {fileID: 5182167463956016492}
   m_Layer: 5
   m_Name: ScoreboardItem
   m_TagString: Untagged
@@ -59,6 +60,19 @@ MonoBehaviour:
   - {fileID: 6189895546866470262}
   - {fileID: 4061979920701350837}
   - {fileID: 9064161257800453645}
+--- !u!114 &5182167463956016492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217885718386016835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c7fac9e6fc8b7c4bb4173e1e81513f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _useForChildren: 1
 --- !u!1 &3579020349673498864
 GameObject:
   m_ObjectHideFlags: 0
