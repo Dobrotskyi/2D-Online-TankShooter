@@ -19,7 +19,6 @@ public class ShopMenu : MonoBehaviour, IUseLoading
     [SerializeField] private Toggle[] _toggles;
     [SerializeField] private ToggleGroup _group;
     [SerializeField] private TextMeshProUGUI _textTMP;
-    [SerializeField] private GameObject _loadingScreenPanel;
 
     private Toggle _lastToggled;
 
@@ -91,8 +90,8 @@ public class ShopMenu : MonoBehaviour, IUseLoading
         DisplayAllParts(caller.Result, builder);
 
         _finishedDisplayingCount++;
-        if(_finishedDisplayingCount == CallsAmt)
-           EndLoading?.Invoke();
+        if (_finishedDisplayingCount == CallsAmt)
+            EndLoading?.Invoke();
     }
 
     private void DisplayAllParts(string[] info, ObjectFromDBBuilder builder)
