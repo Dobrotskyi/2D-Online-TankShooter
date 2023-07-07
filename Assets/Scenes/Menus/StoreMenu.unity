@@ -730,7 +730,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1373166993}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: UpdateSelectedCategorie
+        m_MethodName: UpdateSelectedCategory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1519,7 +1519,6 @@ MonoBehaviour:
   - {fileID: 848978313}
   _group: {fileID: 1127713312}
   _textTMP: {fileID: 439057836}
-  _loadingScreenPanel: {fileID: 0}
 --- !u!1 &1472671574
 GameObject:
   m_ObjectHideFlags: 0
