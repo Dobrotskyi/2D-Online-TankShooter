@@ -9,7 +9,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private GameObject _playerTank;
     private PhotonView _view;
 
-    public Vector2 GetRandomSpawnPoint() => _spawnPoints[0].transform.position;//_spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
+    public Vector2 GetRandomSpawnPoint() => _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position;
 
     private void Start()
     {
