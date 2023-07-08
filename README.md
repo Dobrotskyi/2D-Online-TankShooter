@@ -8,7 +8,7 @@ Goal of this game is very simple, you just hop in on a server with your friends 
 
 For this project I used such technologies as PUN 2, phpMyAdmin, MAMP.
 
-You can find some videos of me playing this game here: https://www.youtube.com/watch?v=nNsXzEtM8Mk&list=PLEptj_XTzOPVYy_SENyvTgKJ5POnSLMHS&ab_channel=ValeriiDobrotskyi 
+You can find some videos of me playing this game here: [https://www.youtube.com/watch?v=nNsXzEtM8Mk&list=PLEptj_XTzOPVYy_SENyvTgKJ5POnSLMHS&ab_channel=ValeriiDobrotskyi](https://www.youtube.com/playlist?list=PLEptj_XTzOPVYy_SENyvTgKJ5POnSLMHS) 
 
 # Here are some screenshots. 
 ![Shop Menu](https://github.com/Dobrotskyi/2D-TankShooter/assets/118120050/3a52ec76-5005-404f-93de-c00ab81201cf)
